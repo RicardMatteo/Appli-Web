@@ -28,14 +28,6 @@ public class Group {
 
 	
 	/** 
-	 * @param id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	
-	/** 
 	 * @return String
 	 */
 	public String getName() {
