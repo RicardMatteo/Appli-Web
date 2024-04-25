@@ -1,4 +1,8 @@
+package pack;
+
 import java.util.Collection;
+
+import javax.persistence.Entity;
 
 @Entity
 public class Agenda {
