@@ -32,13 +32,6 @@ public class Agenda {
 		return id;
 	}
 
-	
-	/** 
-	 * @param id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	
 	/** 

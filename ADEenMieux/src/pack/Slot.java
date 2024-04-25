@@ -31,13 +31,6 @@ public class Slot {
 		return id;
 	}
 
-	
-	/** 
-	 * @param id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	
 	/** 

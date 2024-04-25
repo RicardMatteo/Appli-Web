@@ -31,14 +31,6 @@ public class Task {
 
 	
 	/** 
-	 * @param id
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	
-	/** 
 	 * @return String
 	 */
 	public String getName() {
