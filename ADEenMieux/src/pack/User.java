@@ -21,5 +21,5 @@ public class User {
     Collection<Group> groups;
     Collection<Agenda> agendas;
 
-    private bool isAdmin;
+    private boolean isAdmin;
 }
