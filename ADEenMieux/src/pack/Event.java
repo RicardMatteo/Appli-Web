@@ -18,6 +18,7 @@ public class Event {
     Collection<User> guests;
     Collection<User> organisers;
     
+    public Event() {};
 	
 	/** 
 	 * @return int
