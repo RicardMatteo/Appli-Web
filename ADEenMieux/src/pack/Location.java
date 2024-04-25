@@ -21,6 +21,7 @@ public class Location {
 	public Location(String name, int capacity, Agenda agenda) {
 		this.name = name;
 		this.capacity = capacity;
+		// TODO check if agenda is null
 		this.agenda = agenda;
 	}
     
