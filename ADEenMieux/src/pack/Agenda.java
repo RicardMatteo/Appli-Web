@@ -18,14 +18,8 @@ public class Agenda {
     Collection<Task> tasks;
     Collection<Slot> slots;
 
-    public Agenda(String name, Collection<Task> tasks, Collection<Slot> slots) {
-        this.name = name;
-        this.tasks = tasks;
-        this.slots = slots;
-    }
-
     public Agenda(String name) {
-        this(name, new Collection<Task>(), new Collection<Slot>());
+        this.name = name; 
     }
 
 	public int getId() {
