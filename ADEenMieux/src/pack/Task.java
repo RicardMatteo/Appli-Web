@@ -21,6 +21,12 @@ public class Task {
     Collection<User> users;
     
     public Task() {};
+
+	public Task(String name, int deadline, Collection<User> users) {
+		this.name = name;
+		this.deadline = deadline;
+		this.users = users;
+	}
 	
 	/** 
 	 * @return int

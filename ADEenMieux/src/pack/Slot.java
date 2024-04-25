@@ -23,6 +23,15 @@ public class Slot {
     Collection<User> participants;
 
 	public Slot() {};
+
+	public Slot(int capacity, int startDate, int endDate, Location location, Event event, Collection<User> participants) {
+		this.capacity = capacity;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.location = location;
+		this.event = event;
+		this.participants = participants;
+	}
     
 	/** 
 	 * @return int

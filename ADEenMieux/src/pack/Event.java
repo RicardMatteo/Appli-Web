@@ -20,6 +20,12 @@ public class Event {
     
     public Event() {};
 	
+	public Event(String name, Collection<User> guests, Collection<User> organisers) {
+		this.name = name;
+		this.guests = guests;
+		this.organisers = organisers;
+	}
+
 	/** 
 	 * @return int
 	 */

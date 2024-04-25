@@ -19,6 +19,11 @@ public class Group {
     Collection<User> users;
     
     public Group() {};
+
+	public Group(String name, Collection<User> users) {
+		this.name = name;
+		this.users = users;
+	}
 	
 	/** 
 	 * @return int

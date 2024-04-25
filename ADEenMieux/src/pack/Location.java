@@ -17,6 +17,12 @@ public class Location {
     private Agenda agenda;
 	
     public Location() {};
+
+	public Location(String name, int capacity, Agenda agenda) {
+		this.name = name;
+		this.capacity = capacity;
+		this.agenda = agenda;
+	}
     
 	/** 
 	 * @return int
