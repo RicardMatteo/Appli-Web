@@ -24,34 +24,66 @@ public class Agenda {
         this.name = name; 
     }
 
+	
+	/** 
+	 * @return int
+	 */
 	public int getId() {
 		return id;
 	}
 
+	
+	/** 
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String getName() {
 		return name;
 	}
 
+	
+	/** 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	
+	/** 
+	 * @return Collection<Task>
+	 */
 	public Collection<Task> getTasks() {
 		return tasks;
 	}
 
+	
+	/** 
+	 * @param tasks
+	 */
 	public void setTasks(Collection<Task> tasks) {
 		this.tasks = tasks;
 	}
 
+	
+	/** 
+	 * @return Collection<Slot>
+	 */
 	public Collection<Slot> getSlots() {
 		return slots;
 	}
 
+	
+	/** 
+	 * @param slots
+	 */
 	public void setSlots(Collection<Slot> slots) {
 		this.slots = slots;
 	}
