@@ -1,3 +1,5 @@
+package pack;
+
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -12,7 +14,7 @@ public class Group {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
-    private string name;
+    private String name;
 
     Collection<User> users;
 

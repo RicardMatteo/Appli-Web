@@ -1,3 +1,5 @@
+package pack;
+
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -12,9 +14,9 @@ public class Event {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-    private string name;
-    Collection<Users> guests;
-    Collection<Users> organisers;
+    private String name;
+    Collection<User> guests;
+    Collection<User> organisers;
 
     
 }
