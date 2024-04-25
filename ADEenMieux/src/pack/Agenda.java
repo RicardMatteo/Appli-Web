@@ -24,8 +24,9 @@ public class Agenda {
         this.name = name; 
     }
 
-	public Agenda(Srting name, Collection<Task> tasks, Collection<Slot> slots) {
+	public Agenda(String name, Collection<Task> tasks, Collection<Slot> slots) {
 		this.name = name;
+		// TODO check if null
 		this.tasks = tasks;
 		this.slots = slots;
 	}
