@@ -19,7 +19,8 @@ public class Task {
     private int deadline;
 
     Collection<User> users;
-
+    
+    public Task() {};
 	
 	/** 
 	 * @return int

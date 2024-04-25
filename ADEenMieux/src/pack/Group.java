@@ -17,7 +17,8 @@ public class Group {
     private String name;
 
     Collection<User> users;
-
+    
+    public Group() {};
 	
 	/** 
 	 * @return int

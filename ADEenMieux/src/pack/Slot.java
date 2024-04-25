@@ -22,7 +22,8 @@ public class Slot {
 
     Collection<User> participants;
 
-	
+	public Slot() {};
+    
 	/** 
 	 * @return int
 	 */

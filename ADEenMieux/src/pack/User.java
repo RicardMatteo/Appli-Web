@@ -23,7 +23,8 @@ public class User {
 
     private boolean isAdmin;
 
-	
+	public User() {};
+    
 	/** 
 	 * @return int
 	 */

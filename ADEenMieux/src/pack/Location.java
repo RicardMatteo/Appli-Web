@@ -16,6 +16,8 @@ public class Location {
     private int capacity;
     private Agenda agenda;
 	
+    public Location() {};
+    
 	/** 
 	 * @return int
 	 */
