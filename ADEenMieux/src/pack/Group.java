@@ -18,26 +18,50 @@ public class Group {
 
     Collection<User> users;
 
+	
+	/** 
+	 * @return int
+	 */
 	public int getId() {
 		return id;
 	}
 
+	
+	/** 
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String getName() {
 		return name;
 	}
 
+	
+	/** 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	
+	/** 
+	 * @return Collection<User>
+	 */
 	public Collection<User> getUsers() {
 		return users;
 	}
 
+	
+	/** 
+	 * @param users
+	 */
 	public void setUsers(Collection<User> users) {
 		this.users = users;
 	}
