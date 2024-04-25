@@ -1,4 +1,11 @@
+package pack;
+
 import java.util.Collection;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Slot {
@@ -13,6 +20,6 @@ public class Slot {
     private int endDate;
     private Event event;
 
-    Collection<Users> participants;
+    Collection<User> participants;
 
 }
