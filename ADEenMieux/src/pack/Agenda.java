@@ -17,7 +17,4 @@ public class Agenda {
     private String name;
     Collection<Task> tasks;
     Collection<Slot> slots;
-
-
-    
 }
