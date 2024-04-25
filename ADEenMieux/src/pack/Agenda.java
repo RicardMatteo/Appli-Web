@@ -15,31 +15,18 @@ public class Agenda {
 	private int id;
 
     private String name;
+    private String name;
     Collection<Task> tasks;
-    Collection<Slot> slots;
-    
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public Collection<Task> getTasks() {
-		return tasks;
-	}
-	public void setTasks(Collection<Task> tasks) {
-		this.tasks = tasks;
-	}
-	public Collection<Slot> getSlots() {
-		return slots;
-	}
-	public void setSlots(Collection<Slot> slots) {
-		this.slots = slots;
-	}
+    Collection<Slots> slots;
+
+    public Agenda(String name, Collection<Task> tasks, Collection<Slots> slots) {
+        this.name = name;
+        this.tasks = tasks;
+        this.slots = slots;
+    }
+
+    public Agenda(String name) {
+        this(name, new Collection<Task>(), new Collection<Slots>());
+    }
+
 }
