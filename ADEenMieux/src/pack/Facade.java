@@ -82,7 +82,7 @@ public class Facade {
 	 * @param slots
 	 */
 	public void addAgenda(String name, Collection<Task> tasks, Collection<Slot> slots) {
-		Agenda agenda = new Agenda(null, tasks, slots)
+		Agenda agenda = new Agenda(null, tasks, slots);
 		em.persist(agenda);
 	}
 
@@ -158,7 +158,7 @@ public class Facade {
 	 */
 	public void addParticipantToSlot(int slotId, int userId) {
 		User participant = em.find(User.class, userId);
-		Slot slot = em.find(Event.class, slotId);
+		Slot slot = em.find(Slot.class, slotId);
 		slot.addParticipant(participant);
 	}
 
@@ -170,7 +170,7 @@ public class Facade {
 	 */
 	public void addUserToGroup(int groupId, int userId) {
 		User user = em.find(User.class, userId);
-		Group group = em.find(Event.class, groupId);
+		Group group = em.find(Group.class, groupId);
 		group.addUser(user);
 	}
 
@@ -182,7 +182,7 @@ public class Facade {
 	 */
 	public void removeUserToGroup(int groupId, int userId) {
 		User user = em.find(User.class, userId);
-		Group group = em.find(Event.class, groupId);
+		Group group = em.find(Group.class, groupId);
 		group.removeUser(user);
 	}
 }
