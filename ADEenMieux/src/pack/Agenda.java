@@ -17,45 +17,73 @@ public class Agenda {
     private String name;
     Collection<Task> tasks;
     Collection<Slot> slots;
-
-    public Agenda(String name, Collection<Task> tasks, Collection<Slot> slots) {
-        this.name = name;
-        this.tasks = tasks;
-        this.slots = slots;
-    }
-
+    
+    public Agenda() {};
+    
     public Agenda(String name) {
-        this(name, new Collection<Task>(), new Collection<Slot>());
+        this.name = name; 
     }
 
+	public Agenda(String name, Collection<Task> tasks, Collection<Slot> slots) {
+		this.name = name;
+		// TODO check if null
+		this.tasks = tasks;
+		this.slots = slots;
+	}
+
+	
+	/** 
+	 * @return int
+	 */
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String getName() {
 		return name;
 	}
 
+	
+	/** 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	
+	/** 
+	 * @return Collection<Task>
+	 */
 	public Collection<Task> getTasks() {
 		return tasks;
 	}
 
+	
+	/** 
+	 * @param tasks
+	 */
 	public void setTasks(Collection<Task> tasks) {
 		this.tasks = tasks;
 	}
 
+	
+	/** 
+	 * @return Collection<Slot>
+	 */
 	public Collection<Slot> getSlots() {
 		return slots;
 	}
 
+	
+	/** 
+	 * @param slots
+	 */
 	public void setSlots(Collection<Slot> slots) {
 		this.slots = slots;
 	}

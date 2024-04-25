@@ -15,27 +15,62 @@ public class Location {
     private String name;
     private int capacity;
     private Agenda agenda;
+	
+    public Location() {};
+
+	public Location(String name, int capacity, Agenda agenda) {
+		this.name = name;
+		this.capacity = capacity;
+		// TODO check if agenda is null
+		this.agenda = agenda;
+	}
+    
+	/** 
+	 * @return int
+	 */
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
+	
+	/** 
+	 * @return String
+	 */
 	public String getName() {
 		return name;
 	}
+	
+	/** 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/** 
+	 * @return int
+	 */
 	public int getCapacity() {
 		return capacity;
 	}
+	
+	/** 
+	 * @param capacity
+	 */
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+	
+	/** 
+	 * @return Agenda
+	 */
 	public Agenda getAgenda() {
 		return agenda;
 	}
+	
+	/** 
+	 * @param agenda
+	 */
 	public void setAgenda(Agenda agenda) {
 		this.agenda = agenda;
 	}

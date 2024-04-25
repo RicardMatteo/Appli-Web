@@ -18,27 +18,59 @@ public class Event {
     Collection<User> guests;
     Collection<User> organisers;
     
+    public Event() {};
+	
+	public Event(String name, Collection<User> guests, Collection<User> organisers) {
+		this.name = name;
+		this.guests = guests;
+		this.organisers = organisers;
+	}
+
+	/** 
+	 * @return int
+	 */
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
+	/**
+	 * @return the name of the Event
+	 */
 	public String getName() {
 		return name;
 	}
+	
+	/** 
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/** 
+	 * @return Collection<User>
+	 */
 	public Collection<User> getGuests() {
 		return guests;
 	}
+	
+	/** 
+	 * @param guests
+	 */
 	public void setGuests(Collection<User> guests) {
 		this.guests = guests;
 	}
+	
+	/** 
+	 * @return Collection<User>
+	 */
 	public Collection<User> getOrganisers() {
 		return organisers;
 	}
+	
+	/** 
+	 * @param organisers
+	 */
 	public void setOrganisers(Collection<User> organisers) {
 		this.organisers = organisers;
 	}
