@@ -22,6 +22,7 @@ public class Event {
 	
 	public Event(String name, Collection<User> guests, Collection<User> organisers) {
 		this.name = name;
+		// TODO check if null
 		this.guests = guests;
 		this.organisers = organisers;
 	}
@@ -73,5 +74,21 @@ public class Event {
 	 */
 	public void setOrganisers(Collection<User> organisers) {
 		this.organisers = organisers;
+	}
+
+	
+	/** 
+	 * @param guest
+	 */
+	public void addGuest(User guest) {
+		guests.add(guest);
+	}
+
+	
+	/** 
+	 * @param organiser
+	 */
+	public void addOrganiser(User organiser) {
+		organisers.add(organiser);
 	}
 }

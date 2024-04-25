@@ -53,7 +53,6 @@ public class Facade {
 	}
 
 
-	
 	/** 
 	 * Add a location to the DB
 	 * @param name
@@ -65,7 +64,6 @@ public class Facade {
 	}
 
 	
-	
 	/** 
 	 * Add a group to the DB
 	 * @param name
@@ -76,7 +74,6 @@ public class Facade {
 		em.persist(group);
 	}	
 
-	
 	
 	/** 
 	 * Add an agenda to the DB
@@ -90,13 +87,57 @@ public class Facade {
 	}
 
 	
-	
 	/** 
 	 * Add an agenda to the DB
 	 * @param name
 	 */
 	public void addAgenda(String name) {
 		addAgenda(name, null, null);
+	}
+
+	
+	/**
+	 * Add an event to the DB 
+	 * @param name
+	 * @param guests
+	 * @param organisers
+	 */
+	public void addEvent(String name, Collection<User> guests, Collection<User> organisers) {
+		Event event = new Event(name, guests, organisers);
+		em.persist(event);
+	}
+
+	
+	/**
+	 * Add an event to the DB 
+	 * @param name
+	 */
+	public void addEvent(String name) {
+		addAgenda(name, null, null);
+	}
+
+	
+	/** 
+	 * Add a guest to an event
+	 * @param guestId
+	 * @param eventId
+	 */
+	public void addGuestInEvent(int guestId, int eventId) {
+		User guest = em.find(User.class, guestId);
+		Event event = em.find(Event.class, eventId);
+		event.addGuest(guest);
+	}
+
+	
+	/** 
+	 * Add an organiser to an event
+	 * @param orgaId
+	 * @param eventId
+	 */
+	public void addOrganiserInEvent(int orgaId, int eventId) {
+		User organiser = em.find(User.class, orgaId);
+		Event event = em.find(Event.class, eventId);
+		event.addOrganiser(organiser);
 	}
 
 	/*
@@ -110,13 +151,5 @@ public class Facade {
 		TypedQuery<Adresse> req = em.createQuery("select c from Adresse c", Adresse.class);
 		return req.getResultList();
 	}
-	
-	public void associer(int personneId, int adresseId) {
-		Personne pers = em.find(Personne.class, personneId);
-		Adresse addr = em.find(Adresse.class, adresseId);
-		// addr.setPersonne(pers); // OneToMany
-		// addr.getPersonnes().add(pers); // ManyToMany
-		addr.setPersonne(pers); // OneToOne
-	}
-	*/
+
 }
