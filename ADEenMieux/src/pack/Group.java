@@ -63,4 +63,22 @@ public class Group {
 	public void setUsers(Collection<User> users) {
 		this.users = users;
 	}
+
+	
+	/**
+	 * Add an user to the group 
+	 * @param user
+	 */
+	public void addUser(User user) {
+		this.users.add(user);
+	}
+
+	
+	/**
+	 * Remove an user of the group 
+	 * @param user
+	 */
+	public void removeUser(User user) {
+		this.users.remove(user);
+	}
 }

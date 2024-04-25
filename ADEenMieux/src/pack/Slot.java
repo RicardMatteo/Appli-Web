@@ -136,4 +136,14 @@ public class Slot {
 	public void setParticipants(Collection<User> participants) {
 		this.participants = participants;
 	}
+
+	
+	/** 
+	 * Add an user to the participant of the slot
+	 * @param participant
+	 */
+	public void addParticipant(User participant) {
+		// TODO throw error if capacity exeeded
+		this.participants.add(participant);
+	}
 }
