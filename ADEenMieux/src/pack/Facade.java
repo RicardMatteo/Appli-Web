@@ -140,16 +140,49 @@ public class Facade {
 		event.addOrganiser(organiser);
 	}
 
-	/*
 	
-	public Collection<Personne> listePersonnes() {
-		TypedQuery<Personne> req = em.createQuery("select c from Personne c", Personne.class);
-		return req.getResultList();
-	}
-	
-	public Collection<Adresse> listeAdresses() {
-		TypedQuery<Adresse> req = em.createQuery("select c from Adresse c", Adresse.class);
+	/**
+	 * Get all the existing location 
+	 * @return Collection<Location>
+	 */
+	public Collection<Location> getLocations() {
+		TypedQuery<Location> req = em.createQuery("select l from Location l", Location.class);
 		return req.getResultList();
 	}
 
+	
+	/**
+	 * Add a participant to a slot 
+	 * @param slotId
+	 * @param userId
+	 */
+	public void addParticipantToSlot(int slotId, int userId) {
+		User participant = em.find(User.class, userId);
+		Slot slot = em.find(Event.class, slotId);
+		slot.addParticipant(participant);
+	}
+
+	
+	/** 
+	 * Add an user to the group
+	 * @param groupId
+	 * @param userId
+	 */
+	public void addUserToGroup(int groupId, int userId) {
+		User user = em.find(User.class, userId);
+		Group group = em.find(Event.class, groupId);
+		group.addUser(user);
+	}
+
+
+	/** 
+	 * Remove an user of the group
+	 * @param groupId
+	 * @param userId
+	 */
+	public void removeUserToGroup(int groupId, int userId) {
+		User user = em.find(User.class, userId);
+		Group group = em.find(Event.class, groupId);
+		group.removeUser(user);
+	}
 }
