@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Event {
@@ -15,7 +17,11 @@ public class Event {
 	private int id;
 
     private String name;
+    
+    @ManyToMany
     Collection<User> guests;
+    
+    @ManyToMany
     Collection<User> organisers;
     
     public Event() {};

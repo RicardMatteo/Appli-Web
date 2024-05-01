@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -17,9 +19,18 @@ public class User {
 	private String username;
     private String firstName;
     private String lastName;
-
-    Collection<Group> groups;
+    
+//    @ManyToMany(mappedBy = "users") // Fetch.TYPE ?
+//    Collection<Group> groups;
+    
+    @OneToMany(mappedBy = "user") // FetchType ?
     Collection<Agenda> agendas;
+    
+    @ManyToMany(mappedBy = "guests")
+    Collection<Event> signed_up_events;
+    
+    @ManyToMany(mappedBy = "organisers")
+    Collection<Event> organised_events;
 
     private boolean isAdmin;
 
@@ -29,7 +40,7 @@ public class User {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.groups = groups;
+//		this.groups = groups;
 		this.agendas = agendas;
 		this.isAdmin = isAdmin;
 	}
@@ -93,17 +104,17 @@ public class User {
 	/** 
 	 * @return Collection<Group>
 	 */
-	public Collection<Group> getGroups() {
-		return groups;
-	}
+//	public Collection<Group> getGroups() {
+//		return groups;
+//	}
 
 	
 	/** 
 	 * @param groups
 	 */
-	public void setGroups(Collection<Group> groups) {
-		this.groups = groups;
-	}
+//	public void setGroups(Collection<Group> groups) {
+//		this.groups = groups;
+//	}
 
 	
 	/** 
@@ -135,5 +146,21 @@ public class User {
 	 */
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+	
+	public Collection<Event> getSigned_up_events() {
+		return signed_up_events;
+	}
+
+	public void setSigned_up_events(Collection<Event> signed_up_events) {
+		this.signed_up_events = signed_up_events;
+	}
+
+	public Collection<Event> getOrganised_events() {
+		return organised_events;
+	}
+
+	public void setOrganised_events(Collection<Event> organised_events) {
+		this.organised_events = organised_events;
 	}
 }

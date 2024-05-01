@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Task {
@@ -17,15 +18,15 @@ public class Task {
     private String name;
     
     private int deadline;
-
-    Collection<User> users;
     
-    public Task() {};
+    @ManyToOne
+    Agenda agenda;
+
+	public Task() {};
 
 	public Task(String name, int deadline, Collection<User> users) {
 		this.name = name;
 		this.deadline = deadline;
-		this.users = users;
 	}
 	
 	/** 
@@ -66,20 +67,19 @@ public class Task {
 	public void setDeadline(int deadline) {
 		this.deadline = deadline;
 	}
-
 	
-	/** 
-	 * @return Collection<User>
+	/**
+	 * @return agenda
 	 */
-	public Collection<User> getUsers() {
-		return users;
+	public Agenda getAgenda() {
+		return agenda;
 	}
-
 	
-	/** 
-	 * @param users
+	/**
+	 * Choisit l'agenda auquel associer la tâche
+	 * @param agenda
 	 */
-	public void setUsers(Collection<User> users) {
-		this.users = users;
+	public void setAgenda(Agenda agenda) {
+		this.agenda = agenda;
 	}
 }

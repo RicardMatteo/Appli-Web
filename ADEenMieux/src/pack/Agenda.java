@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Agenda {
@@ -15,10 +17,17 @@ public class Agenda {
 	private int id;
 
     private String name;
+    
+    @OneToMany(mappedBy = "agenda") // FetchType ?
     Collection<Task> tasks;
+    
+    @OneToMany
     Collection<Slot> slots;
     
-    public Agenda() {};
+    @ManyToOne
+    User user;
+
+	public Agenda() {};
     
     public Agenda(String name) {
         this.name = name; 
@@ -86,5 +95,13 @@ public class Agenda {
 	 */
 	public void setSlots(Collection<Slot> slots) {
 		this.slots = slots;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

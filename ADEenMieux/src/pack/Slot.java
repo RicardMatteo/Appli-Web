@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Slot {
@@ -15,11 +17,16 @@ public class Slot {
 	private int id;
 
     private int capacity;
-    private Location location;
     private int startDate;
     private int endDate;
-    private Event event;
-
+    
+    @ManyToOne
+    Location location;
+    
+    @ManyToOne
+    Event event;
+    
+    @ManyToMany
     Collection<User> participants;
 
 	public Slot() {};

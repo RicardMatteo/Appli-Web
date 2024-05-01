@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Location {
@@ -14,15 +15,12 @@ public class Location {
 
     private String name;
     private int capacity;
-    private Agenda agenda;
 	
     public Location() {};
 
-	public Location(String name, int capacity, Agenda agenda) {
+	public Location(String name, int capacity) {
 		this.name = name;
 		this.capacity = capacity;
-		// TODO check if agenda is null
-		this.agenda = agenda;
 	}
     
 	/** 
@@ -59,19 +57,5 @@ public class Location {
 	 */
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
-	}
-	
-	/** 
-	 * @return Agenda
-	 */
-	public Agenda getAgenda() {
-		return agenda;
-	}
-	
-	/** 
-	 * @param agenda
-	 */
-	public void setAgenda(Agenda agenda) {
-		this.agenda = agenda;
 	}
 }

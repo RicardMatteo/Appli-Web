@@ -24,8 +24,8 @@ public class Personne {
 	Collection<Adresse> adresses;
 	
 	// ManyToMany
-//	@ManyToMany(mappedBy = "personnes", fetch=FetchType.EAGER)
-//	Collection<Adresse> adresses;
+	//	@ManyToMany(mappedBy = "personnes", fetch=FetchType.EAGER)
+	//	Collection<Adresse> adresses;
 	
 	// OneToOne
 	// @OneToOne(mappedBy="personne")
