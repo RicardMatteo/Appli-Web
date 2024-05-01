@@ -1,14 +1,10 @@
 package pack;
 
-import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  * @author nauchere
@@ -20,8 +16,8 @@ public class Adresse {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	private String rue;
-	private String ville;
+	private String street;
+	private String city;
 	
 	// OneToMany bidirectionnelle
 	@ManyToOne
@@ -45,34 +41,34 @@ public class Adresse {
 
 	public Adresse() {}
 	
-	public Adresse(String rue, String ville) {
-		this.setRue(rue);
-		this.setVille(ville);
+	public Adresse(String street, String city) {
+		this.setStreet(street);
+		this.setCity(city);
 	}
 	
-	public void setAdresse(String rue, String ville) {
-		this.setRue(rue);
-		this.setVille(ville);
-	}
-
-	public String getRue() {
-		return rue;
-	}
-
-	public void setRue(String rue) {
-		this.rue = rue;
-	}
-
-	public String getVille() {
-		return ville;
-	}
-
-	public void setVille(String ville) {
-		this.ville = ville;
+	public void setAdresse(String street, String city) {
+		this.setStreet(street);
+		this.setCity(city);
 	}
 	
 	public String getAdresse() {
-		return rue.concat(" " + ville);
+		return street.concat(" " + city);
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public int getId() {
@@ -82,6 +78,5 @@ public class Adresse {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
 }
 

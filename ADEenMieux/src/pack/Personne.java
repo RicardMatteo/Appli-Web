@@ -16,8 +16,8 @@ public class Personne {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	private String nom;
-	private String prenom;
+	private String lastName;
+	private String firstName;
 	
 	// OneToMany bidirectionnelle
 	@OneToMany(mappedBy = "personne", fetch=FetchType.EAGER)
@@ -42,29 +42,29 @@ public class Personne {
 		this.adresses = adresses;
 	}
 
-	public Personne(String nom, String prenom) {
-		this.setNom(nom);
-		this.setPrenom(prenom);
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public Personne(String lastName, String firstName) {
+		this.setLastName(lastName);
+		this.setFirstName(firstName);
 	}
 	
 	public String getPersonne() {
-		return nom.concat(" " + prenom);
+		return lastName.concat(" " + firstName);
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
 	public int getId() {

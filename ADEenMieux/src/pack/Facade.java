@@ -205,17 +205,22 @@ public class Facade {
 	@POST
 	@Path("/addperson")
 	@Consumes({"application/json"})
-	public void ajoutPersonne(String nom, String prenom) {
-		Personne personne = new Personne(nom, prenom);
+	public void ajoutPersonne(Personne personne) {
 		em.persist(personne);
+//		System.out.println("La personne " + nom + " " + prenom + "a bien étée ajoutée.");
+//		System.out.println("État de la DB :");
+//		TypedQuery<Personne> req = em.createQuery("select c from Personne c", Personne.class);
+//		for (Personne p : req.getResultList()) {
+//			System.out.println("Entrée personne : " + p.getNom() + " " + p.getPrenom());
+//		}
 	}
 	
 	@POST
 	@Path("/addaddress")
 	@Consumes({"application/json"})
-	public void ajoutAdresse(String rue, String ville) {
-		Adresse adresse = new Adresse(rue, ville);
+	public void ajoutAdresse(Adresse adresse) {
 		em.persist(adresse);
+//		System.out.println("L'adresse " + rue + " " + ville + "a bien étée ajoutée.");
 	}
 
 	@GET

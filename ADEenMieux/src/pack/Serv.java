@@ -38,14 +38,14 @@ public class Serv extends HttpServlet {
 			if (request.getParameter("op").equals("ajoutpersonne")) {
 				s1 = request.getParameter("nom");
 				s2 = request.getParameter("prenom");
-				facade.ajoutPersonne(s1, s2);
+				//facade.ajoutPersonne(s1, s2);
 				response.getWriter().println("<html><body>Personne ajoutée.</body></html>");
 				request.getRequestDispatcher("index.html").forward(request, response);
 				
 			} else if (request.getParameter("op").equals("ajoutadresse")) {
 				s1 = request.getParameter("rue");
 				s2 = request.getParameter("ville");
-				facade.ajoutAdresse(s1, s2);
+				//facade.ajoutAdresse(s1, s2);
 				response.getWriter().println("<html><body>Adresse ajoutée.</body></html>");
 				request.getRequestDispatcher("index.html").forward(request, response);
 				
