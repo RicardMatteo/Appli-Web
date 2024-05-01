@@ -12,7 +12,7 @@ if (request.getAttribute("personnes") != null) {
 	Collection<Personne> lp = (Collection<Personne>) request.getAttribute("personnes");
 	for (Personne p : lp) {
 		out.println(p.getPersonne() + "<br>");
-		Collection<Adresse> la = p.getAdresses();
+		Collection<Adresse> la = p.getAddresses();
 		if (la != null) {
 			for (Adresse a : la) {
 				out.println("&nbsp; &nbsp; &nbsp;" + a.getAdresse() + "<br>");
