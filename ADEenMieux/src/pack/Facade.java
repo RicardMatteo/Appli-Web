@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 @Singleton
 @Path("/")
@@ -207,12 +208,6 @@ public class Facade {
 	@Consumes({"application/json"})
 	public void ajoutPersonne(Personne personne) {
 		em.persist(personne);
-//		System.out.println("La personne " + nom + " " + prenom + "a bien étée ajoutée.");
-//		System.out.println("État de la DB :");
-//		TypedQuery<Personne> req = em.createQuery("select c from Personne c", Personne.class);
-//		for (Personne p : req.getResultList()) {
-//			System.out.println("Entrée personne : " + p.getNom() + " " + p.getPrenom());
-//		}
 	}
 	
 	@POST
@@ -220,20 +215,20 @@ public class Facade {
 	@Consumes({"application/json"})
 	public void ajoutAdresse(Adresse adresse) {
 		em.persist(adresse);
-//		System.out.println("L'adresse " + rue + " " + ville + "a bien étée ajoutée.");
 	}
 
 	@GET
 	@Path("/listpersons")
-	@Consumes({"application/json"})
+	@Produces({"application/json"})
 	public Collection<Personne> listePersonnes() {
 		TypedQuery<Personne> req = em.createQuery("select c from Personne c", Personne.class);
+		System.out.println("Résultat query : " + req.getResultList().toString());
 		return req.getResultList();
 	}
 	
 	@GET
 	@Path("/listaddresses")
-	@Consumes({"application/json"})
+	@Produces({"application/json"})
 	public Collection<Adresse> listeAdresses() {
 		TypedQuery<Adresse> req = em.createQuery("select c from Adresse c", Adresse.class);
 		return req.getResultList();
@@ -242,9 +237,9 @@ public class Facade {
 	@POST
 	@Path("/associate")
 	@Consumes({"application/json"})
-	public void associer(int personneId, int adresseId) {
-		Personne pers = em.find(Personne.class, personneId);
-		Adresse addr = em.find(Adresse.class, adresseId);
+	public void associer(Association association) {
+		Personne pers = em.find(Personne.class, association.getPersonId());
+		Adresse addr = em.find(Adresse.class, association.getAddressId());
 		addr.setPersonne(pers); // OneToMany
 		// addr.getPersonnes().add(pers); // ManyToMany
 		// addr.setPersonne(pers); // OneToOne

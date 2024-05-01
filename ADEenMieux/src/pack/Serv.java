@@ -65,7 +65,7 @@ public class Serv extends HttpServlet {
 				response.getWriter().println("<html><body>Association.</body></html>");
 				int personneId = Integer.parseInt(request.getParameter("pa"));
 				int adresseId = Integer.parseInt(request.getParameter("aa"));
-				facade.associer(personneId, adresseId);
+				//facade.associer(personneId, adresseId);
 				request.getRequestDispatcher("index.html").forward(request, response);
 			} else {
 				response.getWriter().println("<html><body>404 Not Found !!!</body></html>");

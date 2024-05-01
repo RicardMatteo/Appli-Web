@@ -21,11 +21,11 @@ public class Personne {
 	
 	// OneToMany bidirectionnelle
 	@OneToMany(mappedBy = "personne", fetch=FetchType.EAGER)
-	Collection<Adresse> adresses;
+	Collection<Adresse> addresses;
 	
 	// ManyToMany
-	//	@ManyToMany(mappedBy = "personnes", fetch=FetchType.EAGER)
-	//	Collection<Adresse> adresses;
+	// @ManyToMany(mappedBy = "personnes", fetch=FetchType.EAGER)
+	// Collection<Adresse> addresses;
 	
 	// OneToOne
 	// @OneToOne(mappedBy="personne")
@@ -34,12 +34,12 @@ public class Personne {
 	
 	public Personne() {}
 	
-	public Collection<Adresse> getAdresses() {
-		return adresses;
+	public Collection<Adresse> getAddresses() {
+		return addresses;
 	}
 
-	public void setAdresses(Collection<Adresse> adresses) {
-		this.adresses = adresses;
+	public void setAddresses(Collection<Adresse> addresses) {
+		this.addresses = addresses;
 	}
 
 	public Personne(String lastName, String firstName) {
