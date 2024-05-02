@@ -34,10 +34,18 @@ public class Personne {
 	
 	public Personne() {}
 	
+	
+	/** 
+	 * @return Collection<Adresse>
+	 */
 	public Collection<Adresse> getAddresses() {
 		return addresses;
 	}
 
+	
+	/** 
+	 * @param addresses
+	 */
 	public void setAddresses(Collection<Adresse> addresses) {
 		this.addresses = addresses;
 	}
@@ -47,30 +55,58 @@ public class Personne {
 		this.setFirstName(firstName);
 	}
 	
+	
+	/** 
+	 * @return String
+	 */
 	public String getPersonne() {
 		return lastName.concat(" " + firstName);
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String getLastName() {
 		return lastName;
 	}
 
+	
+	/** 
+	 * @param lastName
+	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
+	
+	/** 
+	 * @param firstName
+	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
+	
+	/** 
+	 * @return int
+	 */
 	public int getId() {
 		return id;
 	}
 
+	
+	/** 
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}

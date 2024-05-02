@@ -97,6 +97,10 @@ public class Agenda {
 		this.slots = slots;
 	}
 	
+	
+	/** 
+	 * @return User
+	 */
 	public User getUser() {
 		return user;
 	}

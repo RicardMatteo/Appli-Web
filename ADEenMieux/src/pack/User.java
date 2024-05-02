@@ -148,18 +148,34 @@ public class User {
 		this.isAdmin = isAdmin;
 	}
 	
+	
+	/** 
+	 * @return Collection<Event>
+	 */
 	public Collection<Event> getSigned_up_events() {
 		return signed_up_events;
 	}
 
+	
+	/** 
+	 * @param signed_up_events
+	 */
 	public void setSigned_up_events(Collection<Event> signed_up_events) {
 		this.signed_up_events = signed_up_events;
 	}
 
+	
+	/** 
+	 * @return Collection<Event>
+	 */
 	public Collection<Event> getOrganised_events() {
 		return organised_events;
 	}
 
+	
+	/** 
+	 * @param organised_events
+	 */
 	public void setOrganised_events(Collection<Event> organised_events) {
 		this.organised_events = organised_events;
 	}

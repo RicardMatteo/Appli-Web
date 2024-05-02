@@ -210,6 +210,10 @@ public class Facade {
 		em.persist(personne);
 	}
 	
+	
+	/** 
+	 * @param adresse
+	 */
 	@POST
 	@Path("/addaddress")
 	@Consumes({"application/json"})
@@ -217,6 +221,10 @@ public class Facade {
 		em.persist(adresse);
 	}
 
+	
+	/** 
+	 * @return Collection<Personne>
+	 */
 	@GET
 	@Path("/listpersons")
 	@Produces({"application/json"})
@@ -226,6 +234,10 @@ public class Facade {
 		return req.getResultList();
 	}
 	
+	
+	/** 
+	 * @return Collection<Adresse>
+	 */
 	@GET
 	@Path("/listaddresses")
 	@Produces({"application/json"})
@@ -234,6 +246,10 @@ public class Facade {
 		return req.getResultList();
 	}
 	
+	
+	/** 
+	 * @param association
+	 */
 	@POST
 	@Path("/associate")
 	@Consumes({"application/json"})
