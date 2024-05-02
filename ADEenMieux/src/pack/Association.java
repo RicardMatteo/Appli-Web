@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 public class Association implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5654173171216288003L;
+	
 	int firstId;
 	int secondId;
 	
