@@ -238,8 +238,8 @@ public class Facade {
 	@Path("/associate")
 	@Consumes({"application/json"})
 	public void associer(Association association) {
-		Personne pers = em.find(Personne.class, association.getPersonId());
-		Adresse addr = em.find(Adresse.class, association.getAddressId());
+		Adresse addr = em.find(Adresse.class, association.getFirstId());
+		Personne pers = em.find(Personne.class, association.getSecondId());
 		addr.setPersonne(pers); // OneToMany
 		// addr.getPersonnes().add(pers); // ManyToMany
 		// addr.setPersonne(pers); // OneToOne

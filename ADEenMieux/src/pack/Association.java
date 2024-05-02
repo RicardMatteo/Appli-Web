@@ -4,28 +4,28 @@ import java.io.Serializable;
 
 public class Association implements Serializable {
 	
-	int personId;
-	int addressId;
+	int firstId;
+	int secondId;
 	
 	public Association() {}
-	public Association(int personId, int addressId) {
-		this.addressId = addressId;
-		this.personId = personId;
+	public Association(int secondId, int firstId) {
+		this.firstId = firstId;
+		this.secondId = secondId;
 	}
 	
-	public int getPersonId() {
-		return personId;
+	public int getSecondId() {
+		return secondId;
 	}
 	
-	public void setPersonId(int personId) {
-		this.personId = personId;
+	public void setSecondId(int secondId) {
+		this.secondId = secondId;
 	}
 	
-	public int getAddressId() {
-		return addressId;
+	public int getFirstId() {
+		return firstId;
 	}
 	
-	public void setAddressId(int addressId) {
-		this.addressId = addressId;
+	public void setFirstId(int firstId) {
+		this.firstId = firstId;
 	}
 }

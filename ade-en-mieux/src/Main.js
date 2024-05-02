@@ -101,8 +101,8 @@ function Associate() {
   const handleSubmit = (event) => {
     event.preventDefault();
     let association={};
-    association.personId=selectedP;
-    association.addressId=selectedA;
+    association.secondId=selectedP;
+    association.firstId=selectedA;
     invokePost("associate", association, "association added", "pb with associate");
     CleanWorker();
   }
