@@ -10,9 +10,10 @@
         <class>pack.User</class>
         <class>pack.Agenda</class>
         <class>pack.Event</class>
-        <class>pack.Location</class>
+        <class>pack.Place</class>
         <class>pack.Slot</class>
         <class>pack.Task</class>
+        <class>pack.GroupClass</class>
         
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>

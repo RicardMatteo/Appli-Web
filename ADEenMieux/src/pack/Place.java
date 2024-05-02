@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Location {
+public class Place {
 
     @Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -16,9 +16,9 @@ public class Location {
     private String name;
     private int capacity;
 	
-    public Location() {};
+    public Place() {};
 
-	public Location(String name, int capacity) {
+	public Place(String name, int capacity) {
 		this.name = name;
 		this.capacity = capacity;
 	}
