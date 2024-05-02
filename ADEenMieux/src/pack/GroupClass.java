@@ -8,23 +8,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-//@Entity
-public class Group {
+@Entity
+public class GroupClass {
 
-//    @Id
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
     private String name;
     
-//     @ManyToMany
-//     Collection<User> users;
+     @ManyToMany
+     Collection<User> users;
     
-    public Group() {};
+    public GroupClass() {};
 
-	public Group(String name, Collection<User> users) {
+	public GroupClass(String name, Collection<User> users) {
 		this.name = name;
-//		this.users = users;
+		this.users = users;
 	}
 	
 	/** 
@@ -54,33 +54,33 @@ public class Group {
 	/** 
 	 * @return Collection<User>
 	 */
-//	public Collection<User> getUsers() {
-//		return users;
-//	}
+	public Collection<User> getUsers() {
+		return users;
+	}
 
 	
 	/** 
 	 * @param users
 	 */
-//	public void setUsers(Collection<User> users) {
-//		this.users = users;
-//	}
+	public void setUsers(Collection<User> users) {
+		this.users = users;
+	}
 
 	
 	/**
 	 * Add an user to the group 
 	 * @param user
 	 */
-//	public void addUser(User user) {
-//		this.users.add(user);
-//	}
+	public void addUser(User user) {
+		this.users.add(user);
+	}
 
 	
 	/**
 	 * Remove an user of the group 
 	 * @param user
 	 */
-//	public void removeUser(User user) {
-//		this.users.remove(user);
-//	}
+	public void removeUser(User user) {
+		this.users.remove(user);
+	}
 }

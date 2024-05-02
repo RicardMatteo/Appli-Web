@@ -20,8 +20,8 @@ public class User {
     private String firstName;
     private String lastName;
     
-//    @ManyToMany(mappedBy = "users") // Fetch.TYPE ?
-//    Collection<Group> groups;
+    @ManyToMany(mappedBy = "users") // Fetch.TYPE ?
+    Collection<GroupClass> groups;
     
     @OneToMany(mappedBy = "user") // FetchType ?
     Collection<Agenda> agendas;
@@ -36,11 +36,11 @@ public class User {
 
 	public User() {};
 
-	public User(String username, String firstName, String lastName, Collection<Group> groups, Collection<Agenda> agendas, boolean isAdmin) {
+	public User(String username, String firstName, String lastName, Collection<GroupClass> groups, Collection<Agenda> agendas, boolean isAdmin) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
-//		this.groups = groups;
+		this.groups = groups;
 		this.agendas = agendas;
 		this.isAdmin = isAdmin;
 	}
@@ -104,17 +104,17 @@ public class User {
 	/** 
 	 * @return Collection<Group>
 	 */
-//	public Collection<Group> getGroups() {
-//		return groups;
-//	}
+	public Collection<GroupClass> getGroups() {
+		return groups;
+	}
 
 	
 	/** 
 	 * @param groups
 	 */
-//	public void setGroups(Collection<Group> groups) {
-//		this.groups = groups;
-//	}
+	public void setGroups(Collection<GroupClass> groups) {
+		this.groups = groups;
+	}
 
 	
 	/** 

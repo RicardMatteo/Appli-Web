@@ -21,7 +21,7 @@ public class Slot {
     private int endDate;
     
     @ManyToOne
-    Location location;
+    Place location;
     
     @ManyToOne
     Event event;
@@ -31,7 +31,7 @@ public class Slot {
 
 	public Slot() {};
 
-	public Slot(int capacity, int startDate, int endDate, Location location, Event event, Collection<User> participants) {
+	public Slot(int capacity, int startDate, int endDate, Place location, Event event, Collection<User> participants) {
 		this.capacity = capacity;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -68,7 +68,7 @@ public class Slot {
 	/** 
 	 * @return Location
 	 */
-	public Location getLocation() {
+	public Place getLocation() {
 		return location;
 	}
 
@@ -76,7 +76,7 @@ public class Slot {
 	/** 
 	 * @param location
 	 */
-	public void setLocation(Location location) {
+	public void setLocation(Place location) {
 		this.location = location;
 	}
 
