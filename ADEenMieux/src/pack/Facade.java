@@ -230,7 +230,6 @@ public class Facade {
 	@Produces({"application/json"})
 	public Collection<Personne> listePersonnes() {
 		TypedQuery<Personne> req = em.createQuery("select c from Personne c", Personne.class);
-		System.out.println("Résultat query : " + req.getResultList().toString());
 		return req.getResultList();
 	}
 	
@@ -254,6 +253,7 @@ public class Facade {
 	@Path("/associate")
 	@Consumes({"application/json"})
 	public void associer(Association association) {
+		System.out.println("On a l'association : "+association.getFirstId()+", "+association.getSecondId());
 		Adresse addr = em.find(Adresse.class, association.getFirstId());
 		Personne pers = em.find(Personne.class, association.getSecondId());
 		addr.setPersonne(pers); // OneToMany
