@@ -1,48 +1,60 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import ReactDOM from 'react-dom';
+import { createRoot } from "react-dom/client";
 
-var init=false;
+var init = false;
 
 function ShowMessage(message: string): void {
-  ReactDOM.render(<p>{message}</p>, document.getElementById("Message"));
+  const container = document.getElementById("Message");
+  const root = createRoot(container!);
+  root.render(<p>{message}</p>);
 }
 
 function CleanWorker(): void {
-  ReactDOM.render([], document.getElementById("Worker"));
+  const container = document.getElementById("Worker");
+  const root = createRoot(container!);
+  root.render([]);
 }
 
-async function invokePost(method: string, data: any, successMsg: string, failureMsg: string): Promise<void> {
+async function invokePost(
+  method: string,
+  data: any,
+  successMsg: string,
+  failureMsg: string
+): Promise<void> {
   const requestOptions: RequestInit = {
-      method: "POST",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      body: JSON.stringify(data)
+    method: "POST",
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+    body: JSON.stringify(data),
   };
 
   try {
-      const res = await fetch("/ADEenMieux/rest/" + method, requestOptions);
-      if (res.ok) {
-          ShowMessage(successMsg);
-      } else {
-          ShowMessage(failureMsg);
-      }
+    const res = await fetch("/ADEenMieux/rest/" + method, requestOptions);
+    if (res.ok) {
+      ShowMessage(successMsg);
+    } else {
+      ShowMessage(failureMsg);
+    }
   } catch (error) {
-      console.error("Error in invokePost :", error);
+    console.error("Error in invokePost :", error);
   }
 }
 
-async function invokeGet(method: string, failureMsg: string): Promise<any | null> {
+async function invokeGet(
+  method: string,
+  failureMsg: string
+): Promise<any | null> {
   try {
-      const res = await fetch("/ADEenMieux/rest/" + method);
-      if (res.ok) {
-          return await res.json();
-      } else {
-          ShowMessage(failureMsg);
-          return null;
-      }
-  } catch (error) {
-      console.error("Error in invokeGet :", error);
+    const res = await fetch("/ADEenMieux/rest/" + method);
+    if (res.ok) {
+      return await res.json();
+    } else {
+      ShowMessage(failureMsg);
       return null;
+    }
+  } catch (error) {
+    console.error("Error in invokeGet :", error);
+    return null;
   }
 }
 
@@ -54,12 +66,11 @@ const AddPerson: React.FC = () => {
     event.preventDefault();
     let person: { firstName: string; lastName: string } = {
       firstName: fname,
-      lastName: lname
+      lastName: lname,
     };
     invokePost("addperson", person, "person added", "pb with addperson");
     CleanWorker();
   };
-
 
   if (init) {
     init = false;
@@ -70,10 +81,20 @@ const AddPerson: React.FC = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        First Name: <input type="text" value={fname}
-          onChange={(e) => setFname(e.target.value)} /><br />
-        Last Name:  <input type="text" value={lname}
-          onChange={(e) => setLname(e.target.value)} /><br />
+        First Name:{" "}
+        <input
+          type="text"
+          value={fname}
+          onChange={(e) => setFname(e.target.value)}
+        />
+        <br />
+        Last Name:{" "}
+        <input
+          type="text"
+          value={lname}
+          onChange={(e) => setLname(e.target.value)}
+        />
+        <br />
         <br />
         <input type="submit" value="OK" />
       </form>
@@ -89,7 +110,7 @@ function AddAddress() {
     event.preventDefault();
     let address: { street: string; city: string } = {
       street: street,
-      city: city
+      city: city,
     };
     invokePost("addaddress", address, "address added", "pb with addaddress");
     CleanWorker();
@@ -106,10 +127,20 @@ function AddAddress() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        Street: <input type="text" value={street}
-          onChange={(e) => setStreet(e.target.value)} /><br />
-        City:  <input type="text" value={city}
-          onChange={(e) => setCity(e.target.value)} /><br />
+        Street:{" "}
+        <input
+          type="text"
+          value={street}
+          onChange={(e) => setStreet(e.target.value)}
+        />
+        <br />
+        City:{" "}
+        <input
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+        <br />
         <br />
         <input type="submit" value="OK" />
       </form>
@@ -120,47 +151,66 @@ function AddAddress() {
 const Associate: React.FC = () => {
   const [listP, setListP] = useState<any[]>([]);
   const [listA, setListA] = useState<any[]>([]);
-  const [selectedP, setSelectedP] = useState<string>("");
-  const [selectedA, setSelectedA] = useState<string>("");
+  const [selectedP, setSelectedP] = useState<number>();
+  const [selectedA, setSelectedA] = useState<number>();
+  type person = { id: number; firstName: string; lastName: string };
+  type address = { id: number; street: string; city: string };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     let association: any = {
       secondId: selectedP,
-      firstId: selectedA
+      firstId: selectedA,
     };
-    invokePost("associate", association, "association added", "pb with associate");
+    invokePost(
+      "associate",
+      association,
+      "association added",
+      "pb with associate"
+    );
     CleanWorker();
   };
 
   if (init) {
-  	init=false;
-	invokeGet("listpersons", "pb with listpersons")
-	.then(data => setListP(data));
-	invokeGet("listaddresses", "pb with listaddresses")
-	.then(data => setListA(data));
+    init = false;
+    invokeGet("listpersons", "pb with listpersons").then((data) =>
+      setListP(data)
+    );
+    invokeGet("listaddresses", "pb with listaddresses").then((data) =>
+      setListA(data)
+    );
   }
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        Select a person:<br />
-        {listP.map((p: any) => (
+        Select a person:
+        <br />
+        {listP.map((p: person) => (
           <div key={p.id}>
-            <input type="radio" value={p.id}
-              checked={selectedP == p.id}
-              onChange={(e) => setSelectedP(e.target.value)} />
-            {p.firstName} {p.lastName}<br />
+            <input
+              type="radio"
+              value={p.id}
+              checked={selectedP === p.id}
+              onChange={(e) => setSelectedP(parseInt(e.target.value))}
+            />
+            {p.firstName} {p.lastName}
+            <br />
           </div>
         ))}
         <br />
-        Select an address:<br />
-        {listA.map((a: any) => (
+        Select an address:
+        <br />
+        {listA.map((a: address) => (
           <div key={a.id}>
-            <input type="radio" value={a.id}
-              checked={selectedA == a.id}
-              onChange={(e) => setSelectedA(e.target.value)} />
-            {a.street} {a.city}<br />
+            <input
+              type="radio"
+              value={a.id}
+              checked={selectedA === a.id}
+              onChange={(e) => setSelectedA(parseInt(e.target.value))}
+            />
+            {a.street} {a.city}
+            <br />
           </div>
         ))}
         <br />
@@ -168,7 +218,7 @@ const Associate: React.FC = () => {
       </form>
     </>
   );
-}
+};
 
 function List() {
   const [list, setList] = useState<any[]>([]);
@@ -176,8 +226,9 @@ function List() {
   useEffect(() => {
     if (init) {
       init = false;
-      invokeGet("listpersons", "pb with listpersons")
-        .then(data => setList(data));
+      invokeGet("listpersons", "pb with listpersons").then((data) =>
+        setList(data)
+      );
     }
   }, []);
 
@@ -214,31 +265,37 @@ function List() {
   );
 }
 
-
-
 function App() {
   const addPerson = () => {
     ShowMessage("");
-    init=true;
-    ReactDOM.render(<AddPerson />, document.getElementById("Worker"));
-  }
+    init = true;
+    const container = document.getElementById("Worker");
+    const root = createRoot(container!);
+    root.render(<AddPerson />);
+  };
   const addAddress = () => {
     ShowMessage("");
-    init=true;
-    ReactDOM.render(<AddAddress />, document.getElementById("Worker"));
-  }
+    init = true;
+    const container = document.getElementById("Worker");
+    const root = createRoot(container!);
+    root.render(<AddAddress />);
+  };
   const associate = () => {
     ShowMessage("");
-    init=true;
-    ReactDOM.render(<Associate />, document.getElementById("Worker"));
-  }
+    init = true;
+    const container = document.getElementById("Worker");
+    const root = createRoot(container!);
+    root.render(<Associate />);
+  };
   const list = () => {
-     ShowMessage("");
-     init=true;
-     ReactDOM.render(<List />, document.getElementById("Worker"));
-  }
+    ShowMessage("");
+    init = true;
+    const container = document.getElementById("Worker");
+    const root = createRoot(container!);
+    root.render(<List />);
+  };
 
-  return (	
+  return (
     <>
       <div id="Main">
         <button onClick={addPerson}>Add personne</button>
@@ -246,12 +303,10 @@ function App() {
         <button onClick={associate}>Associate</button>
         <button onClick={list}>List</button>
       </div>
-      <br/>
-      <div id="Message">
-      </div>
-      <br/>
-      <div id ="Worker">
-      </div>
+      <br />
+      <div id="Message"></div>
+      <br />
+      <div id="Worker"></div>
     </>
   );
 }
