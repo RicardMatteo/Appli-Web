@@ -6,13 +6,13 @@
     "@testing-library/jest-dom": "^6.4.5",
     "@testing-library/react": "^15.0.7",
     "@testing-library/user-event": "^14.5.2",
-    "@types/react": "^18.3.1",
+    "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
     "react-scripts": "^5.0.1",
-    "web-vitals": "^3.5.2"
+    "web-vitals": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,5 +42,8 @@
   "description": "ADE mais en mieux",
   "main": "index.tsx",
   "author": "",
-  "license": "GPL-3.0-or-later"
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
 }
