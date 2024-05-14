@@ -1,8 +1,5 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import login from './login/login';
 import { createRoot } from "react-dom/client";
 
 var init = false;
@@ -299,31 +296,22 @@ function App() {
   };
 
   return (
-    <>
+    <><>
       <div id="Main">
         <button onClick={addPerson}>Add personne</button>
         <button onClick={addAddress}>Add address</button>
         <button onClick={associate}>Associate</button>
         <button onClick={list}>List</button>
-        <Link to="/login">Login</Link>
       </div>
-      <br/>
+      <br />
       <div id="Message">
       </div>
-      <br/>
-      <div id ="Worker">
+      <br />
+      <div id="Worker">
       </div>
-        <div>
-          <Router>
-            <Route path="/login" Component={login} />
-          </Router>
-        </div>
-      </>
-      <br />
-      <div id="Message"></div>
-      <br />
-      <div id="Worker"></div>
-    </>
+      <div>
+      </div>
+    </><br /><div id="Message"></div><br /><div id="Worker"></div></>
   );
 }
 
