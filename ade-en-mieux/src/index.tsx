@@ -12,6 +12,7 @@ import "./index.css";
 import Root from "./routes/root";
 import Tp3 from "./routes/tp3/tp3";
 import Login from "./routes/login/login";
+import Register from "./routes/register/register";
 /*
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   }
 ]);
 
