@@ -1,4 +1,4 @@
-import "./App.css";
+import "./tp3.css";
 import { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -265,7 +265,7 @@ function List() {
   );
 }
 
-function App() {
+function Tp3() {
   const addPerson = () => {
     ShowMessage("");
     init = true;
@@ -315,4 +315,4 @@ function App() {
   );
 }
 
-export default App;
+export default Tp3;
