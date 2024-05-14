@@ -307,22 +307,17 @@ function App() {
         <button onClick={list}>List</button>
         <Link to="/login">Login</Link>
       </div>
-      <br/>
+      <br />
       <div id="Message">
       </div>
-      <br/>
-      <div id ="Worker">
+      <br />
+      <div id="Worker">
       </div>
-        <div>
-          <Router>
-            <Route path="/login" Component={login} />
-          </Router>
-        </div>
-      </>
-      <br />
-      <div id="Message"></div>
-      <br />
-      <div id="Worker"></div>
+      <div>
+        <Router>
+          <Route path="/login" Component={login} />
+        </Router>
+      </div>
     </>
   );
 }
