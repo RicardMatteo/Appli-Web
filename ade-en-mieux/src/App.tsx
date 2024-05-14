@@ -1,6 +1,8 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import login from './login/login';
 
 var init=false;
 
@@ -245,6 +247,7 @@ function App() {
         <button onClick={addAddress}>Add address</button>
         <button onClick={associate}>Associate</button>
         <button onClick={list}>List</button>
+        <Link to="/login">Login</Link>
       </div>
       <br/>
       <div id="Message">
@@ -252,7 +255,12 @@ function App() {
       <br/>
       <div id ="Worker">
       </div>
-    </>
+        <div>
+          <Router>
+            <Route path="/login" Component={login} />
+          </Router>
+        </div>
+      </>
   );
 }
 
