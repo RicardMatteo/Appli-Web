@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import CryptoJS from "crypto-js";
 import axios from "axios";
+import {invokeGet, invokePost, ShowMessage }from "../../include/requests";
 
 function hashPassword(password: string) {
     return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
@@ -27,7 +28,7 @@ function Login() {
         const username = sanitize_username_input(values.username);
         const password = hashPassword(values.password);
         console.log("Submitted values - username : ", username, " - password : ", password, " - firstname : ", values.firstname, " - lastname : ", values.lastname);
-        axios.post("http://localhost:8080/ADEenMieux/rest/adduser", {
+        /*axios.post("http://localhost:8080/ADEenMieux/rest/adduser", {
             username: username,
             hashedPassword: password,
             firstName: values.firstname,
@@ -36,7 +37,15 @@ function Login() {
         .then((response) => {
             console.log(response);
             navigate("/login");
-        })
+        })*/
+
+        invokePost("adduser", {
+            username: username,
+            firstName: values.firstname,
+            lastName: values.lastname,
+            hashedPassword: password
+        }, "Utilisateur ajouté", "Erreur lors de l'ajout de l'utilisateur");
+
       };
     
     const validate = (values: { username: string, firstname: string, lastname: string, password: string }) => {
