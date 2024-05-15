@@ -1,4 +1,4 @@
-import "./App.css";
+import "./tp3.css";
 import { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -265,7 +265,7 @@ function List() {
   );
 }
 
-function App() {
+function Tp3() {
   const addPerson = () => {
     ShowMessage("");
     init = true;
@@ -296,7 +296,7 @@ function App() {
   };
 
   return (
-    <>
+    <><>
       <div id="Main">
         <button onClick={addPerson}>Add personne</button>
         <button onClick={addAddress}>Add address</button>
@@ -304,11 +304,15 @@ function App() {
         <button onClick={list}>List</button>
       </div>
       <br />
-      <div id="Message"></div>
+      <div id="Message">
+      </div>
       <br />
-      <div id="Worker"></div>
-    </>
+      <div id="Worker">
+      </div>
+      <div>
+      </div>
+    </><br /><div id="Message"></div><br /><div id="Worker"></div></>
   );
 }
 
-export default App;
+export default Tp3;

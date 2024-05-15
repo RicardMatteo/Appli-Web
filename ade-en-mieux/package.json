@@ -8,6 +8,10 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
+    "axios": "^1.6.8",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.2.0",
+    "formik": "^2.4.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
@@ -45,6 +49,7 @@
   "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/crypto-js": "^4.2.2",
     "prettier": "^3.2.5"
   }
 }

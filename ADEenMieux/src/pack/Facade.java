@@ -19,8 +19,7 @@ public class Facade {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Facade() {
-	}
+	public Facade() {}
 
 	/**
 	 * Add an user to the DB
@@ -28,15 +27,18 @@ public class Facade {
 	 * @param username
 	 * @param firstName
 	 * @param lastName
-	 * @param isAdmin
+	 * @param hashedPassword
 	 */
-	/*
-	 * public void addUser(String username, String firstName, String lastName,
-	 * boolean isAdmin) { User user = new User(username, firstName, lastName, null,
-	 * null, isAdmin); em.persist(user); }
-	 * 
-	 * 
-	 *//**
+	
+	@POST
+	@Path("/adduser")
+	public void addUser(String username, String firstName, String lastName, String hashedPassword) { 
+		User user = new User(username, firstName, lastName, null, null, false);
+		em.persist(user);
+	}
+	
+
+/**
 		 * Add a task to the DB
 		 * 
 		 * @param name

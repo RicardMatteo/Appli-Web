@@ -3,6 +3,7 @@ package pack;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +20,7 @@ public class User {
 	private String username;
     private String firstName;
     private String lastName;
+	private String hashedPassword;
     
     @ManyToMany(mappedBy = "users") // Fetch.TYPE ?
     Collection<GroupClass> groups;
@@ -31,6 +33,10 @@ public class User {
     
     @ManyToMany(mappedBy = "organisers")
     Collection<Event> organised_events;
+
+	@OneToMany(mappedBy = "user_token", fetch = FetchType.EAGER)
+	Collection<ConnexionToken> tokens;
+
 
     private boolean isAdmin;
 
@@ -178,5 +184,19 @@ public class User {
 	 */
 	public void setOrganised_events(Collection<Event> organised_events) {
 		this.organised_events = organised_events;
+	}
+
+	/**
+	 * @return String
+	 */
+	public String getHashedPassword() {
+		return hashedPassword;
+	}
+
+	/**
+	 * @param hashedPassword
+	 */
+	public void setHashedPassword(String hashedPassword) {
+		this.hashedPassword = hashedPassword;
 	}
 }
