@@ -6,16 +6,16 @@ import axios from "axios";
 import {invokeGet, invokePost, ShowMessage }from "../../include/requests";
 
 function hashPassword(password: string) {
-    return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+  return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
 }
 
 const sanitize_username_input = (value: string) => {
-    const sanitizedValue = value.toLowerCase().replace(/[^a-z0-9]/g, '');
-    return sanitizedValue;
+  const sanitizedValue = value.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return sanitizedValue;
 };
 
 function Login() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
     const initial_values = {
         username: "",

@@ -48,6 +48,7 @@
   "author": "",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/crypto-js": "^4.2.2",
     "prettier": "^3.2.5"
   }
