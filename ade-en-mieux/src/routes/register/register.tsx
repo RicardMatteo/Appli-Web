@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import CryptoJS from "crypto-js";
 import { invokePost } from "../../include/requests";
+import "./register.css";
 
 function hashPassword(password: string) {
   return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
@@ -77,20 +78,20 @@ function Login() {
       password?: string;
     } = {};
     if (!values.username) {
-      errors.username = "Veuillez saisir un nom d'utilisateur";
+      errors.username = "* Veuillez saisir un nom d'utilisateur";
     }
     if (!values.firstname) {
-      errors.firstname = "Veuillez saisir un prénom";
+      errors.firstname = "* Veuillez saisir un prénom";
     }
     if (!values.lastname) {
-      errors.lastname = "Veuillez saisir un nom de famille";
+      errors.lastname = "* Veuillez saisir un nom de famille";
     }
     if (!values.password) {
-      errors.password = "Veuillez saisir un mot de passe";
+      errors.password = "* Veuillez saisir un mot de passe";
     }
     if (values.username !== sanitize_username_input(values.username)) {
       errors.username =
-        "Mauvais nom d'utilisateur : ne doit contenir que des lettres minuscules et des chiffres";
+        "*Mauvais nom d'utilisateur : ne doit contenir que des lettres minuscules et des chiffres";
     }
     return errors;
   };
@@ -108,22 +109,38 @@ function Login() {
             <div>
               <label htmlFor="username">Nom d'utilisateur:</label>
               <Field type="text" id="username" name="username" />
-              <ErrorMessage name="username" component="div" />
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="errorMsg"
+              />
             </div>
             <div>
               <label htmlFor="firstname">Prénom:</label>
               <Field type="text" id="firstname" name="firstname" />
-              <ErrorMessage name="firstname" component="div" />
+              <ErrorMessage
+                name="firstname"
+                component="div"
+                className="errorMsg"
+              />
             </div>
             <div>
               <label htmlFor="lastname">Nom de famille:</label>
               <Field type="text" id="lastname" name="lastname" />
-              <ErrorMessage name="lastname" component="div" />
+              <ErrorMessage
+                name="lastname"
+                component="div"
+                className="errorMsg"
+              />
             </div>
             <div>
               <label htmlFor="password">Mot de passe:</label>
               <Field type="password" id="password" name="password" />
-              <ErrorMessage name="password" component="div" />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="errorMsg"
+              />
             </div>
             <button type="submit" disabled={isSubmitting}>
               Créer son compte

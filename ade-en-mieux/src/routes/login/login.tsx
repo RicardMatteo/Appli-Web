@@ -1,7 +1,7 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import CryptoJS from "crypto-js";
+import "./login.css";
 
 function hashPassword(password: string) {
   return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
@@ -34,13 +34,13 @@ function Login() {
   const validate = (values: { username: string; password: string }) => {
     const errors: { username?: string; password?: string } = {};
     if (!values.username) {
-      errors.username = "Veuillez saisir un nom d'utilisateur";
+      errors.username = "* Veuillez saisir un nom d'utilisateur";
     }
     if (!values.password) {
-      errors.password = "Veuillez saisir un mot de passe";
+      errors.password = "* Veuillez saisir un mot de passe";
     }
     if (values.username !== sanitize_username_input(values.username)) {
-      errors.username = "Mauvais nom d'utilisateur";
+      errors.username = "* Mauvais nom d'utilisateur";
     }
     return errors;
   };
@@ -58,12 +58,20 @@ function Login() {
             <div>
               <label htmlFor="username">Nom d'utilisateur:</label>
               <Field type="text" id="username" name="username" />
-              <ErrorMessage name="username" component="div" />
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="errorMsg"
+              />
             </div>
             <div>
               <label htmlFor="password">Mot de passe:</label>
               <Field type="password" id="password" name="password" />
-              <ErrorMessage name="password" component="div" />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="errorMsg"
+              />
             </div>
             <button type="submit" disabled={isSubmitting}>
               Se connecter
