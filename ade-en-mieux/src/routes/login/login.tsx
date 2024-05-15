@@ -46,7 +46,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Page de connexion</h1>
       <Formik
         initialValues={initial_values}
@@ -55,31 +55,33 @@ function Login() {
       >
         {({ isSubmitting }) => (
           <Form>
-            <div>
+            <div className="entry">
               <label htmlFor="username">Nom d'utilisateur:</label>
               <Field type="text" id="username" name="username" />
-              <ErrorMessage
-                name="username"
-                component="div"
-                className="errorMsg"
-              />
             </div>
-            <div>
+            <ErrorMessage
+              name="username"
+              component="div"
+              className="errorMsg"
+            />
+            <div className="entry">
               <label htmlFor="password">Mot de passe:</label>
               <Field type="password" id="password" name="password" />
-              <ErrorMessage
+            </div>
+            <ErrorMessage
                 name="password"
                 component="div"
                 className="errorMsg"
               />
+            <div className="button-container">
+              <button type="submit" disabled={isSubmitting}>
+                Se connecter
+              </button>
+              <button onClick={() => navigate("/")}>Home</button>
             </div>
-            <button type="submit" disabled={isSubmitting}>
-              Se connecter
-            </button>
           </Form>
         )}
       </Formik>
-      <button onClick={() => navigate("/")}>Home</button>
     </div>
   );
 }

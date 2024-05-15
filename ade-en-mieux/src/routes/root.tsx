@@ -5,15 +5,19 @@ export default function Root() {
 
   return (
     <>
+    <div className="container">
       <div>
         <h1>ADE en Mieux</h1>
       </div>
       <div>
         <h2>Ceci sera la future homepage du site !</h2>
       </div>
-      <button onClick={() => navigate("/tp3")}>TP3</button>
-      <button onClick={() => navigate("/login")}>Login toi mon reuf !</button>
-      <button onClick={() => navigate("/register")}>Inscris-toi mon reuf !</button>
+      <div className="button-container">
+        <button onClick={() => navigate("/tp3")}>TP3</button>
+        <button onClick={() => navigate("/login")}>Login toi mon reuf !</button>
+        <button onClick={() => navigate("/register")}>Inscris-toi mon reuf !</button>
+      </div>
+    </div>
     </>
   );
 }

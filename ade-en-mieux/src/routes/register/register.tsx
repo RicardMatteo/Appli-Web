@@ -111,58 +111,63 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Créez votre compte !</h1>
-      <Formik
-        initialValues={initial_values}
-        validate={validate}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div>
-              <label htmlFor="username">Nom d'utilisateur:</label>
-              <Field type="text" id="username" name="username" />
+    <div className="container">
+      <div>
+        <h1>Créez votre compte !</h1>
+        <Formik
+          initialValues={initial_values}
+          validate={validate}
+          onSubmit={handleSubmit}
+          >
+          {({ isSubmitting }) => (
+            <Form>
+              <div className="entry">
+                <label htmlFor="username">Nom d'utilisateur: </label>
+                <Field type="text" id="username" name="username" />
+              </div>
               <ErrorMessage
-                name="username"
-                component="div"
-                className="errorMsg"
-              />
-            </div>
-            <div>
-              <label htmlFor="firstname">Prénom:</label>
-              <Field type="text" id="firstname" name="firstname" />
+                  name="username"
+                  component="div"
+                  className="errorMsg"
+                  />
+              <div className="entry">
+                <label htmlFor="firstname">Prénom: </label>
+                <Field type="text" id="firstname" name="firstname" />
+                
+              </div>
               <ErrorMessage
-                name="firstname"
-                component="div"
-                className="errorMsg"
-              />
-            </div>
-            <div>
-              <label htmlFor="lastname">Nom de famille:</label>
-              <Field type="text" id="lastname" name="lastname" />
+                  name="firstname"
+                  component="div"
+                  className="errorMsg"
+                  />
+              <div className="entry">
+                <label htmlFor="lastname">Nom de famille: </label>
+                <Field type="text" id="lastname" name="lastname" />
+              </div>
               <ErrorMessage
-                name="lastname"
-                component="div"
-                className="errorMsg"
-              />
-            </div>
-            <div>
-              <label htmlFor="password">Mot de passe:</label>
-              <Field type="password" id="password" name="password" />
+                  name="lastname"
+                  component="div"
+                  className="errorMsg"
+                  />
+              <div className="entry">
+                <label htmlFor="password">Mot de passe: </label>
+                <Field type="password" id="password" name="password" />
+              </div>
               <ErrorMessage
-                name="password"
-                component="div"
-                className="errorMsg"
-              />
-            </div>
-            <button type="submit" disabled={isSubmitting}>
-              Créer son compte
-            </button>
-          </Form>
-        )}
-      </Formik>
-      <button onClick={() => navigate("/")}>Home</button>
+                  name="password"
+                  component="div"
+                  className="errorMsg"
+                  />
+              <div className="button-container">
+                <button type="submit" disabled={isSubmitting}>
+                  Créer son compte
+                </button>
+                <button onClick={() => navigate("/")}>Retour</button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+        </div>
     </div>
   );
 }
