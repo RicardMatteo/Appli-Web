@@ -33,8 +33,7 @@ public class Facade {
 	@POST
 	@Consumes({"application/json"})
 	@Path("/adduser")
-	public void addUser(String username, String firstName, String lastName, String hashedPassword) { 
-		User user = new User(username, firstName, lastName, null, null, false);
+	public void addUser(User user) { 
 		em.persist(user);
 	}
 	
