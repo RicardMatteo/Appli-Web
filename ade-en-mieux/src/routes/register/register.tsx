@@ -13,6 +13,12 @@ const sanitize_username_input = (value: string) => {
   return sanitizedValue;
 };
 
+const sanitize_name_input = (value: string) => {
+  // Remove all non-alphabetical characters
+  const sanitizedValue = value.replace(/[^a-zA-Z]/g, "");
+  return sanitizedValue;
+}
+
 function Login() {
   const navigate = useNavigate();
 
@@ -31,15 +37,17 @@ function Login() {
   }) => {
     const username = sanitize_username_input(values.username);
     const password = hashPassword(values.password);
+    const firstname = sanitize_name_input(values.firstname);
+    const lastname = sanitize_name_input(values.lastname);
     console.log(
       "Submitted values - username : ",
       username,
       " - password : ",
       password,
       " - firstname : ",
-      values.firstname,
+      firstname,
       " - lastname : ",
-      values.lastname
+      lastname
     );
     /*axios.post("http://localhost:8080/ADEenMieux/rest/adduser", {
             username: username,
@@ -92,6 +100,12 @@ function Login() {
     if (values.username !== sanitize_username_input(values.username)) {
       errors.username =
         "*Mauvais nom d'utilisateur : ne doit contenir que des lettres minuscules et des chiffres";
+    }
+    if (values.firstname !== sanitize_name_input(values.firstname)) {
+      errors.firstname = "*Mauvais prénom : ne doit contenir que des lettres";
+    }
+    if (values.lastname !== sanitize_name_input(values.lastname)) {
+      errors.lastname = "*Mauvais nom de famille : ne doit contenir que des lettres";
     }
     return errors;
   };
