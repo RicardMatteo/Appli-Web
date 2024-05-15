@@ -31,8 +31,8 @@ public class Facade {
 	 */
 	
 	@POST
-	@Consumes({"application/json"})
 	@Path("/adduser")
+	@Consumes({"application/json"})
 	public void addUser(User user) { 
 		em.persist(user);
 	}
