@@ -49,16 +49,6 @@ function Login() {
       " - lastname : ",
       lastname
     );
-    /*axios.post("http://localhost:8080/ADEenMieux/rest/adduser", {
-            username: username,
-            hashedPassword: password,
-            firstName: values.firstname,
-            lastName: values.lastname
-        })
-        .then((response) => {
-            console.log(response);
-            navigate("/login");
-        })*/
 
     invokePost(
       "adduser",
@@ -70,7 +60,11 @@ function Login() {
       },
       "Utilisateur ajouté",
       "Erreur lors de l'ajout de l'utilisateur"
-    );
+    ).then((response: Response) => {
+      if (response.ok) {
+        navigate("/login");
+      }
+    });
   };
 
   const validate = (values: {
@@ -119,7 +113,7 @@ function Login() {
           initialValues={initial_values}
           validate={validate}
           onSubmit={handleSubmit}
-          >
+        >
           {({ isSubmitting }) => (
             <Form>
               <div className="entry">
@@ -127,38 +121,37 @@ function Login() {
                 <Field type="text" id="username" name="username" />
               </div>
               <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="errorMsg"
-                  />
+                name="username"
+                component="div"
+                className="errorMsg"
+              />
               <div className="entry">
                 <label htmlFor="firstname">Prénom: </label>
                 <Field type="text" id="firstname" name="firstname" />
-                
               </div>
               <ErrorMessage
-                  name="firstname"
-                  component="div"
-                  className="errorMsg"
-                  />
+                name="firstname"
+                component="div"
+                className="errorMsg"
+              />
               <div className="entry">
                 <label htmlFor="lastname">Nom de famille: </label>
                 <Field type="text" id="lastname" name="lastname" />
               </div>
               <ErrorMessage
-                  name="lastname"
-                  component="div"
-                  className="errorMsg"
-                  />
+                name="lastname"
+                component="div"
+                className="errorMsg"
+              />
               <div className="entry">
                 <label htmlFor="password">Mot de passe: </label>
                 <Field type="password" id="password" name="password" />
               </div>
               <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="errorMsg"
-                  />
+                name="password"
+                component="div"
+                className="errorMsg"
+              />
               <div className="button-container">
                 <button type="submit" disabled={isSubmitting}>
                   Créer son compte
@@ -168,7 +161,7 @@ function Login() {
             </Form>
           )}
         </Formik>
-        </div>
+      </div>
     </div>
   );
 }

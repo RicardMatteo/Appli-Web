@@ -12,7 +12,7 @@ async function invokePost(
   data: any,
   successMsg: string,
   failureMsg: string
-): Promise<void> {
+): Promise<Response> {
   const requestOptions: RequestInit = {
     method: "POST",
     headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -28,9 +28,11 @@ async function invokePost(
       console.log(failureMsg);
       //ShowMessage(failureMsg);
     }
+    return res;
   } catch (error) {
     console.error("Error in invokePost :", error);
   }
+  throw new Error("Error in invokePost");
 }
 
 async function invokeGet(

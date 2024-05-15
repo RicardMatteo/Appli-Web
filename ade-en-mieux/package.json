@@ -12,6 +12,7 @@
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
     "formik": "^2.4.6",
+    "js-cookie": "^3.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/crypto-js": "^4.2.2",
+    "@types/js-cookie": "^3.0.6",
     "prettier": "^3.2.5"
   }
 }

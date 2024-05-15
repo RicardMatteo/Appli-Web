@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import CryptoJS from "crypto-js";
+import { invokePost } from "../../include/requests";
 import "./login.css";
+import Cookies from "js-cookie";
 
 function hashPassword(password: string) {
   return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
@@ -29,6 +31,28 @@ function Login() {
       " - password : ",
       password
     );
+
+    invokePost(
+      "login",
+      {
+        username: username,
+        hashedPassword: password,
+      },
+      "User logged in",
+      "pb with login"
+    )
+      .then((response: Response) => {
+        const authToken = response.headers.get("authtoken");
+        if (authToken === null) {
+          console.error("AuthToken is null");
+          return;
+        }
+        console.log("AuthToken : ", authToken);
+        Cookies.set("authToken", authToken, { expires: 365 });
+      })
+      .catch((error: Error) => {
+        // Handle the error here (ALED)
+      });
   };
 
   const validate = (values: { username: string; password: string }) => {
@@ -69,15 +93,20 @@ function Login() {
               <Field type="password" id="password" name="password" />
             </div>
             <ErrorMessage
-                name="password"
-                component="div"
-                className="errorMsg"
-              />
+              name="password"
+              component="div"
+              className="errorMsg"
+            />
             <div className="button-container">
               <button type="submit" disabled={isSubmitting}>
                 Se connecter
               </button>
               <button onClick={() => navigate("/")}>Home</button>
+            </div>
+            <div className="button-container">
+              <button onClick={() => navigate("/login/test")}>
+                tester l'inscription
+              </button>
             </div>
           </Form>
         )}

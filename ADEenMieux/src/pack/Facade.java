@@ -11,6 +11,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 @Singleton
 @Path("/")
@@ -19,7 +20,8 @@ public class Facade {
 	@PersistenceContext
 	private EntityManager em;
 
-	public Facade() {}
+	public Facade() {
+	}
 
 	/**
 	 * Add an user to the DB
@@ -29,21 +31,133 @@ public class Facade {
 	 * @param lastName
 	 * @param hashedPassword
 	 */
-	
+
 	@POST
 	@Path("/adduser")
-	@Consumes({"application/json"})
-	public void addUser(User user) { 
+	@Consumes({ "application/json" })
+	public void addUser(User user) {
 		em.persist(user);
 	}
-	
 
-/**
-		 * Add a task to the DB
-		 * 
-		 * @param name
-		 * @param deadline
-		 */
+	public static class LoginInfo {
+		private String username;
+		private String hashedPassword;
+
+		// Constructor
+		public LoginInfo() {
+		}
+
+		public LoginInfo(String username, String hashedPassword) {
+			this.username = username;
+			this.hashedPassword = hashedPassword;
+		}
+
+		// Getters and setters
+		public String getUsername() {
+			return username;
+		}
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+
+		public String getHashedPassword() {
+			return hashedPassword;
+		}
+
+		public void setHashedPassword(String hashedPassword) {
+			this.hashedPassword = hashedPassword;
+		}
+	}
+
+	/**
+	 * Try to log an user
+	 * 
+	 * @param loginInfo
+	 */
+	@POST
+	@Path("/login")
+	@Consumes({ "application/json" })
+	public Response login(LoginInfo loginInfo) {
+		// look in the DB for the user with the given username with and sql query
+		// SELECT * FROM User WHERE username = loginInfo.username
+		// if the user is found, check if the password is correct
+		// if the password is correct, generate a token and store it in the DB
+		// return the token
+		TypedQuery<User> req = em.createQuery("select u from User u where u.username = :username", User.class);
+		req.setParameter("username", loginInfo.getUsername());
+		System.out.println("select u from User u where u.username = :username");
+		try {
+			User user = req.getSingleResult();
+			System.out.println("User found : " + user.getUsername());
+			if (user != null) {
+				if (user.getHashedPassword().equals(loginInfo.getHashedPassword())) {
+					ConnexionToken token = new ConnexionToken();
+					em.persist(token);
+					token.setUserToken(user);
+					token.setToken(token.generateToken());
+
+					// return the token in the response data
+					return Response.ok().header("AuthToken", token.getToken()).build();
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("User not found");
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+		System.out.println("Password incorrect");
+		return Response.status(Response.Status.UNAUTHORIZED).build();
+	}
+
+	public static class Cookie {
+		private String cookie;
+
+		// Constructor
+		public Cookie() {
+		}
+
+		public Cookie(String cookie) {
+			this.cookie = cookie;
+		}
+
+		public String getCookie() {
+			return cookie;
+		}
+
+		public void setCookie(String cookie) {
+			this.cookie = cookie;
+		}
+	}
+
+	/**
+	 * Get the current user from the cookie
+	 * 
+	 * @return Collection<User>
+	 */
+	@POST
+	@Path("/getuser")
+	@Consumes({ "application/json" })
+	public Response getUser(Cookie cookie) {
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie.getCookie());
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				return Response.ok().header("username", token.getUserToken().getUsername()).build();
+			}
+		} catch (Exception e) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+		return Response.status(Response.Status.UNAUTHORIZED).build();
+	}
+
+	/**
+	 * Add a task to the DB
+	 * 
+	 * @param name
+	 * @param deadline
+	 */
 	/*
 	 * public void addTask(String name, int deadline) { Task task = new Task(name,
 	 * deadline, null); em.persist(task); }
@@ -204,58 +318,54 @@ public class Facade {
 	 * Pour tester le js
 	 * 
 	 ******************************************************/
-	
+
 	@POST
 	@Path("/addperson")
-	@Consumes({"application/json"})
+	@Consumes({ "application/json" })
 	public void ajoutPersonne(Personne personne) {
 		em.persist(personne);
 	}
-	
-	
-	/** 
+
+	/**
 	 * @param adresse
 	 */
 	@POST
 	@Path("/addaddress")
-	@Consumes({"application/json"})
+	@Consumes({ "application/json" })
 	public void ajoutAdresse(Adresse adresse) {
 		em.persist(adresse);
 	}
 
-	
-	/** 
+	/**
 	 * @return Collection<Personne>
 	 */
 	@GET
 	@Path("/listpersons")
-	@Produces({"application/json"})
+	@Produces({ "application/json" })
 	public Collection<Personne> listePersonnes() {
 		TypedQuery<Personne> req = em.createQuery("select c from Personne c", Personne.class);
 		return req.getResultList();
 	}
-	
-	
-	/** 
+
+	/**
 	 * @return Collection<Adresse>
 	 */
 	@GET
 	@Path("/listaddresses")
-	@Produces({"application/json"})
+	@Produces({ "application/json" })
 	public Collection<Adresse> listeAdresses() {
 		TypedQuery<Adresse> req = em.createQuery("select c from Adresse c", Adresse.class);
 		return req.getResultList();
 	}
-	
-	
-	/** 
+
+	/**
 	 * @param association
 	 */
 	@POST
 	@Path("/associate")
-	@Consumes({"application/json"})
+	@Consumes({ "application/json" })
 	public void associer(Association association) {
-		System.out.println("On a l'association : "+association.getFirstId()+", "+association.getSecondId());
+		System.out.println("On a l'association : " + association.getFirstId() + ", " + association.getSecondId());
 		Adresse addr = em.find(Adresse.class, association.getFirstId());
 		Personne pers = em.find(Personne.class, association.getSecondId());
 		addr.setPersonne(pers); // OneToMany
