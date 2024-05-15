@@ -17,7 +17,7 @@ const sanitize_name_input = (value: string) => {
   // Remove all non-alphabetical characters
   const sanitizedValue = value.replace(/[^a-zA-Z]/g, "");
   return sanitizedValue;
-}
+};
 
 function Login() {
   const navigate = useNavigate();
@@ -105,7 +105,8 @@ function Login() {
       errors.firstname = "*Mauvais prénom : ne doit contenir que des lettres";
     }
     if (values.lastname !== sanitize_name_input(values.lastname)) {
-      errors.lastname = "*Mauvais nom de famille : ne doit contenir que des lettres";
+      errors.lastname =
+        "*Mauvais nom de famille : ne doit contenir que des lettres";
     }
     return errors;
   };
