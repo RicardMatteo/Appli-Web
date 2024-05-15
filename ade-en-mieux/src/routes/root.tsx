@@ -13,6 +13,7 @@ export default function Root() {
       </div>
       <button onClick={() => navigate("/tp3")}>TP3</button>
       <button onClick={() => navigate("/login")}>Login toi mon reuf !</button>
+      <button onClick={() => navigate("/register")}>Inscris-toi mon reuf !</button>
     </>
   );
 }
