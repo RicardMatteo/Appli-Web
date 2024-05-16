@@ -154,13 +154,6 @@ export default Login;
 function Login() {
   const navigate = useNavigate();
 
-  // On vérifie que l'utilisateur est connecter avant d'afficher la page
-  useEffect(() => {
-    if (!(Cookies.get("authToken") === undefined)) {
-      navigate("/dashboard");
-    }
-  }, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
-
   const initial_values = {
     username: "",
     password: "",
@@ -193,7 +186,6 @@ function Login() {
         }
         console.log("AuthToken : ", authToken);
         Cookies.set("authToken", authToken, { expires: 365 });
-        navigate("/dashboard");
       })
       .catch((error: Error) => {
         // Handle the error here (ALED)

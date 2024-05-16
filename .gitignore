@@ -13,7 +13,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-*.classpath
+.classpath
 
 # External tool builders
 .externalToolBuilders/
@@ -96,3 +96,4 @@ replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse
 
+ade-en-mieux/.project
