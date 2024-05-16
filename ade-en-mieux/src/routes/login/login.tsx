@@ -4,6 +4,7 @@ import CryptoJS from "crypto-js";
 import { invokePost } from "../../include/requests";
 import "./login.css";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 function hashPassword(password: string) {
   return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
@@ -16,6 +17,13 @@ const sanitize_username_input = (value: string) => {
 
 function Login() {
   const navigate = useNavigate();
+
+  // On vérifie que l'utilisateur est connecter avant d'afficher la page
+  useEffect(() => {
+    if (!(Cookies.get("authToken") === undefined)) {
+      navigate("/dashboard");
+    }
+  }, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
 
   const initial_values = {
     username: "",
@@ -49,6 +57,7 @@ function Login() {
         }
         console.log("AuthToken : ", authToken);
         Cookies.set("authToken", authToken, { expires: 365 });
+        navigate("/dashboard");
       })
       .catch((error: Error) => {
         // Handle the error here (ALED)
@@ -98,11 +107,7 @@ function Login() {
               className="errorMsg"
             />
             <div className="button-container">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                onClick={() => navigate("/dashboard")}
-              >
+              <button type="submit" disabled={isSubmitting}>
                 Se connecter
               </button>
               <button onClick={() => navigate("/")}>Home</button>
