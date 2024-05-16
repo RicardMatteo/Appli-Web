@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { invokePost } from "../../include/requests";
+import { useEffect } from "react";
 import * as yup from "yup";
 import CryptoJS from "crypto-js";
 import "./login.scss";
@@ -40,6 +41,12 @@ const validationSchema = yup.object({
 const Login = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!(Cookies.get("authToken") === undefined)) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -76,6 +83,7 @@ const Login = () => {
             expires: 365,
             sameSite: "Strict",
           });
+          navigate("/dashboard");
         })
         .catch((error: Error) => {
           // Handle the error here (ALED)
