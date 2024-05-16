@@ -1,3 +1,8 @@
+@import url("/src/style/catppuccin.scss");
+@import url("/src/style/background.scss");
+@import url("/src/style/button.scss");
+@import url("/src/style/container.scss");
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -13,7 +18,7 @@ code {
 }
 
 .errorMsg {
-  color: red;
+  color: var(--red);
   font-size: small;
   padding-bottom: 0.5%;
 }
@@ -27,13 +32,6 @@ html {
   align-items: center;
 }
 
-.container {
-  border: thick double #32a1ce;
-  padding: 20px;
-  margin: 2px;
-  border-radius: 15px;
-  width: auto;
-}
 
 .entry {
   padding-top: 1%;
@@ -48,9 +46,6 @@ html {
   margin-left: 1rem;
 }
 
-.button-container {
-  display: flex;
-  justify-content: center;
-  padding-top: 1rem;
-  justify-content: space-between;
+.padding {
+  padding: 1rem;
 }
