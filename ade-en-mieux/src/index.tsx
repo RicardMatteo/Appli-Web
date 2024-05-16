@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom/client";
 // React router imports
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // CSS imports
-import "./index.css";
+import "./index.scss";
 // Routes imports
 import Root from "./routes/root";
 import Tp3 from "./routes/tp3/tp3";

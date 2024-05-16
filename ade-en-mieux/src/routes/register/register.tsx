@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import CryptoJS from "crypto-js";
 import { invokePost } from "../../include/requests";
-import "./register.css";
+import "./register.scss";
 
 const HeroPattern = ({
   pttrn,
@@ -118,6 +118,19 @@ function Login() {
       <HeroPattern pttrn={"topography-pattern"}>
         <div></div>
       </HeroPattern>
+      <div className="form__group field">
+        <input
+          type="input"
+          className="form__field"
+          placeholder="Name"
+          name="name"
+          id="name"
+          required
+        />
+        <label form="name" className="form__label">
+          Name
+        </label>
+      </div>
       <div className="container">
         <div>
           <h1>Créez votre compte !</h1>
@@ -128,6 +141,22 @@ function Login() {
           >
             {({ isSubmitting }) => (
               <Form>
+                <div className="form__group field">
+                  <label form="username" className="form__label">
+                    Nom d'utilisateur:
+                    <Field
+                      className="form__field"
+                      type="text"
+                      id="username"
+                      name="username"
+                    />
+                  </label>
+                </div>
+                <ErrorMessage
+                  name="username"
+                  component="div"
+                  className="errorMsg"
+                />
                 <div className="entry">
                   <label htmlFor="username">Nom d'utilisateur: </label>
                   <Field type="text" id="username" name="username" />
@@ -180,6 +209,26 @@ function Login() {
                     </button>
                   </div>{" "}
                 </div>
+                <div className="form__group field">
+                  <label
+                    form="password2"
+                    className="form__label"
+                    htmlFor="password2"
+                  >
+                    Mot de passe:
+                  </label>
+                  <Field
+                    className="form__field"
+                    type="password2"
+                    id="password2"
+                    name="password2"
+                  />
+                </div>
+                <ErrorMessage
+                  name="password2"
+                  component="div"
+                  className="errorMsg"
+                />
               </Form>
             )}
           </Formik>

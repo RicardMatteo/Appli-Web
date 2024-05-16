@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import CryptoJS from "crypto-js";
 import { invokePost } from "../../include/requests";
-import "./login.css";
+import "./login.scss";
 import Cookies from "js-cookie";
 
 const HeroPattern = ({

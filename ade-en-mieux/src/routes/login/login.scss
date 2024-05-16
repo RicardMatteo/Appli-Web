@@ -1,7 +1,7 @@
-@import url("/src/style/catppuccin.css");
-@import url("/src/style/background.css");
-@import url("/src/style/button.css");
-@import url("/src/style/container.css");
+@import url("/src/style/catppuccin.scss");
+@import url("/src/style/background.scss");
+@import url("/src/style/button.scss");
+@import url("/src/style/container.scss");
 
 .errorMsg {
     color: var(--red);
