@@ -1,5 +1,7 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import CryptoJS from "crypto-js";
 import { invokePost } from "../../include/requests";
 import "./register.scss";
@@ -27,215 +29,162 @@ const sanitize_name_input = (value: string) => {
   return sanitizedValue;
 };
 
-function Login() {
+const validationSchema = yup.object({
+  username: yup
+    .string()
+    .required("Username is required")
+    .matches(
+      /^[a-z0-9]+$/,
+      "Username should contain only lowercase letters and numbers"
+    ),
+  firstname: yup
+    .string()
+    .required("Firstname is required")
+    .matches(/^[a-zA-Z]+$/, "Firstname should contain only letters"),
+  lastname: yup
+    .string()
+    .required("Lastname is required")
+    .matches(/^[a-zA-Z]+$/, "Lastname should contain only letters"),
+  password: yup
+    .string()
+    .min(1, "Password should be of minimum 1 characters length")
+    .required("Password is required"),
+});
+
+const Register = () => {
   const navigate = useNavigate();
 
-  const initial_values = {
-    username: "",
-    firstname: "",
-    lastname: "",
-    password: "",
-  };
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      firstname: "",
+      lastname: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      const username = sanitize_username_input(values.username);
+      const password = hashPassword(values.password);
+      const firstname = sanitize_name_input(values.firstname);
+      const lastname = sanitize_name_input(values.lastname);
+      console.log(
+        "Submitted values - username : ",
+        username,
+        " - password : ",
+        password,
+        " - firstname : ",
+        firstname,
+        " - lastname : ",
+        lastname
+      );
 
-  const handleSubmit = (values: {
-    username: string;
-    firstname: string;
-    lastname: string;
-    password: string;
-  }) => {
-    const username = sanitize_username_input(values.username);
-    const password = hashPassword(values.password);
-    const firstname = sanitize_name_input(values.firstname);
-    const lastname = sanitize_name_input(values.lastname);
-    console.log(
-      "Submitted values - username : ",
-      username,
-      " - password : ",
-      password,
-      " - firstname : ",
-      firstname,
-      " - lastname : ",
-      lastname
-    );
-
-    invokePost(
-      "adduser",
-      {
-        username: username,
-        firstName: values.firstname,
-        lastName: values.lastname,
-        hashedPassword: password,
-      },
-      "Utilisateur ajouté",
-      "Erreur lors de l'ajout de l'utilisateur"
-    ).then((response: Response) => {
-      if (response.ok) {
-        navigate("/login");
-      }
-    });
-  };
-
-  const validate = (values: {
-    username: string;
-    firstname: string;
-    lastname: string;
-    password: string;
-  }) => {
-    const errors: {
-      username?: string;
-      firstname?: string;
-      lastname?: string;
-      password?: string;
-    } = {};
-    if (!values.username) {
-      errors.username = "* Veuillez saisir un nom d'utilisateur";
-    }
-    if (!values.firstname) {
-      errors.firstname = "* Veuillez saisir un prénom";
-    }
-    if (!values.lastname) {
-      errors.lastname = "* Veuillez saisir un nom de famille";
-    }
-    if (!values.password) {
-      errors.password = "* Veuillez saisir un mot de passe";
-    }
-    if (values.username !== sanitize_username_input(values.username)) {
-      errors.username =
-        "*Mauvais nom d'utilisateur : ne doit contenir que des lettres minuscules et des chiffres";
-    }
-    if (values.firstname !== sanitize_name_input(values.firstname)) {
-      errors.firstname = "*Mauvais prénom : ne doit contenir que des lettres";
-    }
-    if (values.lastname !== sanitize_name_input(values.lastname)) {
-      errors.lastname =
-        "*Mauvais nom de famille : ne doit contenir que des lettres";
-    }
-    return errors;
-  };
-
+      invokePost(
+        "adduser",
+        {
+          username: username,
+          firstName: values.firstname,
+          lastName: values.lastname,
+          hashedPassword: password,
+        },
+        "Utilisateur ajouté",
+        "Erreur lors de l'ajout de l'utilisateur"
+      ).then((response: Response) => {
+        if (response.ok) {
+          navigate("/login");
+        }
+      });
+    },
+  });
   return (
     <>
       <HeroPattern pttrn={"topography-pattern"}>
         <div></div>
       </HeroPattern>
-      <div className="form__group field">
-        <input
-          type="input"
-          className="form__field"
-          placeholder="Name"
-          name="name"
-          id="name"
-          required
-        />
-        <label form="name" className="form__label">
-          Name
-        </label>
-      </div>
       <div className="container">
-        <div>
-          <h1>Créez votre compte !</h1>
-          <Formik
-            initialValues={initial_values}
-            validate={validate}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <div className="form__group field">
-                  <label form="username" className="form__label">
-                    Nom d'utilisateur:
-                    <Field
-                      className="form__field"
-                      type="text"
-                      id="username"
-                      name="username"
-                    />
-                  </label>
-                </div>
-                <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="errorMsg"
-                />
-                <div className="entry">
-                  <label htmlFor="username">Nom d'utilisateur: </label>
-                  <Field type="text" id="username" name="username" />
-                </div>
-                <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="errorMsg"
-                />
-                <div className="entry">
-                  <label htmlFor="firstname">Prénom: </label>
-                  <Field type="text" id="firstname" name="firstname" />
-                </div>
-                <ErrorMessage
-                  name="firstname"
-                  component="div"
-                  className="errorMsg"
-                />
-                <div className="entry">
-                  <label htmlFor="lastname">Nom de famille: </label>
-                  <Field type="text" id="lastname" name="lastname" />
-                </div>
-                <ErrorMessage
-                  name="lastname"
-                  component="div"
-                  className="errorMsg"
-                />
-                <div className="entry">
-                  <label htmlFor="password">Mot de passe: </label>
-                  <Field type="password" id="password" name="password" />
-                </div>
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="errorMsg"
-                />
-                <div className="button-container">
-                  <div className="padding">
-                    <button
-                      className="button-64"
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
-                      <span className="text">Créer son compte</span>
-                    </button>
-                  </div>
-                  <div className="padding">
-                    <button className="button-64" onClick={() => navigate("/")}>
-                      <span className="text">Home</span>
-                    </button>
-                  </div>{" "}
-                </div>
-                <div className="form__group field">
-                  <label
-                    form="password2"
-                    className="form__label"
-                    htmlFor="password2"
-                  >
-                    Mot de passe:
-                  </label>
-                  <Field
-                    className="form__field"
-                    type="password2"
-                    id="password2"
-                    name="password2"
-                  />
-                </div>
-                <ErrorMessage
-                  name="password2"
-                  component="div"
-                  className="errorMsg"
-                />
-              </Form>
-            )}
-          </Formik>
-        </div>
+        <form onSubmit={formik.handleSubmit}>
+          <div className="form__group field">
+            <input
+              className="form__field"
+              type="text"
+              placeholder="Username"
+              name="username"
+              id="username"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              required
+            />
+            <label htmlFor="username" className="form__label">
+              Username
+            </label>
+            {formik.touched.username && formik.errors.username ? (
+              <div className="errorMsg">{formik.errors.username}</div>
+            ) : null}
+          </div>
+          <div className="form__group field">
+            <input
+              className="form__field"
+              type="text"
+              placeholder="First Name"
+              name="firstname"
+              id="firstname"
+              value={formik.values.firstname}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              required
+            />
+            <label htmlFor="firstname" className="form__label">
+              First Name
+            </label>
+          </div>
+          <div className="form__group field">
+            <input
+              className="form__field"
+              type="text"
+              placeholder="Last Name"
+              name="lastname"
+              id="lastname"
+              value={formik.values.lastname}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              required
+            />
+            <label htmlFor="lastname" className="form__label">
+              Last Name
+            </label>
+          </div>
+          <div className="form__group field">
+            <input
+              className="form__field"
+              type="password"
+              placeholder="Password"
+              name="password"
+              id="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              required
+            />
+            <label htmlFor="password" className="form__label">
+              Password
+            </label>
+          </div>
+          <div className="button-container">
+            <div className="padding">
+              <button type="submit" className="button-64">
+                <span className="text">Create Account</span>
+              </button>
+            </div>
+            <div className="padding">
+              <button className="button-64" onClick={() => navigate("/")}>
+                <span className="text">Home</span>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </>
   );
-}
+};
 
-export default Login;
+export default Register;
