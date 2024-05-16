@@ -1,0 +1,32 @@
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border: thick double var(--text);
+    padding: 10px;
+    margin: 0;
+    border-radius: 10px;
+    background-color: var(--overlay0);
+    backdrop-filter: blur(200px);
+    opacity: 0.8;
+    display: flex; /* Utilisation de flexbox */
+    //centrage horizontal
+    justify-content: center;
+  }
+  
+  .topbar h1,
+  .topbar h2 {
+    text-align: center;
+    color: var(--text);
+  }
+  
+  .topbar label {
+    color: var(--text);
+  }
+  
+  /* Style spécifique pour la div placée tout à droite */
+.topbar .dashboard {
+    margin-left: auto; /* La div se place tout à droite */
+    margin-right: 10px; /* Espace à droite */
+  }

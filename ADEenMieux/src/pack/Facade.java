@@ -41,7 +41,6 @@ public class Facade {
 	public void addUser(User user) {
 		em.persist(user);
 	}
-	
 
 	public static class LoginInfo {
 		private String username;
@@ -64,14 +63,13 @@ public class Facade {
 		public void setUsername(String username) {
 			this.username = username;
 		}
-		
+
 		public static String hashPassword(String Password) {
 			MessageDigest digest;
 			try {
 				digest = MessageDigest.getInstance("SHA-256");
 				byte[] encodedhash = digest.digest(Password.getBytes(StandardCharsets.UTF_8));
-				
-				
+
 				return encodedhash.toString();
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
@@ -79,7 +77,7 @@ public class Facade {
 			}
 			return "";
 		}
-		
+
 		public String getHashedPassword() {
 			return hashedPassword;
 		}
@@ -171,190 +169,243 @@ public class Facade {
 		return Response.status(Response.Status.UNAUTHORIZED).build();
 	}
 
+	public static class GroupName {
+		private String groupName;
+
+		// Constructor
+		public GroupName() {
+		}
+
+		public GroupName(String groupName) {
+			this.groupName = groupName;
+		}
+
+		public String getGroupName() {
+			return groupName;
+		}
+
+		public void setGroupName(String groupName) {
+			this.groupName = groupName;
+		}
+	}
+
 	/**
-	 * Add a task to the DB
+	 * create an empty group
 	 * 
-	 * @param name
-	 * @param deadline
+	 * @param groupName
 	 */
-	
 	@POST
-	@Path("/addtask")
+	@Path("/creategroup")
 	@Consumes({ "application/json" })
-	public void addTask(Task task) { 
-		em.persist(task); 
-	}
-  
-	  
-	 /**
-		 * Add a time slot to the DB
-		 * 
-		 * @param capacity
-		 * @param startDate
-		 * @param endDate
-		 * @param location
-		 */
-	@POST
-	@Path("/addslot")
-	@Consumes({ "application/json" })
-	public void addSlot(Slot slot) {
-	  
-	  em.persist(slot); 
-	}
-	  
-	  
-	 /**
-		 * Add a location to the DB
-		 * 
-		 * @param name
-		 * @param capacity
-		 */
-	@POST
-	@Path("/addslot")
-	@Consumes({ "application/json" })
-	public void addLocation(Place location) {
-		em.persist(location); 
-	}
-	  
-	  
-	 /**
-		 * Add a group to the DB
-		 * 
-		 * @param name
-		 * @param users
-		 */
-	
-	@POST
-	@Path("/addgroup")
-	@Consumes({ "application/json" })
-	public void addGroup(GroupClass group) { 
+	public void createGroup(GroupName groupName) {
+		GroupClass group = new GroupClass();
+		group.setName(groupName.getGroupName());
 		em.persist(group);
 	}
-	  
-	  
-	 /**
-		 * Add an agenda to the DB
-		 * 
-		 * @param name
-		 * @param tasks
-		 * @param slots
-		 */
+
+	/**
+	 * List all the groups
+	 * 
+	 * @param Cookie
+	 */
 	@POST
-	@Path("/addagenda")
+	@Path("/listgroups")
 	@Consumes({ "application/json" })
-	public void addAgenda(Agenda agenda) {  
-		em.persist(agenda);
+	@Produces({ "application/json" })
+	public Response listGroups(Cookie cookie) {
+		TypedQuery<GroupClass> req = em.createQuery("select g from GroupClass g", GroupClass.class);
+		Collection<GroupClass> groups = req.getResultList();
+		// return the list of groups as a json object that we build as a string
+		// beforehand, and then put it in the groups header
+		return Response.ok().header("groups", groups).build();
 	}
-	
-	 /**
-		 * Add an event to the DB
-		 * 
-		 * @param name
-		 * @param guests
-		 * @param organisers
-		 */
-	@POST
-	@Path("/addevent")
-	@Consumes({ "application/json" })
-	public void addEvent(Event event) {
-		em.persist(event); 
-	}
-	  
-	  
-	
-	  
-	 /**
-		 * Add a guest to an event
-		 * 
-		 * @param guestId
-		 * @param eventId
-		 */
-	@POST
-	@Path("/addguestevent")
-	@Consumes({ "application/json" })
-	public void addGuestInEvent(Association guesteventID) { 
-		User guest = em.find(User.class, guesteventID.getFirstId()); 
-		Event event = em.find(Event.class, guesteventID.getSecondId());
-		event.addGuest(guest); 
-	}
-	  
-	  
-	 /**
-		 * Add an organiser to an event
-		 * 
-		 * @param orgaId
-		 * @param eventId
-		 */
-	@POST
-	@Path("/addorgaevent")
-	@Consumes({ "application/json" })
-	public void addOrganiserInEvent(Association orgaeventID) { 
-		User organiser = em.find(User.class, orgaeventID.getFirstId()); 
-	    Event event = em.find(Event.class, orgaeventID.getSecondId());
-	    event.addOrganiser(organiser); 
-	}
-	  
-	  
-	 /**
-		 * Get all the existing location
-		 * 
-		 * @return Collection<Location>
-		 */
-	
-	public Collection<Location> getLocations() { 
-		TypedQuery<Location> req =
-	  em.createQuery("select l from Location l", Location.class); return
-	  req.getResultList(); 
-	}
-	  
-	  
-	 /**
-		 * Add a participant to a slot
-		 * 
-		 * @param slotId
-		 * @param userId
-		 */
-	@POST
-	@Path("/adduserslot")
-	@Consumes({ "application/json" })
-	public void addParticipantToSlot(Association userslotID) { 
-		User participant = em.find(User.class, userslotID.getFirstId());
-		Slot slot = em.find(Slot.class, userslotID.getSecondId());
-		slot.addParticipant(participant);
-	}
-	  
-	  
-	 /**
-		 * Add an user to the group
-		 * 
-		 * @param groupId
-		 * @param userId
-		 */
-	@POST
-	@Path("/addusergroup")
-	@Consumes({ "application/json" })
-	public void addUserToGroup(Association usergroupID) { 
-		User user = em.find(User.class, usergroupID.getFirstId());
-		GroupClass group = em.find(GroupClass.class, usergroupID.getSecondId());
-		group.addUser(user);
-	}
-	  
-	  
-	 /**
-		 * Remove an user of the group
-		 * 
-		 * @param groupId
-		 * @param userId
-		 */
-	@POST
-	@Path("/rmusergroup")
-	@Consumes({ "application/json" })
-	public void removeUserToGroup(Association usergroupID) { 
-		User user = em.find(User.class, usergroupID.getFirstId()); 
-		GroupClass group = em.find(GroupClass.class, usergroupID.getSecondId());
-		group.removeUser(user);
-	}
-			 
+
+	//
+	//
+	// /**
+	// * Add a task to the DB
+	// *
+	// * @param name
+	// * @param deadline
+	// */
+	//
+	// @POST
+	// @Path("/addtask")
+	// @Consumes({ "application/json" })
+	// public void addTask(Task task) {
+	// em.persist(task);
+	// }
+	//
+	//
+	// /**
+	// * Add a time slot to the DB
+	// *
+	// * @param capacity
+	// * @param startDate
+	// * @param endDate
+	// * @param location
+	// */
+	// @POST
+	// @Path("/addslot")
+	// @Consumes({ "application/json" })
+	// public void addSlot(Slot slot) {
+	//
+	// em.persist(slot);
+	// }
+	//
+	//
+	// /**
+	// * Add a location to the DB
+	// *
+	// * @param name
+	// * @param capacity
+	// */
+	// @POST
+	// @Path("/addslot")
+	// @Consumes({ "application/json" })
+	// public void addLocation(Place location) {
+	// em.persist(location);
+	// }
+	//
+	//
+	// /**
+	// * Add a group to the DB
+	// *
+	// * @param name
+	// * @param users
+	// */
+	//
+	// @POST
+	// @Path("/addgroup")
+	// @Consumes({ "application/json" })
+	// public void addGroup(GroupClass group) {
+	// em.persist(group);
+	// }
+	//
+	//
+	// /**
+	// * Add an agenda to the DB
+	// *
+	// * @param name
+	// * @param tasks
+	// * @param slots
+	// */
+	// @POST
+	// @Path("/addagenda")
+	// @Consumes({ "application/json" })
+	// public void addAgenda(Agenda agenda) {
+	// em.persist(agenda);
+	// }
+	//
+	// /**
+	// * Add an event to the DB
+	// *
+	// * @param name
+	// * @param guests
+	// * @param organisers
+	// */
+	// @POST
+	// @Path("/addevent")
+	// @Consumes({ "application/json" })
+	// public void addEvent(Event event) {
+	// em.persist(event);
+	// }
+	//
+	//
+	//
+	//
+	// /**
+	// * Add a guest to an event
+	// *
+	// * @param guestId
+	// * @param eventId
+	// */
+	// @POST
+	// @Path("/addguestevent")
+	// @Consumes({ "application/json" })
+	// public void addGuestInEvent(Association guesteventID) {
+	// User guest = em.find(User.class, guesteventID.getFirstId());
+	// Event event = em.find(Event.class, guesteventID.getSecondId());
+	// event.addGuest(guest);
+	// }
+	//
+	//
+	// /**
+	// * Add an organiser to an event
+	// *
+	// * @param orgaId
+	// * @param eventId
+	// */
+	// @POST
+	// @Path("/addorgaevent")
+	// @Consumes({ "application/json" })
+	// public void addOrganiserInEvent(Association orgaeventID) {
+	// User organiser = em.find(User.class, orgaeventID.getFirstId());
+	// Event event = em.find(Event.class, orgaeventID.getSecondId());
+	// event.addOrganiser(organiser);
+	// }
+	//
+	//
+	// /**
+	// * Get all the existing location
+	// *
+	// * @return Collection<Location>
+	// */
+	//
+	// public Collection<Location> getLocations() {
+	// TypedQuery<Location> req =
+	// em.createQuery("select l from Location l", Location.class); return
+	// req.getResultList();
+	// }
+	//
+	//
+	// /**
+	// * Add a participant to a slot
+	// *
+	// * @param slotId
+	// * @param userId
+	// */
+	// @POST
+	// @Path("/adduserslot")
+	// @Consumes({ "application/json" })
+	// public void addParticipantToSlot(Association userslotID) {
+	// User participant = em.find(User.class, userslotID.getFirstId());
+	// Slot slot = em.find(Slot.class, userslotID.getSecondId());
+	// slot.addParticipant(participant);
+	// }
+	//
+	//
+	// /**
+	// * Add an user to the group
+	// *
+	// * @param groupId
+	// * @param userId
+	// */
+	// @POST
+	// @Path("/addusergroup")
+	// @Consumes({ "application/json" })
+	// public void addUserToGroup(Association usergroupID) {
+	// User user = em.find(User.class, usergroupID.getFirstId());
+	// GroupClass group = em.find(GroupClass.class, usergroupID.getSecondId());
+	// group.addUser(user);
+	// }
+	//
+	//
+	// /**
+	// * Remove an user of the group
+	// *
+	// * @param groupId
+	// * @param userId
+	// */
+	// @POST
+	// @Path("/rmusergroup")
+	// @Consumes({ "application/json" })
+	// public void removeUserToGroup(Association usergroupID) {
+	// User user = em.find(User.class, usergroupID.getFirstId());
+	// GroupClass group = em.find(GroupClass.class, usergroupID.getSecondId());
+	// group.removeUser(user);
+	// }
+	//
 
 	/*******************************************************
 	 * 

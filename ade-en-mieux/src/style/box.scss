@@ -1,0 +1,29 @@
+.box {
+    display: flex; /* Utilisation de flexbox */
+    align-items: center; /* Alignement vertical */
+    justify-content: center; /* Alignement horizontal */
+    gap: 5rem;
+  }
+  
+  .box .container {
+    width: 45%; /* Réduit la largeur pour que deux containers puissent s'aligner côte à côte */
+    height: 70vh; /* 70% de la hauteur de la fenêtre */
+    margin: 5rem auto 0; /* Espace sur les côtés et en haut */
+    border: thick double var(--text);
+    padding: 20px;
+    border-radius: 15px;
+    background-color: var(--overlay0);
+    backdrop-filter: blur(200px);
+    opacity: 0.8;
+  }
+  
+  .box .container h1,
+  .box .container h2 {
+    text-align: center;
+    color: var(--text);
+  }
+  
+  .box .container label {
+    color: var(--text);
+  }
+  

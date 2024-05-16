@@ -1,6 +1,15 @@
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./participant.scss";
+
+const HeroPattern = ({
+  pttrn,
+  children,
+}: {
+  pttrn: string;
+  children: React.ReactNode;
+}) => <div className={pttrn}>{children}</div>;
 
 function Participant() {
   const navigate = useNavigate();
@@ -13,9 +22,24 @@ function Participant() {
   }, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
 
   return (
-    <div>
-      <h1>Participant</h1>
-    </div>
+    <>
+      <HeroPattern pttrn={"topography-pattern"}>
+        <div></div>
+      </HeroPattern>
+      <div className="topbar">
+        <h1>Participant</h1>
+        <div className="dashboard">
+          <div className="padding">
+            <button
+              className="button-64"
+              onClick={() => navigate("/dashboard")}
+            >
+              <span className="text">Dashboard</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
