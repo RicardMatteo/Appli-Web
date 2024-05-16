@@ -15,12 +15,8 @@ export default function Root() {
         </div>
         <div className="button-container">
           <button onClick={() => navigate("/tp3")}>TP3</button>
-          <button onClick={() => navigate("/login")}>
-            Login toi mon reuf !
-          </button>
-          <button onClick={() => navigate("/register")}>
-            Inscris-toi mon reuf !
-          </button>
+          <button onClick={() => navigate("/login")}>Login</button>
+          <button onClick={() => navigate("/register")}>Register</button>
           <button onClick={() => Cookies.remove("authToken")}>Logout</button>
         </div>
       </div>
