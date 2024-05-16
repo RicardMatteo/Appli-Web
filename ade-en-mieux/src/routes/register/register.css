@@ -12,12 +12,25 @@ body, html {
 }
 
 .container {
-    border: thick double #32a1ce;
+    border: thick double var(--text);
     padding: 20px;
     margin: 2px;
     border-radius: 15px;
     width: auto;
-}
+    background-color: var(--overlay0);
+    backdrop-filter: blur(200px);
+    opacity: 0.8;
+  }
+  
+  .container h1 {
+    text-align: center;
+    color: var(--text);
+  }
+  
+  .container h2 {
+    text-align: center;
+    color: var(--subtext1);
+  }
 
 .entry {
     padding-top: 1%;
