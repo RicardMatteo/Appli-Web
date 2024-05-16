@@ -11,6 +11,7 @@ import Tp3 from "./routes/tp3/tp3";
 import Login from "./routes/login/login";
 import Test from "./routes/login/test/test";
 import Register from "./routes/register/register";
+import Dashboard from "./routes/dashboard/dashboard";
 
 // Create Router and render App
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/login/test",
     element: <Test />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 

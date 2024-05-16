@@ -98,7 +98,11 @@ function Login() {
               className="errorMsg"
             />
             <div className="button-container">
-              <button type="submit" disabled={isSubmitting}>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                onClick={() => navigate("/dashboard")}
+              >
                 Se connecter
               </button>
               <button onClick={() => navigate("/")}>Home</button>
