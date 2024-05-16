@@ -4,6 +4,14 @@ import CryptoJS from "crypto-js";
 import { invokePost } from "../../include/requests";
 import "./register.css";
 
+const HeroPattern = ({
+  pttrn,
+  children,
+}: {
+  pttrn: string;
+  children: React.ReactNode;
+}) => <div className={pttrn}>{children}</div>;
+
 function hashPassword(password: string) {
   return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
 }
@@ -106,63 +114,78 @@ function Login() {
   };
 
   return (
-    <div className="container">
-      <div>
-        <h1>Créez votre compte !</h1>
-        <Formik
-          initialValues={initial_values}
-          validate={validate}
-          onSubmit={handleSubmit}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              <div className="entry">
-                <label htmlFor="username">Nom d'utilisateur: </label>
-                <Field type="text" id="username" name="username" />
-              </div>
-              <ErrorMessage
-                name="username"
-                component="div"
-                className="errorMsg"
-              />
-              <div className="entry">
-                <label htmlFor="firstname">Prénom: </label>
-                <Field type="text" id="firstname" name="firstname" />
-              </div>
-              <ErrorMessage
-                name="firstname"
-                component="div"
-                className="errorMsg"
-              />
-              <div className="entry">
-                <label htmlFor="lastname">Nom de famille: </label>
-                <Field type="text" id="lastname" name="lastname" />
-              </div>
-              <ErrorMessage
-                name="lastname"
-                component="div"
-                className="errorMsg"
-              />
-              <div className="entry">
-                <label htmlFor="password">Mot de passe: </label>
-                <Field type="password" id="password" name="password" />
-              </div>
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="errorMsg"
-              />
-              <div className="button-container">
-                <button type="submit" disabled={isSubmitting}>
-                  Créer son compte
-                </button>
-                <button onClick={() => navigate("/")}>Retour</button>
-              </div>
-            </Form>
-          )}
-        </Formik>
+    <>
+      <HeroPattern pttrn={"topography-pattern"}>
+        <div></div>
+      </HeroPattern>
+      <div className="container">
+        <div>
+          <h1>Créez votre compte !</h1>
+          <Formik
+            initialValues={initial_values}
+            validate={validate}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <div className="entry">
+                  <label htmlFor="username">Nom d'utilisateur: </label>
+                  <Field type="text" id="username" name="username" />
+                </div>
+                <ErrorMessage
+                  name="username"
+                  component="div"
+                  className="errorMsg"
+                />
+                <div className="entry">
+                  <label htmlFor="firstname">Prénom: </label>
+                  <Field type="text" id="firstname" name="firstname" />
+                </div>
+                <ErrorMessage
+                  name="firstname"
+                  component="div"
+                  className="errorMsg"
+                />
+                <div className="entry">
+                  <label htmlFor="lastname">Nom de famille: </label>
+                  <Field type="text" id="lastname" name="lastname" />
+                </div>
+                <ErrorMessage
+                  name="lastname"
+                  component="div"
+                  className="errorMsg"
+                />
+                <div className="entry">
+                  <label htmlFor="password">Mot de passe: </label>
+                  <Field type="password" id="password" name="password" />
+                </div>
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="errorMsg"
+                />
+                <div className="button-container">
+                  <div className="padding">
+                    <button
+                      className="button-64"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      <span className="text">Créer son compte</span>
+                    </button>
+                  </div>
+                  <div className="padding">
+                    <button className="button-64" onClick={() => navigate("/")}>
+                      <span className="text">Home</span>
+                    </button>
+                  </div>{" "}
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -1,8 +1,14 @@
+@import url("/src/style/catppuccin.css");
+@import url("/src/style/background.css");
+@import url("/src/style/button.css");
+@import url("/src/style/container.css");
+
 .errorMsg {
     color: red;
     font-size: small;
     padding-bottom: 0.5%;
 }
+
 body, html {
     height: 100%;
     margin: 0;
@@ -10,27 +16,6 @@ body, html {
     justify-content: center;
     align-items: center;
 }
-
-.container {
-    border: thick double var(--text);
-    padding: 20px;
-    margin: 2px;
-    border-radius: 15px;
-    width: auto;
-    background-color: var(--overlay0);
-    backdrop-filter: blur(200px);
-    opacity: 0.8;
-  }
-  
-  .container h1 {
-    text-align: center;
-    color: var(--text);
-  }
-  
-  .container h2 {
-    text-align: center;
-    color: var(--subtext1);
-  }
 
 .entry {
     padding-top: 1%;

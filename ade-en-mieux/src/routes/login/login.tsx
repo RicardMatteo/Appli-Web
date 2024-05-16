@@ -5,6 +5,14 @@ import { invokePost } from "../../include/requests";
 import "./login.css";
 import Cookies from "js-cookie";
 
+const HeroPattern = ({
+  pttrn,
+  children,
+}: {
+  pttrn: string;
+  children: React.ReactNode;
+}) => <div className={pttrn}>{children}</div>;
+
 function hashPassword(password: string) {
   return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
 }
@@ -70,48 +78,66 @@ function Login() {
   };
 
   return (
-    <div className="container">
-      <h1>Page de connexion</h1>
-      <Formik
-        initialValues={initial_values}
-        validate={validate}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div className="entry">
-              <label htmlFor="username">Nom d'utilisateur:</label>
-              <Field type="text" id="username" name="username" />
-            </div>
-            <ErrorMessage
-              name="username"
-              component="div"
-              className="errorMsg"
-            />
-            <div className="entry">
-              <label htmlFor="password">Mot de passe:</label>
-              <Field type="password" id="password" name="password" />
-            </div>
-            <ErrorMessage
-              name="password"
-              component="div"
-              className="errorMsg"
-            />
-            <div className="button-container">
-              <button type="submit" disabled={isSubmitting}>
-                Se connecter
-              </button>
-              <button onClick={() => navigate("/")}>Home</button>
-            </div>
-            <div className="button-container">
-              <button onClick={() => navigate("/login/test")}>
-                tester l'inscription
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+    <>
+      <HeroPattern pttrn={"topography-pattern"}>
+        <div></div>
+      </HeroPattern>
+      <div className="container">
+        <h1>Page de connexion</h1>
+        <Formik
+          initialValues={initial_values}
+          validate={validate}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <div className="entry">
+                <label htmlFor="username">Nom d'utilisateur:</label>
+                <Field type="text" id="username" name="username" />
+              </div>
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="errorMsg"
+              />
+              <div className="entry">
+                <label htmlFor="password">Mot de passe:</label>
+                <Field type="password" id="password" name="password" />
+              </div>
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="errorMsg"
+              />
+              <div className="button-container">
+                <div className="padding">
+                  <button
+                    className="button-64"
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    <span className="text">Se connecter</span>
+                  </button>
+                </div>
+                <div className="padding">
+                  <button
+                    className="button-64"
+                    onClick={() => navigate("/login/test")}
+                  >
+                    <span className="text">Tester l'inscription</span>
+                  </button>
+                </div>
+                <div className="padding">
+                  <button className="button-64" onClick={() => navigate("/")}>
+                    <span className="text">Home</span>
+                  </button>
+                </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </>
   );
 }
 

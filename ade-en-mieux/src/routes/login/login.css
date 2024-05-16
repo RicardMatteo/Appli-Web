@@ -1,5 +1,10 @@
+@import url("/src/style/catppuccin.css");
+@import url("/src/style/background.css");
+@import url("/src/style/button.css");
+@import url("/src/style/container.css");
+
 .errorMsg {
-    color: red;
+    color: var(--red);
     font-size: small;
     padding-bottom: 0.5%;
 }
@@ -9,14 +14,6 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.container {
-    border: thick double #32a1ce;
-    padding: 20px;
-    margin: 2px;
-    border-radius: 15px;
-    width: auto;
 }
 
 .entry {
@@ -30,12 +27,5 @@ body, html {
 
 .entry input {
     margin-left: 1rem;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    padding-top: 1rem;
-    justify-content: space-between;
 }
 

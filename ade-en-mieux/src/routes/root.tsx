@@ -24,13 +24,30 @@ export default function Root() {
         <div>
           <h2>Ceci sera la future homepage du site !</h2>
         </div>
-        <div>
-          <button className="button-64" onClick={() => navigate("/tp3")}>
-            <span className="text">TP3</span>
-          </button>
-          <button onClick={() => navigate("/login")}>Login</button>
-          <button onClick={() => navigate("/register")}>Register</button>
-          <button onClick={() => Cookies.remove("authToken")}>Logout</button>
+        <div className="button-container">
+          <div className="padding">
+            <button className="button-64" onClick={() => navigate("/tp3")}>
+              <span className="text">TP3</span>
+            </button>
+          </div>
+          <div className="padding">
+            <button className="button-64" onClick={() => navigate("/login")}>
+              <span className="text">Login</span>
+            </button>
+          </div>
+          <div className="padding">
+            <button className="button-64" onClick={() => navigate("/register")}>
+              <span className="text">Register</span>
+            </button>
+          </div>
+          <div className="padding">
+            <button
+              className="button-64"
+              onClick={() => Cookies.remove("authToken")}
+            >
+              <span className="text">Logout</span>
+            </button>
+          </div>
         </div>
       </div>
     </>
