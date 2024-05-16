@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import CryptoJS from "crypto-js";
+import { useFormik } from "formik";
 import { invokePost } from "../../include/requests";
+import * as yup from "yup";
+import CryptoJS from "crypto-js";
 import "./login.scss";
 import Cookies from "js-cookie";
 
@@ -22,6 +23,133 @@ const sanitize_username_input = (value: string) => {
   return sanitizedValue;
 };
 
+const validationSchema = yup.object({
+  username: yup
+    .string()
+    .required("Username is required")
+    .matches(
+      /^[a-z0-9]+$/,
+      "Username should contain only lowercase letters and numbers"
+    ),
+  password: yup
+    .string()
+    .min(1, "Password should be of minimum 1 characters length")
+    .required("Password is required"),
+});
+
+const Login = () => {
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      const username = sanitize_username_input(values.username);
+      const password = hashPassword(values.password);
+      console.log(
+        "Submitted values - username : ",
+        username,
+        " - password : ",
+        password
+      );
+
+      invokePost(
+        "login",
+        {
+          username: username,
+          hashedPassword: password,
+        },
+        "User logged in",
+        "pb with login"
+      )
+        .then((response: Response) => {
+          const authToken = response.headers.get("authtoken");
+          if (authToken === null) {
+            console.error("AuthToken is null");
+            return;
+          }
+          console.log("AuthToken : ", authToken);
+          Cookies.set("authToken", authToken, { expires: 365 });
+        })
+        .catch((error: Error) => {
+          // Handle the error here (ALED)
+        });
+    },
+  });
+  return (
+    <>
+      <HeroPattern pttrn={"topography-pattern"}>
+        <div></div>
+      </HeroPattern>
+      <div className="container">
+        <form onSubmit={formik.handleSubmit}>
+          <div className="form__group field">
+            <input
+              className="form__field"
+              type="text"
+              placeholder="Username"
+              name="username"
+              id="username"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              required
+            />
+            <label htmlFor="username" className="form__label">
+              Username
+            </label>
+            {formik.touched.username && formik.errors.username ? (
+              <div className="errorMsg">{formik.errors.username}</div>
+            ) : null}
+          </div>
+          <div className="form__group field">
+            <input
+              className="form__field"
+              type="password"
+              placeholder="Password"
+              name="password"
+              id="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              required
+            />
+            <label htmlFor="password" className="form__label">
+              Password
+            </label>
+          </div>
+          <div className="button-container">
+            <div className="padding">
+              <button type="submit" className="button-64">
+                <span className="text">Login</span>
+              </button>
+            </div>
+            <div className="padding">
+              <button className="button-64" onClick={() => navigate("/")}>
+                <span className="text">Home</span>
+              </button>
+            </div>
+            <div className="padding">
+              <button
+                className="button-64"
+                onClick={() => navigate("/login/test")}
+              >
+                <span className="text">Test login</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+};
+
+export default Login;
+
+/*
 function Login() {
   const navigate = useNavigate();
 
@@ -142,3 +270,4 @@ function Login() {
 }
 
 export default Login;
+*/
