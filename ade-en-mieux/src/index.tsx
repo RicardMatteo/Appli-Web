@@ -12,6 +12,9 @@ import Login from "./routes/login/login";
 import Test from "./routes/login/test/test";
 import Register from "./routes/register/register";
 import Dashboard from "./routes/dashboard/dashboard";
+import Agenda from "./routes/agenda/agenda";
+import Organiser from "./routes/organiser/orginiser";
+import Participate from "./routes/participate/participate";
 
 // Create Router and render App
 
@@ -42,6 +45,18 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/agenda",
+    element: <Agenda />,
+  },
+  {
+    path: "/organiser",
+    element: <Organiser />,
+  },
+  {
+    path: "/participate",
+    element: <Participate />,
   },
 ]);
 
