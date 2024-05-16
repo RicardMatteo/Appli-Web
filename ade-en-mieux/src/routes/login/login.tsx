@@ -72,7 +72,10 @@ const Login = () => {
             return;
           }
           console.log("AuthToken : ", authToken);
-          Cookies.set("authToken", authToken, { expires: 365 });
+          Cookies.set("authToken", authToken, {
+            expires: 365,
+            sameSite: "Strict",
+          });
         })
         .catch((error: Error) => {
           // Handle the error here (ALED)
