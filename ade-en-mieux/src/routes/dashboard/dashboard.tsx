@@ -12,8 +12,8 @@ function Dashboard() {
 
       <div className="button-container">
         <button onClick={() => navigate("/agenda")}>Agenda</button>
-        <button onClick={() => navigate("/organise")}>Orginise</button>
-        <button onClick={() => navigate("/participate")}>Participate</button>
+        <button onClick={() => navigate("/organiser")}>Orginise</button>
+        <button onClick={() => navigate("/participant")}>Participate</button>
       </div>
     </>
   );
