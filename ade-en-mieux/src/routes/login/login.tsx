@@ -5,7 +5,6 @@ import * as yup from "yup";
 import CryptoJS from "crypto-js";
 import "./login.scss";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
 
 const HeroPattern = ({
   pttrn,
