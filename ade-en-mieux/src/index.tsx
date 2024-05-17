@@ -13,7 +13,7 @@ import Test from "./routes/login/test/test";
 import Register from "./routes/register/register";
 import Dashboard from "./routes/dashboard/dashboard";
 import Agenda from "./routes/agenda/agenda";
-import Organiser from "./routes/organiser/orginiser";
+import Organiser from "./routes/organiser/organiser";
 import Participant from "./routes/participant/participant";
 
 // Create Router and render App
