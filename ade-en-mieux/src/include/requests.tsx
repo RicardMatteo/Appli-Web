@@ -37,11 +37,13 @@ async function invokePost(
 
 async function invokeGet(
   method: string,
+  successMsg: string,
   failureMsg: string
 ): Promise<any | null> {
   try {
     const res = await fetch("/ADEenMieux/rest/" + method);
     if (res.ok) {
+      ShowMessage(successMsg);
       return await res.json();
     } else {
       ShowMessage(failureMsg);
@@ -49,8 +51,8 @@ async function invokeGet(
     }
   } catch (error) {
     console.error("Error in invokeGet :", error);
-    return null;
   }
+  throw new Error("Error in invokeGet");
 }
 
 export { invokePost, invokeGet, ShowMessage };

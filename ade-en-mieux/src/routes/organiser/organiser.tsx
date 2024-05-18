@@ -1,10 +1,12 @@
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import "./organiser.scss";
 import { invokePost } from "../../include/requests";
+
+type Group = { id: number; name: string };
 
 const HeroPattern = ({
   pttrn,
@@ -28,15 +30,42 @@ function createGroup(groupName: string) {
   );
 }
 
-function listGroups() {
-  invokePost(
-    "listgroups",
-    { cookie: Cookies.get("authToken") },
-    "Group listé",
-    "Erreur lors de la récupération de la liste des groupes"
-  ).then((res) => {
-    console.log(res.headers.get("groups"));
-  });
+function ListGroups() {
+  const [listGroup, setListGroup] = useState<Group[]>([]);
+
+  useEffect(() => {
+    invokePost(
+      "listgroups",
+      { cookie: Cookies.get("authToken") },
+      "Group listé",
+      "Erreur lors de la récupération de la liste des groupes"
+    ).then((res) => {
+      console.log(res);
+      res.json().then((data) => {
+        setListGroup(data);
+      });
+    });
+  }, []);
+
+  if (listGroup === null) {
+    return (
+      <>
+        <p>Pas de groupes</p>
+        <br />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <ul>
+        {listGroup.map((g: Group) => (
+          <li key={g.id}>{g.name}</li>
+        ))}
+      </ul>
+      <br />
+    </>
+  );
 }
 
 function Organiser() {
@@ -65,7 +94,7 @@ function Organiser() {
         <div></div>
       </HeroPattern>
       <div className="topbar">
-        <h1>Organise</h1>
+        <h1>Organiser les groupes et les évènements</h1>
         <div className="dashboard">
           <div className="padding">
             <button
@@ -109,11 +138,7 @@ function Organiser() {
           <div>
             <h1>Ajouter des utilisateurs à un groupe</h1>
           </div>
-          <div className="padding">
-            <button className="button-64" onClick={() => listGroups()}>
-              <span className="text">listGroups</span>
-            </button>
-          </div>
+          <ListGroups />
         </div>
       </div>
     </>
