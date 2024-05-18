@@ -212,12 +212,11 @@ public class Facade {
 	@Path("/listgroups")
 	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Response listGroups(Cookie cookie) {
+	public Collection<GroupClass> listGroups(Cookie cookie) {
 		TypedQuery<GroupClass> req = em.createQuery("select g from GroupClass g", GroupClass.class);
-		Collection<GroupClass> groups = req.getResultList();
 		// return the list of groups as a json object that we build as a string
 		// beforehand, and then put it in the groups header
-		return Response.ok().header("groups", groups).build();
+		return req.getResultList();
 	}
 
 	//
