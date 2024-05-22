@@ -19,7 +19,7 @@ async function invokeGetWithCookie(
     const res = await fetch("/ADEenMieux/rest/" + method, requestOptions);
     if (res.ok) {
       console.log(successMsg);
-      console.log(res);
+      console.log(res.body);
     } else {
       console.log(failureMsg);
     }
