@@ -273,6 +273,45 @@ public class Facade {
 		return Collections.emptyList();
 	}
 
+	public static class AssociationGUID {
+		private Integer groupId;
+		private Collection<Integer> userId;
+
+		// Constructor
+		public AssociationGUID() {
+		}
+
+		public AssociationGUID(Integer groupId, Collection<Integer> userId) {
+			this.groupId = groupId;
+			this.userId = userId;
+		}
+
+		public Integer getGroupId() {
+			return groupId;
+		}
+
+		public Collection<Integer> getUserId() {
+			return userId;
+		}
+	}
+
+	/**
+	 * Add an user to the group
+	 *
+	 * @param groupId
+	 * @param userId
+	 */
+	@POST
+	@Path("/addusergroup")
+	@Consumes({ "application/json" })
+	public void addUserToGroup(AssociationGUID usergroupID) {
+		GroupClass group = em.find(GroupClass.class, usergroupID.getGroupId());
+		for (Integer userId : usergroupID.getUserId()) {
+			User user = em.find(User.class, userId);
+			group.addUser(user);
+		}
+	}
+
 	//
 	//
 	// /**
@@ -409,22 +448,6 @@ public class Facade {
 	// User participant = em.find(User.class, userslotID.getFirstId());
 	// Slot slot = em.find(Slot.class, userslotID.getSecondId());
 	// slot.addParticipant(participant);
-	// }
-	//
-	//
-	// /**
-	// * Add an user to the group
-	// *
-	// * @param groupId
-	// * @param userId
-	// */
-	// @POST
-	// @Path("/addusergroup")
-	// @Consumes({ "application/json" })
-	// public void addUserToGroup(Association usergroupID) {
-	// User user = em.find(User.class, usergroupID.getFirstId());
-	// GroupClass group = em.find(GroupClass.class, usergroupID.getSecondId());
-	// group.addUser(user);
 	// }
 	//
 	//

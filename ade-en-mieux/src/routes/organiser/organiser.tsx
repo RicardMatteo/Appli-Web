@@ -84,11 +84,19 @@ function ListGroups() {
     <>
       <Formik
         initialValues={{
-          toggle: false,
-          checked: [],
           picked: "",
+          checked: [],
         }}
-        onSubmit={async (values) => {}}
+        onSubmit={async (values) => {
+          console.log(values);
+          ///////////////////////////////////////////
+          invokePost(
+            "addusergroup",
+            values,
+            "Utilisateur ajouté au groupe",
+            "Erreur lors de l'ajout de l'utilisateur au groupe"
+          );
+        }}
       >
         {({ values }) => (
           <Form>
@@ -116,7 +124,7 @@ function ListGroups() {
             <br />
             <div>Picked: {values.picked}</div>
             <div>Checked: {values.checked}</div>
-            <button type="submit">Submit</button>
+            <button type="submit">Associer</button>
           </Form>
         )}
       </Formik>
