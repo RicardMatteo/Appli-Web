@@ -214,10 +214,13 @@ public class Facade {
 	@Path("/listgroups")
 	@Produces({ "application/json" })
 	public Collection<GroupClass> listGroups(@HeaderParam("cookie") String cookie) {
+		System.out.println("Cookie : " + cookie);
+		String[] cookieParts = cookie.split("=", 2);
+		String cookieValue = cookieParts[1];
 		// check if the user is logged in
 		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
 				ConnexionToken.class);
-		req.setParameter("token", cookie);
+		req.setParameter("token", cookieValue);
 		try {
 			ConnexionToken token = req.getSingleResult();
 			if (token != null) {
@@ -230,11 +233,7 @@ public class Facade {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("User not found");
-			TypedQuery<GroupClass> reqGroups = em.createQuery("select g from GroupClass g", GroupClass.class);
-			// return the list of groups as a json object that we build as a string
-			// beforehand, and then put it in the groups header
-			return reqGroups.getResultList();
-			// return Collections.emptyList();
+			return Collections.emptyList();
 		}
 		System.out.println("Password incorrect");
 		return Collections.emptyList();
