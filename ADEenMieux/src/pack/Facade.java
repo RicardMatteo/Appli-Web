@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
@@ -11,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -208,15 +210,33 @@ public class Facade {
 	 * 
 	 * @param Cookie
 	 */
-	@POST
+	@GET
 	@Path("/listgroups")
-	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Collection<GroupClass> listGroups(Cookie cookie) {
-		TypedQuery<GroupClass> req = em.createQuery("select g from GroupClass g", GroupClass.class);
-		// return the list of groups as a json object that we build as a string
-		// beforehand, and then put it in the groups header
-		return req.getResultList();
+	public Collection<GroupClass> listGroups(@HeaderParam("cookie") String cookie) {
+		System.out.println("Cookie : " + cookie);
+		String[] cookieParts = cookie.split("=", 2);
+		String cookieValue = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookieValue);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				// get all the groups from the DB
+				TypedQuery<GroupClass> reqGroups = em.createQuery("select g from GroupClass g", GroupClass.class);
+				// return the list of groups as a json object that we build as a string
+				// beforehand, and then put it in the groups header
+				return reqGroups.getResultList();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("User not found");
+			return Collections.emptyList();
+		}
+		System.out.println("Password incorrect");
+		return Collections.emptyList();
 	}
 
 	//
@@ -427,6 +447,22 @@ public class Facade {
 	@Consumes({ "application/json" })
 	public void ajoutAdresse(Adresse adresse) {
 		em.persist(adresse);
+	}
+
+	/**
+	 * @param cookie
+	 * @return User
+	 */
+	@GET
+	@Path("/getwcookie")
+	@Produces({ "application/json" })
+	public User getUserWithCookie(@HeaderParam("cookie") String cookie) {
+		System.out.println("Cookie : " + cookie);
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie);
+		ConnexionToken token = req.getSingleResult();
+		return token.getUserToken();
 	}
 
 	/**
