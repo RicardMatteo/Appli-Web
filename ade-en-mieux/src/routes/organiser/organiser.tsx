@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
+import { Form, useNavigate } from "react-router-dom";
+import { Field, Formik, useFormik } from "formik";
 import * as yup from "yup";
 import "./organiser.scss";
 import { invokePost } from "../../include/requests";
@@ -33,6 +33,7 @@ function createGroup(groupName: string) {
 
 function ListGroups() {
   const [listGroup, setListGroup] = useState<Group[]>([]);
+  const [selectedG, setSelectedG] = useState<number>();
 
   useEffect(() => {
     invokeGetWithCookie(
@@ -60,12 +61,34 @@ function ListGroups() {
 
   return (
     <>
-      <ul>
-        {listGroup.map((g: Group) => (
-          <li key={g.id}>{g.name}</li>
-        ))}
-      </ul>
-      <br />
+      <Formik
+        initialValues={{
+          toggle: false,
+          checked: [],
+          picked: "",
+        }}
+        onSubmit={async (values) => {}}
+      >
+        {({ values }) => (
+          <Form>
+            {listGroup.map((g: Group) => (
+              <>
+                <div id="my-radio-group"></div>
+                <div role="group" aria-labelledby="my-radio-group">
+                  <label>
+                    <Field type="radio" name="picked" value={g.id} />
+                    {g.name}
+                  </label>
+                  <br />
+                </div>
+              </>
+            ))}
+
+            <div>Picked: {values.picked}</div>
+            <button type="submit">Submit</button>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 }
@@ -138,7 +161,7 @@ function Organiser() {
         </div>
         <div className="container">
           <div>
-            <h1>Ajouter des utilisateurs à un groupe</h1>
+            <h1>Associer des utilisateurs à un groupe</h1>
           </div>
           <ListGroups />
         </div>

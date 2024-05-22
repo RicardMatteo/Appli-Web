@@ -44,20 +44,6 @@ export default function Root() {
           <div className="padding">
             <button
               className="button-64"
-              onClick={() =>
-                invokeGetWithCookie(
-                  "getwcookie",
-                  "Get with cookie success",
-                  "Get with cookie failure"
-                )
-              }
-            >
-              <span className="text">test Get </span>
-            </button>
-          </div>
-          <div className="padding">
-            <button
-              className="button-64"
               onClick={() => Cookies.remove("authToken")}
             >
               <span className="text">Logout</span>
