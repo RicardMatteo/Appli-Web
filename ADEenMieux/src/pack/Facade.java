@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.Collections;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
@@ -209,15 +210,34 @@ public class Facade {
 	 * 
 	 * @param Cookie
 	 */
-	@POST
+	@GET
 	@Path("/listgroups")
-	@Consumes({ "application/json" })
 	@Produces({ "application/json" })
-	public Collection<GroupClass> listGroups(Cookie cookie) {
-		TypedQuery<GroupClass> req = em.createQuery("select g from GroupClass g", GroupClass.class);
-		// return the list of groups as a json object that we build as a string
-		// beforehand, and then put it in the groups header
-		return req.getResultList();
+	public Collection<GroupClass> listGroups(@HeaderParam("cookie") String cookie) {
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				// get all the groups from the DB
+				TypedQuery<GroupClass> reqGroups = em.createQuery("select g from GroupClass g", GroupClass.class);
+				// return the list of groups as a json object that we build as a string
+				// beforehand, and then put it in the groups header
+				return reqGroups.getResultList();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("User not found");
+			TypedQuery<GroupClass> reqGroups = em.createQuery("select g from GroupClass g", GroupClass.class);
+			// return the list of groups as a json object that we build as a string
+			// beforehand, and then put it in the groups header
+			return reqGroups.getResultList();
+			// return Collections.emptyList();
+		}
+		System.out.println("Password incorrect");
+		return Collections.emptyList();
 	}
 
 	//

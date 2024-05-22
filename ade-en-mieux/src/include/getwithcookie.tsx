@@ -4,7 +4,7 @@ async function invokeGetWithCookie(
   method: string,
   successMsg: string,
   failureMsg: string
-): Promise<Response> {
+): Promise<any | null> {
   const authToken = Cookies.get("authToken") || ""; // Check if authToken cookie exists, provide default value if it doesn't
   const requestOptions: RequestInit = {
     method: "GET",
@@ -19,11 +19,11 @@ async function invokeGetWithCookie(
     const res = await fetch("/ADEenMieux/rest/" + method, requestOptions);
     if (res.ok) {
       console.log(successMsg);
-      console.log(res.json());
+      console.log(res);
     } else {
       console.log(failureMsg);
     }
-    return res;
+    return await res.json();
   } catch (error) {
     console.error("Error in invokeGetWithCookie :", error);
   }

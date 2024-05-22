@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import "./organiser.scss";
 import { invokePost } from "../../include/requests";
+import { invokeGetWithCookie } from "../../include/getwithcookie";
 
 type Group = { id: number; name: string };
 
@@ -34,16 +35,17 @@ function ListGroups() {
   const [listGroup, setListGroup] = useState<Group[]>([]);
 
   useEffect(() => {
-    invokePost(
+    invokeGetWithCookie(
       "listgroups",
-      { cookie: Cookies.get("authToken") },
       "Group listé",
       "Erreur lors de la récupération de la liste des groupes"
     ).then((res) => {
       console.log(res);
-      res.json().then((data) => {
-        setListGroup(data);
-      });
+      if (Array.isArray(res)) {
+        setListGroup(res);
+      } else {
+        console.error("Expected an array but received", res);
+      }
     });
   }, []);
 
