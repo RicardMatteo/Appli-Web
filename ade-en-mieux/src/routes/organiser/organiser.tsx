@@ -6,8 +6,17 @@ import * as yup from "yup";
 import "./organiser.scss";
 import { invokePost } from "../../include/requests";
 import { invokeGetWithCookie } from "../../include/getwithcookie";
+import React from "react";
 
 type Group = { id: number; name: string };
+type User = {
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  hashedPassword: string;
+  admin: boolean;
+};
 
 const HeroPattern = ({
   pttrn,
@@ -33,19 +42,31 @@ function createGroup(groupName: string) {
 
 function ListGroups() {
   const [listGroup, setListGroup] = useState<Group[]>([]);
-  const [selectedG, setSelectedG] = useState<number>();
+  const [listUser, setListUser] = useState<User[]>([]);
 
   useEffect(() => {
     invokeGetWithCookie(
       "listgroups",
-      "Group listé",
+      "Group listés",
       "Erreur lors de la récupération de la liste des groupes"
     ).then((res) => {
-      console.log(res);
+      console.log("Groups res", res);
       if (Array.isArray(res)) {
         setListGroup(res);
       } else {
-        console.error("Expected an array but received", res);
+        console.error("Expected an group array but received", res);
+      }
+    });
+    invokeGetWithCookie(
+      "listusers",
+      "Users listés",
+      "Erreur lors de la récupération de la liste des users"
+    ).then((res) => {
+      console.log("Users res", res);
+      if (Array.isArray(res)) {
+        setListUser(res);
+      } else {
+        console.error("Expected an user array but received", res);
       }
     });
   }, []);
@@ -71,30 +92,26 @@ function ListGroups() {
       >
         {({ values }) => (
           <Form>
-            Choix du groupe :
+            Choix du groupe : <br />
             {listGroup.map((g: Group) => (
-              <>
-                <div role="group" aria-labelledby="my-radio-group">
-                  <label>
-                    <Field type="radio" name="picked" value={g.id} />
-                    {g.name}
-                  </label>
-                  <br />
-                </div>
-              </>
+              <React.Fragment key={g.id}>
+                <label>
+                  <Field type="radio" name="picked" value={g.id} />
+                  {g.name}
+                </label>
+                <br />
+              </React.Fragment>
             ))}
             <br />
-            Choix des membres :
-            {listGroup.map((g: Group) => (
-              <>
-                <div role="group" aria-labelledby="my-radio-group">
-                  <label>
-                    <Field type="checkbox" name="checked" value={g.id} />
-                    {g.name}
-                  </label>
-                  <br />
-                </div>
-              </>
+            Choix des membres : <br />
+            {listUser.map((u: User) => (
+              <React.Fragment key={u.id}>
+                <label>
+                  <Field type="checkbox" name="checked" value={u.id} />
+                  {u.firstName} {u.lastName} ({u.username})
+                </label>
+                <br />
+              </React.Fragment>
             ))}
             <br />
             <div>Picked: {values.picked}</div>

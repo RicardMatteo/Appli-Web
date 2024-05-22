@@ -239,6 +239,40 @@ public class Facade {
 		return Collections.emptyList();
 	}
 
+	/**
+	 * List all the users
+	 * 
+	 * @param cookie
+	 */
+	@GET
+	@Path("/listusers")
+	@Produces({ "application/json" })
+	public Collection<User> listUsers(@HeaderParam("cookie") String cookie) {
+		System.out.println("Cookie : " + cookie);
+		String[] cookieParts = cookie.split("=", 2);
+		String cookieValue = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookieValue);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				// get all the groups from the DB
+				TypedQuery<User> reqUsers = em.createQuery("select u from User u", User.class);
+				// return the list of groups as a json object that we build as a string
+				// beforehand, and then put it in the groups header
+				return reqUsers.getResultList();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("No users found");
+			return Collections.emptyList();
+		}
+		System.out.println("Not logged in");
+		return Collections.emptyList();
+	}
+
 	//
 	//
 	// /**
@@ -285,22 +319,6 @@ public class Facade {
 	// public void addLocation(Place location) {
 	// em.persist(location);
 	// }
-	//
-	//
-	// /**
-	// * Add a group to the DB
-	// *
-	// * @param name
-	// * @param users
-	// */
-	//
-	// @POST
-	// @Path("/addgroup")
-	// @Consumes({ "application/json" })
-	// public void addGroup(GroupClass group) {
-	// em.persist(group);
-	// }
-	//
 	//
 	// /**
 	// * Add an agenda to the DB
