@@ -71,9 +71,9 @@ function ListGroups() {
       >
         {({ values }) => (
           <Form>
+            Choix du groupe :
             {listGroup.map((g: Group) => (
               <>
-                <div id="my-radio-group"></div>
                 <div role="group" aria-labelledby="my-radio-group">
                   <label>
                     <Field type="radio" name="picked" value={g.id} />
@@ -83,8 +83,22 @@ function ListGroups() {
                 </div>
               </>
             ))}
-
+            <br />
+            Choix des membres :
+            {listGroup.map((g: Group) => (
+              <>
+                <div role="group" aria-labelledby="my-radio-group">
+                  <label>
+                    <Field type="checkbox" name="checked" value={g.id} />
+                    {g.name}
+                  </label>
+                  <br />
+                </div>
+              </>
+            ))}
+            <br />
             <div>Picked: {values.picked}</div>
+            <div>Checked: {values.checked}</div>
             <button type="submit">Submit</button>
           </Form>
         )}
