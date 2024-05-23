@@ -98,6 +98,11 @@ public class Agenda {
 	}
 	
 	
+	public void addSlot(Slot slot) {
+		this.slots.add(slot);
+	}
+	
+	
 	/** 
 	 * @return User
 	 */
@@ -108,4 +113,8 @@ public class Agenda {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	
+	
+	
 }

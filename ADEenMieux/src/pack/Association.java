@@ -14,7 +14,7 @@ public class Association implements Serializable {
 	
 	public Association() {}
 	
-	public Association(int secondId, int firstId) {
+	public Association(int firstId, int secondId) {
 		this.firstId = firstId;
 		this.secondId = secondId;
 	}
