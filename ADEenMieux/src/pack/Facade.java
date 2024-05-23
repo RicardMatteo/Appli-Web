@@ -388,6 +388,62 @@ public class Facade {
 	public void addPlace(Place place) {
 		em.persist(place);
 	}
+
+	/**
+	 * @param cookie
+	 * @return User
+	 */
+	@GET
+	@Path("/getwcookie")
+	@Produces({ "application/json" })
+	public User getUserWithCookie(@HeaderParam("cookie") String cookie) {
+		System.out.println("Cookie : " + cookie);
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie);
+		ConnexionToken token = req.getSingleResult();
+		return token.getUserToken();
+	}
+
+	@POST
+	@Path("/slottoagenda")
+	@Consumes({ "application/json" })
+	public void ajoutSlotAgenda(Slot slot, Agenda agenda) {
+		Collection<Slot> slots = agenda.getSlots();
+		slots.add(slot);
+		agenda.setSlots(slots);
+	}
+
+	@POST
+	@Path("/tasktoagenda")
+	@Consumes({ "application/json" })
+	public void ajoutTaskAgenda(Task task, Agenda agenda) {
+
+	}
+
+	@POST
+	@Path("/initdb")
+	@Consumes({ "application/json" })
+	public void initTestDB() {
+		GroupName g = new GroupName("Acide");
+		createGroup(g);
+		User u = new User("Myrtille", "Jean-Michel", "Paltan", null, null, false);
+		addUser(u);
+		User u2 = new User("Tron", "Anabelle", "Praissé", null, null, false);
+		addUser(u);
+
+		Event e = new Event("fete des agrumes", null, null);
+		addEvent(e);
+		addOrganiserInEvent(new Association(u.getId(), e.getId()));
+		addGuestInEvent(new Association(u2.getId(), e.getId()));
+
+		Agenda a = new Agenda("Déroulé de la fete", null, null);
+		addAgenda(a);
+
+		Place p = new Place("Salle des citrons", 100);
+		addPlace(p);
+	}
+
 	//
 	//
 	// /**
@@ -462,22 +518,6 @@ public class Facade {
 	}
 
 	/**
-	 * @param cookie
-	 * @return User
-	 */
-	@GET
-	@Path("/getwcookie")
-	@Produces({ "application/json" })
-	public User getUserWithCookie(@HeaderParam("cookie") String cookie) {
-		System.out.println("Cookie : " + cookie);
-		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
-				ConnexionToken.class);
-		req.setParameter("token", cookie);
-		ConnexionToken token = req.getSingleResult();
-		return token.getUserToken();
-	}
-
-	/**
 	 * @return Collection<Personne>
 	 */
 	@GET
@@ -513,44 +553,4 @@ public class Facade {
 		// addr.getPersonnes().add(pers); // ManyToMany
 		// addr.setPersonne(pers); // OneToOne
 	}
-
-	@POST
-	@Path("/slottoagenda")
-	@Consumes({ "application/json" })
-	public void ajoutSlotAgenda(Slot slot, Agenda agenda) {
-		Collection<Slot> slots = agenda.getSlots();
-		slots.add(slot);
-		agenda.setSlots(slots);
-	}
-
-	@POST
-	@Path("/tasktoagenda")
-	@Consumes({ "application/json" })
-	public void ajoutTaskAgenda(Task task, Agenda agenda) {
-
-	}
-
-	@POST
-	@Path("/initdb")
-	@Consumes({ "application/json" })
-	public void initTestDB() {
-		GroupName g = new GroupName("Acide");
-		createGroup(g);
-		User u = new User("Myrtille", "Jean-Michel", "Paltan", null, null, false);
-		addUser(u);
-		User u2 = new User("Tron", "Anabelle", "Praissé", null, null, false);
-		addUser(u);
-
-		Event e = new Event("fete des agrumes", null, null);
-		addEvent(e);
-		addOrganiserInEvent(new Association(u.getId(), e.getId()));
-		addGuestInEvent(new Association(u2.getId(), e.getId()));
-
-		Agenda a = new Agenda("Déroulé de la fete", null, null);
-		addAgenda(a);
-
-		Place p = new Place("Salle des citrons", 100);
-		addPlace(p);
-	}
-
 }
