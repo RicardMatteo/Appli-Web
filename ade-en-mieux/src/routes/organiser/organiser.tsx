@@ -8,18 +8,13 @@ import { invokePost } from "../../include/requests";
 import { invokeGetWithCookie } from "../../include/getwithcookie";
 import React from "react";
 
-type Group = { id: number; name: string; users: number[] };
+type Group = { groupId: number; groupName: string };
 type User = {
-  id: number;
+  userId: number;
   username: string;
   firstName: string;
   lastName: string;
   hashedPassword: string;
-  groups: number[];
-  agendas: number[];
-  signed_up_events: number[];
-  organised_events: number[];
-  tokens: number[];
   admin: boolean;
 };
 
@@ -122,8 +117,8 @@ function ListGroups() {
             >
               <option value="">Select a group</option>
               {listGroup.map((group) => (
-                <option key={group.id} value={group.id}>
-                  {group.name}
+                <option key={group.groupId} value={group.groupId}>
+                  {group.groupName}
                 </option>
               ))}
             </Field>
@@ -142,7 +137,7 @@ function ListGroups() {
               value={values.selectedUsers}
             >
               {listUser.map((user) => (
-                <option key={user.id} value={user.id}>
+                <option key={user.userId} value={user.userId}>
                   {user.username}
                 </option>
               ))}

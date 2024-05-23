@@ -1,10 +1,13 @@
 package pack;
 
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
@@ -205,6 +208,36 @@ public class Facade {
 		em.persist(group);
 	}
 
+	public static class SmallGroup implements Serializable {
+		private Integer groupId;
+		private String groupName;
+
+		// Constructor
+		public SmallGroup() {
+		}
+
+		public SmallGroup(Integer groupId, String groupName) {
+			this.groupId = groupId;
+			this.groupName = groupName;
+		}
+
+		public Integer getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Integer groupId) {
+			this.groupId = groupId;
+		}
+
+		public String getGroupName() {
+			return groupName;
+		}
+
+		public void setGroupName(String groupName) {
+			this.groupName = groupName;
+		}
+	}
+
 	/**
 	 * List all the groups
 	 * 
@@ -213,7 +246,7 @@ public class Facade {
 	@GET
 	@Path("/listgroups")
 	@Produces({ "application/json" })
-	public Collection<GroupClass> listGroups(@HeaderParam("cookie") String cookie) {
+	public Collection<SmallGroup> listGroups(@HeaderParam("cookie") String cookie) {
 		System.out.println("Cookie : " + cookie);
 		String[] cookieParts = cookie.split("=", 2);
 		String cookieValue = cookieParts[1];
@@ -224,14 +257,16 @@ public class Facade {
 		try {
 			ConnexionToken token = req.getSingleResult();
 			if (token != null) {
+				List<SmallGroup> groups = new ArrayList<>();
 				// get all the groups from the DB
 				TypedQuery<GroupClass> reqGroups = em.createQuery("select g from GroupClass g", GroupClass.class);
 				// return the list of groups as a json object that we build as a string
 				// beforehand, and then put it in the groups header
 				for (GroupClass group : reqGroups.getResultList()) {
 					System.out.println(group.getName());
+					groups.add(new SmallGroup(group.getId(), group.getName()));
 				}
-				return reqGroups.getResultList();
+				return groups;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -242,6 +277,71 @@ public class Facade {
 		return Collections.emptyList();
 	}
 
+	public static class SmallUser implements Serializable {
+		private Integer userId;
+		private String username;
+		private String firstName;
+		private String lastName;
+		private String hashedPassword;
+		private boolean isAdmin;
+
+		public SmallUser() {
+		}
+
+		public SmallUser(Integer userId, String username) {
+			this.userId = userId;
+			this.username = username;
+		}
+
+		public Integer getUserId() {
+			return userId;
+		}
+
+		public void setUserId(Integer userId) {
+			this.userId = userId;
+		}
+
+		public String getUsername() {
+			return username;
+		}
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+
+		public String getFirstName() {
+			return firstName;
+		}
+
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+
+		public String getLastName() {
+			return lastName;
+		}
+
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+
+		public String getHashedPassword() {
+			return hashedPassword;
+		}
+
+		public void setHashedPassword(String hashedPassword) {
+			this.hashedPassword = hashedPassword;
+		}
+
+		public boolean isAdmin() {
+			return isAdmin;
+		}
+
+		public void setAdmin(boolean isAdmin) {
+			this.isAdmin = isAdmin;
+		}
+	}
+
 	/**
 	 * List all the users
 	 * 
@@ -250,7 +350,7 @@ public class Facade {
 	@GET
 	@Path("/listusers")
 	@Produces({ "application/json" })
-	public Collection<User> listUsers(@HeaderParam("cookie") String cookie) {
+	public Collection<SmallUser> listUsers(@HeaderParam("cookie") String cookie) {
 		System.out.println("Cookie : " + cookie);
 		String[] cookieParts = cookie.split("=", 2);
 		String cookieValue = cookieParts[1];
@@ -261,14 +361,16 @@ public class Facade {
 		try {
 			ConnexionToken token = req.getSingleResult();
 			if (token != null) {
+				List<SmallUser> users = new ArrayList<>();
 				// get all the groups from the DB
 				TypedQuery<User> reqUsers = em.createQuery("select u from User u", User.class);
 				// return the list of groups as a json object that we build as a string
 				// beforehand, and then put it in the groups header
 				for (User user : reqUsers.getResultList()) {
 					System.out.println(user.getUsername());
+					users.add(new SmallUser(user.getId(), user.getUsername()));
 				}
-				return reqUsers.getResultList();
+				return users;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
