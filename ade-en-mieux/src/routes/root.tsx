@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { invokeGetWithCookie } from "../include/getwithcookie";
 
 const HeroPattern = ({
   pttrn,

@@ -10,7 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
 	@Id
@@ -23,7 +27,7 @@ public class User {
 	private String hashedPassword;
 
 	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-	Collection<GroupClass> groups;
+	private Collection<GroupClass> groups;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	Collection<Agenda> agendas;

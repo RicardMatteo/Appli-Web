@@ -8,13 +8,18 @@ import { invokePost } from "../../include/requests";
 import { invokeGetWithCookie } from "../../include/getwithcookie";
 import React from "react";
 
-type Group = { id: number; name: string };
+type Group = { id: number; name: string; users: number[] };
 type User = {
   id: number;
   username: string;
   firstName: string;
   lastName: string;
   hashedPassword: string;
+  groups: number[];
+  agendas: number[];
+  signed_up_events: number[];
+  organised_events: number[];
+  tokens: number[];
   admin: boolean;
 };
 
@@ -81,54 +86,78 @@ function ListGroups() {
   }
 
   return (
-    <>
-      <Formik
-        initialValues={{
-          picked: "",
-          checked: [],
-        }}
-        onSubmit={async (values) => {
-          console.log(values);
-          ///////////////////////////////////////////
-          invokePost(
-            "addusergroup",
-            values,
-            "Utilisateur ajouté au groupe",
-            "Erreur lors de l'ajout de l'utilisateur au groupe"
-          );
-        }}
-      >
-        {({ values }) => (
-          <Form>
-            Choix du groupe : <br />
-            {listGroup.map((g: Group) => (
-              <React.Fragment key={g.id}>
-                <label>
-                  <Field type="radio" name="picked" value={g.id} />
-                  {g.name}
-                </label>
-                <br />
-              </React.Fragment>
-            ))}
-            <br />
-            Choix des membres : <br />
-            {listUser.map((u: User) => (
-              <React.Fragment key={u.id}>
-                <label>
-                  <Field type="checkbox" name="checked" value={u.id} />
-                  {u.firstName} {u.lastName} ({u.username})
-                </label>
-                <br />
-              </React.Fragment>
-            ))}
-            <br />
-            <div>Picked: {values.picked}</div>
-            <div>Checked: {values.checked}</div>
-            <button type="submit">Associer</button>
-          </Form>
-        )}
-      </Formik>
-    </>
+    <Formik
+      initialValues={{
+        selectedGroup: "",
+        selectedUsers: [],
+      }}
+      onSubmit={(values) => {
+        // Handle form submission
+        console.log(values);
+        ///////////////////////////////////////////
+        invokePost(
+          "addusergroup",
+          {
+            selectedGroup: values.selectedGroup,
+            selectedUsers: values.selectedUsers,
+          },
+          "Utilisateur ajouté au groupe",
+          "Erreur lors de l'ajout de l'utilisateur au groupe"
+        );
+      }}
+    >
+      {({ values, handleChange, handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
+          <div className="form__group field">
+            <label htmlFor="selectedGroup" className="form__label">
+              Select Group
+            </label>
+            <Field
+              as="select"
+              id="selectedGroup"
+              name="selectedGroup"
+              className="form__field"
+              onChange={handleChange}
+              value={values.selectedGroup}
+            >
+              <option value="">Select a group</option>
+              {listGroup.map((group) => (
+                <option key={group.id} value={group.id}>
+                  {group.name}
+                </option>
+              ))}
+            </Field>
+          </div>
+          <div className="form__group field">
+            <label htmlFor="selectedUsers" className="form__label">
+              Select Users
+            </label>
+            <Field
+              as="select"
+              id="selectedUsers"
+              name="selectedUsers"
+              className="form__field"
+              multiple
+              onChange={handleChange}
+              value={values.selectedUsers}
+            >
+              {listUser.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.username}
+                </option>
+              ))}
+            </Field>
+          </div>
+          <div>Picked: {values.selectedGroup}</div>
+          <div>Checked: {values.selectedUsers}</div>
+          <div className="padding">
+            <button type="submit" className="button-64">
+              <span className="text">Submit</span>
+            </button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }
 

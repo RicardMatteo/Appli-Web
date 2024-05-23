@@ -228,6 +228,9 @@ public class Facade {
 				TypedQuery<GroupClass> reqGroups = em.createQuery("select g from GroupClass g", GroupClass.class);
 				// return the list of groups as a json object that we build as a string
 				// beforehand, and then put it in the groups header
+				for (GroupClass group : reqGroups.getResultList()) {
+					System.out.println(group.getName());
+				}
 				return reqGroups.getResultList();
 			}
 		} catch (Exception e) {
@@ -262,6 +265,9 @@ public class Facade {
 				TypedQuery<User> reqUsers = em.createQuery("select u from User u", User.class);
 				// return the list of groups as a json object that we build as a string
 				// beforehand, and then put it in the groups header
+				for (User user : reqUsers.getResultList()) {
+					System.out.println(user.getUsername());
+				}
 				return reqUsers.getResultList();
 			}
 		} catch (Exception e) {
@@ -274,39 +280,46 @@ public class Facade {
 	}
 
 	public static class AssociationGUID {
-		private Integer groupId;
-		private Collection<Integer> userId;
+		private Integer selectedGroup;
+		private Collection<Integer> selectedUsers;
 
 		// Constructor
 		public AssociationGUID() {
 		}
 
-		public AssociationGUID(Integer groupId, Collection<Integer> userId) {
-			this.groupId = groupId;
-			this.userId = userId;
+		public AssociationGUID(Integer selectedGroup, Collection<Integer> selectedUsers) {
+			this.selectedGroup = selectedGroup;
+			this.selectedUsers = selectedUsers;
 		}
 
-		public Integer getGroupId() {
-			return groupId;
+		public Integer getSelectedGroup() {
+			return selectedGroup;
 		}
 
-		public Collection<Integer> getUserId() {
-			return userId;
+		public void setSelectedGroup(Integer selectedGroup) {
+			this.selectedGroup = selectedGroup;
+		}
+
+		public Collection<Integer> getSelectedUsers() {
+			return selectedUsers;
+		}
+
+		public void setSelectedUsers(Collection<Integer> selectedUsers) {
+			this.selectedUsers = selectedUsers;
 		}
 	}
 
 	/**
-	 * Add an user to the group
+	 * Add users to the group
 	 *
-	 * @param groupId
-	 * @param userId
+	 * @param usergroupID
 	 */
 	@POST
 	@Path("/addusergroup")
 	@Consumes({ "application/json" })
 	public void addUserToGroup(AssociationGUID usergroupID) {
-		GroupClass group = em.find(GroupClass.class, usergroupID.getGroupId());
-		for (Integer userId : usergroupID.getUserId()) {
+		GroupClass group = em.find(GroupClass.class, usergroupID.getSelectedGroup());
+		for (Integer userId : usergroupID.getSelectedUsers()) {
 			User user = em.find(User.class, userId);
 			group.addUser(user);
 		}
