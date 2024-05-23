@@ -1,13 +1,22 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
+import { Form, useNavigate } from "react-router-dom";
+import { Field, Formik, useFormik } from "formik";
 import * as yup from "yup";
 import "./organiser.scss";
 import { invokePost } from "../../include/requests";
 import { invokeGetWithCookie } from "../../include/getwithcookie";
+import React from "react";
 
-type Group = { id: number; name: string };
+type Group = { groupId: number; groupName: string };
+type User = {
+  userId: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  hashedPassword: string;
+  admin: boolean;
+};
 
 const HeroPattern = ({
   pttrn,
@@ -33,18 +42,31 @@ function createGroup(groupName: string) {
 
 function ListGroups() {
   const [listGroup, setListGroup] = useState<Group[]>([]);
+  const [listUser, setListUser] = useState<User[]>([]);
 
   useEffect(() => {
     invokeGetWithCookie(
       "listgroups",
-      "Group listé",
+      "Group listés",
       "Erreur lors de la récupération de la liste des groupes"
     ).then((res) => {
-      console.log(res);
+      console.log("Groups res", res);
       if (Array.isArray(res)) {
         setListGroup(res);
       } else {
-        console.error("Expected an array but received", res);
+        console.error("Expected an group array but received", res);
+      }
+    });
+    invokeGetWithCookie(
+      "listusers",
+      "Users listés",
+      "Erreur lors de la récupération de la liste des users"
+    ).then((res) => {
+      console.log("Users res", res);
+      if (Array.isArray(res)) {
+        setListUser(res);
+      } else {
+        console.error("Expected an user array but received", res);
       }
     });
   }, []);
@@ -59,14 +81,78 @@ function ListGroups() {
   }
 
   return (
-    <>
-      <ul>
-        {listGroup.map((g: Group) => (
-          <li key={g.id}>{g.name}</li>
-        ))}
-      </ul>
-      <br />
-    </>
+    <Formik
+      initialValues={{
+        selectedGroup: "",
+        selectedUsers: [],
+      }}
+      onSubmit={(values) => {
+        // Handle form submission
+        console.log(values);
+        ///////////////////////////////////////////
+        invokePost(
+          "addusergroup",
+          {
+            selectedGroup: values.selectedGroup,
+            selectedUsers: values.selectedUsers,
+          },
+          "Utilisateur ajouté au groupe",
+          "Erreur lors de l'ajout de l'utilisateur au groupe"
+        );
+      }}
+    >
+      {({ values, handleChange, handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
+          <div className="form__group field">
+            <label htmlFor="selectedGroup" className="form__label">
+              Select Group
+            </label>
+            <Field
+              as="select"
+              id="selectedGroup"
+              name="selectedGroup"
+              className="form__field"
+              onChange={handleChange}
+              value={values.selectedGroup}
+            >
+              <option value="">Select a group</option>
+              {listGroup.map((group) => (
+                <option key={group.groupId} value={group.groupId}>
+                  {group.groupName}
+                </option>
+              ))}
+            </Field>
+          </div>
+          <div className="form__group field">
+            <label htmlFor="selectedUsers" className="form__label">
+              Select Users
+            </label>
+            <Field
+              as="select"
+              id="selectedUsers"
+              name="selectedUsers"
+              className="form__field"
+              multiple
+              onChange={handleChange}
+              value={values.selectedUsers}
+            >
+              {listUser.map((user) => (
+                <option key={user.userId} value={user.userId}>
+                  {user.username}
+                </option>
+              ))}
+            </Field>
+          </div>
+          <div>Picked: {values.selectedGroup}</div>
+          <div>Checked: {values.selectedUsers}</div>
+          <div className="padding">
+            <button type="submit" className="button-64">
+              <span className="text">Submit</span>
+            </button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }
 
@@ -138,7 +224,7 @@ function Organiser() {
         </div>
         <div className="container">
           <div>
-            <h1>Ajouter des utilisateurs à un groupe</h1>
+            <h1>Associer des utilisateurs à un groupe</h1>
           </div>
           <ListGroups />
         </div>

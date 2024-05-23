@@ -10,7 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
 	@Id
@@ -22,16 +26,16 @@ public class User {
 	private String lastName;
 	private String hashedPassword;
 
-	@ManyToMany(mappedBy = "users")
-	Collection<GroupClass> groups;
+	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+	private Collection<GroupClass> groups;
 
-	@OneToMany(mappedBy = "user") // FetchType ?
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	Collection<Agenda> agendas;
 
-	@ManyToMany(mappedBy = "guests")
+	@ManyToMany(mappedBy = "guests", fetch = FetchType.EAGER)
 	Collection<Event> signed_up_events;
 
-	@ManyToMany(mappedBy = "organisers")
+	@ManyToMany(mappedBy = "organisers", fetch = FetchType.EAGER)
 	Collection<Event> organised_events;
 
 	@OneToMany(mappedBy = "user_token", fetch = FetchType.EAGER)

@@ -1,10 +1,13 @@
 package pack;
 
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
@@ -205,6 +208,36 @@ public class Facade {
 		em.persist(group);
 	}
 
+	public static class SmallGroup implements Serializable {
+		private Integer groupId;
+		private String groupName;
+
+		// Constructor
+		public SmallGroup() {
+		}
+
+		public SmallGroup(Integer groupId, String groupName) {
+			this.groupId = groupId;
+			this.groupName = groupName;
+		}
+
+		public Integer getGroupId() {
+			return groupId;
+		}
+
+		public void setGroupId(Integer groupId) {
+			this.groupId = groupId;
+		}
+
+		public String getGroupName() {
+			return groupName;
+		}
+
+		public void setGroupName(String groupName) {
+			this.groupName = groupName;
+		}
+	}
+
 	/**
 	 * List all the groups
 	 * 
@@ -213,7 +246,7 @@ public class Facade {
 	@GET
 	@Path("/listgroups")
 	@Produces({ "application/json" })
-	public Collection<GroupClass> listGroups(@HeaderParam("cookie") String cookie) {
+	public Collection<SmallGroup> listGroups(@HeaderParam("cookie") String cookie) {
 		System.out.println("Cookie : " + cookie);
 		String[] cookieParts = cookie.split("=", 2);
 		String cookieValue = cookieParts[1];
@@ -224,11 +257,16 @@ public class Facade {
 		try {
 			ConnexionToken token = req.getSingleResult();
 			if (token != null) {
+				List<SmallGroup> groups = new ArrayList<>();
 				// get all the groups from the DB
 				TypedQuery<GroupClass> reqGroups = em.createQuery("select g from GroupClass g", GroupClass.class);
 				// return the list of groups as a json object that we build as a string
 				// beforehand, and then put it in the groups header
-				return reqGroups.getResultList();
+				for (GroupClass group : reqGroups.getResultList()) {
+					System.out.println(group.getName());
+					groups.add(new SmallGroup(group.getId(), group.getName()));
+				}
+				return groups;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -237,6 +275,156 @@ public class Facade {
 		}
 		System.out.println("Password incorrect");
 		return Collections.emptyList();
+	}
+
+	public static class SmallUser implements Serializable {
+		private Integer userId;
+		private String username;
+		private String firstName;
+		private String lastName;
+		private String hashedPassword;
+		private boolean isAdmin;
+
+		public SmallUser() {
+		}
+
+		public SmallUser(Integer userId, String username) {
+			this.userId = userId;
+			this.username = username;
+		}
+
+		public Integer getUserId() {
+			return userId;
+		}
+
+		public void setUserId(Integer userId) {
+			this.userId = userId;
+		}
+
+		public String getUsername() {
+			return username;
+		}
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+
+		public String getFirstName() {
+			return firstName;
+		}
+
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+
+		public String getLastName() {
+			return lastName;
+		}
+
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+
+		public String getHashedPassword() {
+			return hashedPassword;
+		}
+
+		public void setHashedPassword(String hashedPassword) {
+			this.hashedPassword = hashedPassword;
+		}
+
+		public boolean isAdmin() {
+			return isAdmin;
+		}
+
+		public void setAdmin(boolean isAdmin) {
+			this.isAdmin = isAdmin;
+		}
+	}
+
+	/**
+	 * List all the users
+	 * 
+	 * @param cookie
+	 */
+	@GET
+	@Path("/listusers")
+	@Produces({ "application/json" })
+	public Collection<SmallUser> listUsers(@HeaderParam("cookie") String cookie) {
+		System.out.println("Cookie : " + cookie);
+		String[] cookieParts = cookie.split("=", 2);
+		String cookieValue = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookieValue);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				List<SmallUser> users = new ArrayList<>();
+				// get all the groups from the DB
+				TypedQuery<User> reqUsers = em.createQuery("select u from User u", User.class);
+				// return the list of groups as a json object that we build as a string
+				// beforehand, and then put it in the groups header
+				for (User user : reqUsers.getResultList()) {
+					System.out.println(user.getUsername());
+					users.add(new SmallUser(user.getId(), user.getUsername()));
+				}
+				return users;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("No users found");
+			return Collections.emptyList();
+		}
+		System.out.println("Not logged in");
+		return Collections.emptyList();
+	}
+
+	public static class AssociationGUID {
+		private Integer selectedGroup;
+		private Collection<Integer> selectedUsers;
+
+		// Constructor
+		public AssociationGUID() {
+		}
+
+		public AssociationGUID(Integer selectedGroup, Collection<Integer> selectedUsers) {
+			this.selectedGroup = selectedGroup;
+			this.selectedUsers = selectedUsers;
+		}
+
+		public Integer getSelectedGroup() {
+			return selectedGroup;
+		}
+
+		public void setSelectedGroup(Integer selectedGroup) {
+			this.selectedGroup = selectedGroup;
+		}
+
+		public Collection<Integer> getSelectedUsers() {
+			return selectedUsers;
+		}
+
+		public void setSelectedUsers(Collection<Integer> selectedUsers) {
+			this.selectedUsers = selectedUsers;
+		}
+	}
+
+	/**
+	 * Add users to the group
+	 *
+	 * @param usergroupID
+	 */
+	@POST
+	@Path("/addusergroup")
+	@Consumes({ "application/json" })
+	public void addUserToGroup(AssociationGUID usergroupID) {
+		GroupClass group = em.find(GroupClass.class, usergroupID.getSelectedGroup());
+		for (Integer userId : usergroupID.getSelectedUsers()) {
+			User user = em.find(User.class, userId);
+			group.addUser(user);
+		}
 	}
 
 	//
@@ -286,36 +474,19 @@ public class Facade {
 	// em.persist(location);
 	// }
 	//
-	//
 	// /**
-	// * Add a group to the DB
+	// * Add an agenda to the DB
 	// *
 	// * @param name
-	// * @param users
+	// * @param tasks
+	// * @param slots
 	// */
-	//
 	// @POST
-	// @Path("/addgroup")
+	// @Path("/addagenda")
 	// @Consumes({ "application/json" })
-	// public void addGroup(GroupClass group) {
-	// em.persist(group);
+	// public void addAgenda(Agenda agenda) {
+	// em.persist(agenda);
 	// }
-	//
-	//
-	/**
-	 * Add an agenda to the DB
-	 *
-	 * @param name
-	 * @param tasks
-	 * @param slots
-	 */
-	@POST
-	@Path("/addagenda")
-	@Consumes({ "application/json" })
-	public void addAgenda(Agenda agenda) {
-		em.persist(agenda);
-	}
-
 	//
 	/**
 	 * Add an event to the DB
@@ -459,22 +630,6 @@ public class Facade {
 	// User participant = em.find(User.class, userslotID.getFirstId());
 	// Slot slot = em.find(Slot.class, userslotID.getSecondId());
 	// slot.addParticipant(participant);
-	// }
-	//
-	//
-	// /**
-	// * Add an user to the group
-	// *
-	// * @param groupId
-	// * @param userId
-	// */
-	// @POST
-	// @Path("/addusergroup")
-	// @Consumes({ "application/json" })
-	// public void addUserToGroup(Association usergroupID) {
-	// User user = em.find(User.class, usergroupID.getFirstId());
-	// GroupClass group = em.find(GroupClass.class, usergroupID.getSecondId());
-	// group.addUser(user);
 	// }
 	//
 	//
