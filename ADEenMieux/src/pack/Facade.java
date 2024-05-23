@@ -474,20 +474,21 @@ public class Facade {
 	// em.persist(location);
 	// }
 	//
-	// /**
-	// * Add an agenda to the DB
-	// *
-	// * @param name
-	// * @param tasks
-	// * @param slots
-	// */
-	// @POST
-	// @Path("/addagenda")
-	// @Consumes({ "application/json" })
-	// public void addAgenda(Agenda agenda) {
-	// em.persist(agenda);
-	// }
-	//
+
+	/**
+	 * Add an agenda to the DB
+	 *
+	 * @param name
+	 * @param tasks
+	 * @param slots
+	 */
+	@POST
+	@Path("/addagenda")
+	@Consumes({ "application/json" })
+	public void addAgenda(Agenda agenda) {
+		em.persist(agenda);
+	}
+
 	/**
 	 * Add an event to the DB
 	 *
