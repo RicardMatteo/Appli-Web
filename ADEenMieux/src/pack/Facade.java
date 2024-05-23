@@ -199,7 +199,7 @@ public class Facade {
 	@POST
 	@Path("/creategroup")
 	@Consumes({ "application/json" })
-	public void createGroup(GroupClass g) {
+	public void createGroup(GroupName g) {
 		GroupClass group = new GroupClass();
 		group.setName(g.getGroupName());
 		em.persist(group);
@@ -303,42 +303,44 @@ public class Facade {
 	//
 	//
 	/**
-	* Add an agenda to the DB
-	*
-	* @param name
-	* @param tasks
-	* @param slots
-	*/
+	 * Add an agenda to the DB
+	 *
+	 * @param name
+	 * @param tasks
+	 * @param slots
+	 */
 	@POST
 	@Path("/addagenda")
 	@Consumes({ "application/json" })
 	public void addAgenda(Agenda agenda) {
 		em.persist(agenda);
 	}
+
 	//
 	/**
-	* Add an event to the DB
-	*
-	* @param name
-	* @param guests
-	* @param organisers
-	*/
+	 * Add an event to the DB
+	 *
+	 * @param name
+	 * @param guests
+	 * @param organisers
+	 */
 	@POST
 	@Path("/addevent")
 	@Consumes({ "application/json" })
 	public void addEvent(Event event) {
 		em.persist(event);
 	}
+
 	//
 	//
 	//
 	//
 	/**
-	* Add a guest to an event
-	*
-	* @param guestId
-	* @param eventId
-	*/
+	 * Add a guest to an event
+	 *
+	 * @param guestId
+	 * @param eventId
+	 */
 	@POST
 	@Path("/addguestevent")
 	@Consumes({ "application/json" })
@@ -347,14 +349,15 @@ public class Facade {
 		Event event = em.find(Event.class, guesteventID.getSecondId());
 		event.addGuest(guest);
 	}
+
 	//
 	//
 	/**
-	* Add an organiser to an event
-	*
-	* @param orgaId
-	* @param eventId
-	*/
+	 * Add an organiser to an event
+	 *
+	 * @param orgaId
+	 * @param eventId
+	 */
 	@POST
 	@Path("/addorgaevent")
 	@Consumes({ "application/json" })
@@ -363,22 +366,22 @@ public class Facade {
 		Event event = em.find(Event.class, orgaeventID.getSecondId());
 		event.addOrganiser(organiser);
 	}
+
 	//
 	//
 	/**
-	* Get all the existing location
-	*
-	* @return Collection<Place>
-	*/
+	 * Get all the existing location
+	 *
+	 * @return Collection<Place>
+	 */
 	@GET
 	@Path("/getplace")
 	@Consumes({ "application/json" })
 	public Collection<Place> getPlace() {
-		TypedQuery<Place> req =	em.createQuery("select l from Place l", Place.class); 
+		TypedQuery<Place> req = em.createQuery("select l from Place l", Place.class);
 		return req.getResultList();
 	}
-	
-	
+
 	@POST
 	@Path("/addplace")
 	@Consumes({ "application/json" })
@@ -510,7 +513,7 @@ public class Facade {
 		// addr.getPersonnes().add(pers); // ManyToMany
 		// addr.setPersonne(pers); // OneToOne
 	}
-	
+
 	@POST
 	@Path("/slottoagenda")
 	@Consumes({ "application/json" })
@@ -519,39 +522,35 @@ public class Facade {
 		slots.add(slot);
 		agenda.setSlots(slots);
 	}
-	
+
 	@POST
 	@Path("/tasktoagenda")
-	@Consumes({ "application/json" }
+	@Consumes({ "application/json" })
 	public void ajoutTaskAgenda(Task task, Agenda agenda) {
-		
+
 	}
-	
-	
+
 	@POST
 	@Path("/initdb")
-	@Consumes({ "application/json" }
+	@Consumes({ "application/json" })
 	public void initTestDB() {
-		GroupClass g = new GroupClass("Acide");
+		GroupName g = new GroupName("Acide");
 		createGroup(g);
-		User u = new User("Myrtille", "Jean-Michel", "Paltan", null,null, false);
+		User u = new User("Myrtille", "Jean-Michel", "Paltan", null, null, false);
 		addUser(u);
-		User u2 = new User("Tron", "Anabelle", "Praissé", null,null, false);
+		User u2 = new User("Tron", "Anabelle", "Praissé", null, null, false);
 		addUser(u);
-		
-		Event e = new Event("fete des agrumes", null,null);
+
+		Event e = new Event("fete des agrumes", null, null);
 		addEvent(e);
-		addOrganiserInEvent(new Association(u.getId(),e.getId()));
-		addGuestInEvent(new Association(u2.getId(),e.getId()));
-		
-		
-		Agenda a = new Agenda("Déroulé de la fete",null,null);
+		addOrganiserInEvent(new Association(u.getId(), e.getId()));
+		addGuestInEvent(new Association(u2.getId(), e.getId()));
+
+		Agenda a = new Agenda("Déroulé de la fete", null, null);
 		addAgenda(a);
-		
+
 		Place p = new Place("Salle des citrons", 100);
 		addPlace(p);
 	}
-	
-	
-	
+
 }
