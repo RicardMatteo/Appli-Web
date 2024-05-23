@@ -273,6 +273,59 @@ public class Facade {
 		return Collections.emptyList();
 	}
 
+	public static class AddEventClass {
+		public String eventName;
+		public Collection<Long> participants;
+		public Collection<Long> startDates;
+		public Collection<Long> endDates;
+		public Collection<Long> capacities;
+	}
+
+	/**
+	 * Create an event
+	 * 
+	 * @param event
+	 */
+	@POST
+	@Path("/addevent")
+	@Consumes({ "application/json" })
+	public Response addEvent(AddEventClass data, @HeaderParam("authToken") String cookie) {
+		System.out.println("Cookie : " + cookie);
+		String[] cookieParts = cookie.split("=", 2);
+		String cookieValue = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookieValue);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				System.out.println("User found : " + token.getUserToken().getUsername());
+				System.out.println("data received :");
+				System.out.println("eventName : " + data.eventName);
+				for (Long participant : data.participants) {
+					System.out.println("participant : " + participant);
+				}
+				for (Long startDate : data.startDates) {
+					System.out.println("startDate : " + startDate);
+				}
+				for (Long endDate : data.endDates) {
+					System.out.println("endDate : " + endDate);
+				}
+				for (Long capacity : data.capacities) {
+					System.out.println("capacity : " + capacity);
+				}
+				return Response.ok().build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("No users found");
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+		System.out.println("Not logged in");
+		return Response.status(Response.Status.UNAUTHORIZED).build();
+	}
+
 	//
 	//
 	// /**

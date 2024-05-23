@@ -69,13 +69,21 @@ function Events() {
     onSubmit: (values) => {
       console.log("Submitted values - event name : ", values.eventName);
       console.log("Selected users : ", values.selectedUsers);
+      // create the list of start dates
+      const listStartDate = listSlot.map((s) => s.startDate);
+      // create the list of end dates
+      const listEndDate = listSlot.map((s) => s.endDate);
+      // create the list of capacities
+      const listCapacity = listSlot.map((s) => s.capacity);
 
       invokePost(
         "addevent",
         {
           eventName: values.eventName,
           participants: values.selectedUsers,
-          slots: listSlot,
+          startDates: listStartDate,
+          endDates: listEndDate,
+          capacities: listCapacity,
         },
         "Evènement ajouté",
         "Erreur lors de l'ajout de l'évènement"
