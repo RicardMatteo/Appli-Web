@@ -19,11 +19,13 @@ public class Event {
 
 	private String name;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany()
 	Collection<User> guests;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	Collection<User> organisers;
+	/*
+	 * @ManyToMany(fetch = FetchType.EAGER)
+	 * Collection<User> organisers;
+	 */
 
 	public Event() {
 	};
@@ -31,13 +33,15 @@ public class Event {
 	public Event(String name) {
 		setName(name);
 	}
-
-	public Event(String name, Collection<User> guests, Collection<User> organisers) {
-		this.name = name;
-		// TODO check if null
-		this.guests = guests;
-		this.organisers = organisers;
-	}
+	/*
+	 * public Event(String name, Collection<User> guests, Collection<User>
+	 * organisers) {
+	 * this.name = name;
+	 * // TODO check if null
+	 * this.guests = guests;
+	 * this.organisers = organisers;
+	 * }
+	 */
 
 	/**
 	 * @return int
@@ -64,7 +68,7 @@ public class Event {
 	 * @return Collection<User>
 	 */
 	public Collection<User> getGuests() {
-		return guests;
+		return this.guests;
 	}
 
 	/**
@@ -76,17 +80,19 @@ public class Event {
 
 	/**
 	 * @return Collection<User>
-	 */
-	public Collection<User> getOrganisers() {
-		return organisers;
-	}
+	 */ /*
+		 * public Collection<User> getOrganisers() {
+		 * return organisers;
+		 * }
+		 */
 
 	/**
 	 * @param organisers
-	 */
-	public void setOrganisers(Collection<User> organisers) {
-		this.organisers = organisers;
-	}
+	 */ /*
+		 * public void setOrganisers(Collection<User> organisers) {
+		 * this.organisers = organisers;
+		 * }
+		 */
 
 	/**
 	 * @param guest
@@ -97,8 +103,9 @@ public class Event {
 
 	/**
 	 * @param organiser
-	 */
-	public void addOrganiser(User organiser) {
-		organisers.add(organiser);
-	}
+	 */ /*
+		 * public void addOrganiser(User organiser) {
+		 * organisers.add(organiser);
+		 * }
+		 */
 }

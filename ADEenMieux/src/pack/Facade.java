@@ -503,18 +503,16 @@ public class Facade {
 			ConnexionToken token = req.getSingleResult();
 			if (token != null) {
 				System.out.println("login post success !!");
-				// get the user from the token
-				User organizer = token.getUserToken();
 				// create the event
 				Event event = new Event(eventSlotsData.eventName);
 				em.persist(event);
 				// add the participants
+				// initialize the guests list
+				event.setGuests(new ArrayList<User>());
 				for (Integer userId : eventSlotsData.participants) {
 					User user = em.find(User.class, userId);
-					user.getSigned_up_events().add(event);
+					event.getGuests().add(user);
 				}
-				// add the organizer
-				organizer.getOrganised_events().add(event);
 				// create the slots
 				for (int i = 0; i < eventSlotsData.startDates.size(); i++) {
 					int capacity = eventSlotsData.capacities.toArray(new Integer[0])[i];
@@ -640,14 +638,18 @@ public class Facade {
 	 * @param orgaId
 	 * @param eventId
 	 */
-	@POST
-	@Path("/addorgaevent")
-	@Consumes({ "application/json" })
-	public void addOrganiserInEvent(Association orgaeventID) {
-		User organiser = em.find(User.class, orgaeventID.getFirstId());
-		Event event = em.find(Event.class, orgaeventID.getSecondId());
-		event.addOrganiser(organiser);
-	}
+	/*
+	 * @POST
+	 * 
+	 * @Path("/addorgaevent")
+	 * 
+	 * @Consumes({ "application/json" })
+	 * public void addOrganiserInEvent(Association orgaeventID) {
+	 * User organiser = em.find(User.class, orgaeventID.getFirstId());
+	 * Event event = em.find(Event.class, orgaeventID.getSecondId());
+	 * event.addOrganiser(organiser);
+	 * }
+	 */
 
 	//
 	//
@@ -724,7 +726,7 @@ public class Facade {
 		u3.setHashedPassword(hashedPassword);
 		addUser(u3);
 
-		Event e = new Event("fete des agrumes", null, null);
+		Event e = new Event("fete des agrumes");
 		addEvent(e);
 		System.out.println("Création de l'évènement fete des agrumes");
 		// addOrganiserInEvent(new Association(u.getId(), e.getId()));

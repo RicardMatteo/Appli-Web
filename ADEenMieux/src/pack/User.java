@@ -32,11 +32,11 @@ public class User {
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	Collection<Agenda> agendas;
 
-	@ManyToMany(mappedBy = "guests", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "guests")
 	Collection<Event> signed_up_events;
 
-	@ManyToMany(mappedBy = "organisers", fetch = FetchType.EAGER)
-	Collection<Event> organised_events;
+	// @ManyToMany(mappedBy = "organisers", fetch = FetchType.EAGER)
+	// Collection<Event> organised_events;
 
 	@OneToMany(mappedBy = "user_token", fetch = FetchType.EAGER)
 	Collection<ConnexionToken> tokens;
@@ -163,17 +163,20 @@ public class User {
 
 	/**
 	 * @return Collection<Event>
-	 */
-	public Collection<Event> getOrganised_events() {
-		return organised_events;
-	}
+	 */ /*
+		 * public Collection<Event> getOrganised_events() {
+		 * return organised_events;
+		 * }
+		 */
 
 	/**
 	 * @param organised_events
 	 */
-	public void setOrganised_events(Collection<Event> organised_events) {
-		this.organised_events = organised_events;
-	}
+	/*
+	 * public void setOrganised_events(Collection<Event> organised_events) {
+	 * this.organised_events = organised_events;
+	 * }
+	 */
 
 	/**
 	 * @return String
