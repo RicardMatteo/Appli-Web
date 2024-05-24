@@ -28,6 +28,10 @@ public class Event {
 	public Event() {
 	};
 
+	public Event(String name) {
+		setName(name);
+	}
+
 	public Event(String name, Collection<User> guests, Collection<User> organisers) {
 		this.name = name;
 		// TODO check if null

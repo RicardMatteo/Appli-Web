@@ -503,14 +503,18 @@ public class Facade {
 			ConnexionToken token = req.getSingleResult();
 			if (token != null) {
 				System.out.println("login post success !!");
+				// get the user from the token
+				User organizer = token.getUserToken();
 				// create the event
-				Event event = new Event(eventSlotsData.eventName, null, null);
+				Event event = new Event(eventSlotsData.eventName);
 				em.persist(event);
 				// add the participants
 				for (Integer userId : eventSlotsData.participants) {
 					User user = em.find(User.class, userId);
-					event.addGuest(user);
+					user.getSigned_up_events().add(event);
 				}
+				// add the organizer
+				organizer.getOrganised_events().add(event);
 				// create the slots
 				for (int i = 0; i < eventSlotsData.startDates.size(); i++) {
 					int capacity = eventSlotsData.capacities.toArray(new Integer[0])[i];
