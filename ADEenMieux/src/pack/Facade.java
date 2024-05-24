@@ -74,13 +74,21 @@ public class Facade {
 			try {
 				digest = MessageDigest.getInstance("SHA-256");
 				byte[] encodedhash = digest.digest(Password.getBytes(StandardCharsets.UTF_8));
-
-				return encodedhash.toString();
+				String encodedHashString = bytesToHex(encodedhash);
+				return encodedHashString;
 			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return "";
+		}
+
+		private static String bytesToHex(byte[] encodedhash) {
+			StringBuilder sb = new StringBuilder();
+			for (byte b : encodedhash) {
+				sb.append(String.format("%02x", b));
+			}
+			String result = sb.toString();
+			return result;
 		}
 
 		public String getHashedPassword() {
@@ -601,11 +609,17 @@ public class Facade {
 		createGroup(g);
 		GroupName g2 = new GroupName("ab");
 		createGroup(g2);
+		String password = "a";
+		String hashedPassword = LoginInfo.hashPassword(password);
+		// "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"
 		User u = new User("Myrtille", "Jean-Michel", "Paltan", null, null, false);
+		u.setHashedPassword(hashedPassword);
 		addUser(u);
 		User u2 = new User("Tron", "Anabelle", "Praissé", null, null, false);
+		u2.setHashedPassword(hashedPassword);
 		addUser(u2);
 		User u3 = new User("a", "a", "a", null, null, false);
+		u3.setHashedPassword(hashedPassword);
 		addUser(u3);
 
 		Event e = new Event("fete des agrumes", null, null);
