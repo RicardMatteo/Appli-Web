@@ -18,8 +18,8 @@ public class Slot {
 	private int id;
 
 	private int capacity;
-	private int startDate;
-	private int endDate;
+	private long startDate;
+	private long endDate;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	Place location;
@@ -33,7 +33,7 @@ public class Slot {
 	public Slot() {
 	};
 
-	public Slot(int capacity, int startDate, int endDate, Place location, Event event, Collection<User> participants) {
+	public Slot(int capacity, long startDate, long endDate, Place location, Event event, Collection<User> participants) {
 		this.capacity = capacity;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -80,28 +80,28 @@ public class Slot {
 	/**
 	 * @return int
 	 */
-	public int getStartDate() {
+	public long getStartDate() {
 		return startDate;
 	}
 
 	/**
 	 * @param startDate
 	 */
-	public void setStartDate(int startDate) {
+	public void setStartDate(long startDate) {
 		this.startDate = startDate;
 	}
 
 	/**
 	 * @return int
 	 */
-	public int getEndDate() {
+	public long getEndDate() {
 		return endDate;
 	}
 
 	/**
 	 * @param endDate
 	 */
-	public void setEndDate(int endDate) {
+	public void setEndDate(long endDate) {
 		this.endDate = endDate;
 	}
 

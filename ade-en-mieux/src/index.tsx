@@ -15,6 +15,7 @@ import Dashboard from "./routes/dashboard/dashboard";
 import Agenda from "./routes/agenda/agenda";
 import Organiser from "./routes/organiser/organiser";
 import Participant from "./routes/participant/participant";
+import Events from "./routes/events/events";
 
 // Create Router and render App
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: "/participant",
     element: <Participant />,
+  },
+  {
+    path: "/events",
+    element: <Events />,
   },
 ]);
 

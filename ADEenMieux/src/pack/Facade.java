@@ -435,6 +435,97 @@ public class Facade {
 		}
 	}
 
+	public static class EventSlotsData {
+		public String eventName;
+		public Collection<Integer> participants;
+		public Collection<Long> startDates;
+		public Collection<Long> endDates;
+		public Collection<Integer> capacities;
+
+		public String getEventName() {
+			return eventName;
+		}
+
+		public void setEventName(String eventName) {
+			this.eventName = eventName;
+		}
+
+		public Collection<Integer> getParticipants() {
+			return participants;
+		}
+
+		public void setParticipants(Collection<Integer> participants) {
+			this.participants = participants;
+		}
+
+		public Collection<Long> getStartDates() {
+			return startDates;
+		}
+
+		public void setStartDates(Collection<Long> startDates) {
+			this.startDates = startDates;
+		}
+
+		public Collection<Long> getEndDates() {
+			return endDates;
+		}
+
+		public void setEndDates(Collection<Long> endDates) {
+			this.endDates = endDates;
+		}
+
+		public Collection<Integer> getCapacities() {
+			return capacities;
+		}
+
+		public void setCapacities(Collection<Integer> capacities) {
+			this.capacities = capacities;
+		}
+
+	}
+
+	/**
+	 * Create an event and its associated slots
+	 * 
+	 * @param EventSlotsData
+	 */
+	@POST
+	@Path("/createevent")
+	@Consumes({ "application/json" })
+	public void createEvent(@HeaderParam("Cookie") String rawAuthToken, EventSlotsData eventSlotsData) {
+		String[] cookieParts = rawAuthToken.split("=", 2);
+		String cookie = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				System.out.println("login post success !!");
+				// create the event
+				Event event = new Event(eventSlotsData.eventName, null, null);
+				em.persist(event);
+				// add the participants
+				for (Integer userId : eventSlotsData.participants) {
+					User user = em.find(User.class, userId);
+					event.addGuest(user);
+				}
+				// create the slots
+				for (int i = 0; i < eventSlotsData.startDates.size(); i++) {
+					Slot slot = new Slot(eventSlotsData.getCapacities().toArray(new Integer[0])[i],
+							eventSlotsData.getStartDates().toArray(new Long[0])[i],
+							eventSlotsData.getEndDates().toArray(new Long[0])[i], null, event, null);
+					em.persist(slot);
+				}
+				System.out.println("Event and slots created");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Not logged in");
+		}
+	}
+
 	//
 	//
 	// /**
