@@ -33,7 +33,14 @@ public class Slot {
 	public Slot() {
 	};
 
-	public Slot(int capacity, long startDate, long endDate, Place location, Event event, Collection<User> participants) {
+	public Slot(int capacity, long startDate, long endDate) {
+		this.capacity = capacity;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
+	public Slot(int capacity, long startDate, long endDate, Place location, Event event,
+			Collection<User> participants) {
 		this.capacity = capacity;
 		this.startDate = startDate;
 		this.endDate = endDate;

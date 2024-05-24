@@ -513,16 +513,23 @@ public class Facade {
 				}
 				// create the slots
 				for (int i = 0; i < eventSlotsData.startDates.size(); i++) {
-					Slot slot = new Slot(eventSlotsData.getCapacities().toArray(new Integer[0])[i],
-							eventSlotsData.getStartDates().toArray(new Long[0])[i],
-							eventSlotsData.getEndDates().toArray(new Long[0])[i], null, event, null);
+					int capacity = eventSlotsData.capacities.toArray(new Integer[0])[i];
+					long startDate = eventSlotsData.startDates.toArray(new Long[0])[i];
+					long endDate = eventSlotsData.endDates.toArray(new Long[0])[i];
+
+					Place location = new Place("Location " + i, capacity);
+					em.persist(location);
+
+					Slot slot = new Slot(capacity, startDate, endDate);
 					em.persist(slot);
+					slot.setLocation(location);
+					slot.setEvent(event);
 				}
 				System.out.println("Event and slots created");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Not logged in");
+			System.out.println("Error creating event");
 		}
 	}
 
