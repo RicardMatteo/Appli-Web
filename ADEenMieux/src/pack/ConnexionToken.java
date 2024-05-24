@@ -1,6 +1,7 @@
 package pack;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,15 +12,16 @@ import java.util.Random;
 public class ConnexionToken {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String token;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user_token;
 
-    public ConnexionToken() {};
+    public ConnexionToken() {
+    };
 
     public ConnexionToken(String token, User user_token) {
         this.token = token;
@@ -36,10 +38,10 @@ public class ConnexionToken {
         }
         String finalToken = token.toString();
         return finalToken;
-        
+
     }
 
-    /** 
+    /**
      * @return int
      */
     public int getId() {
@@ -73,5 +75,5 @@ public class ConnexionToken {
     public void setUserToken(User user_token) {
         this.user_token = user_token;
     }
-    
+
 }
