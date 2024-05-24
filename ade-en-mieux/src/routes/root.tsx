@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { invokePost } from "../include/requests";
 
 const HeroPattern = ({
   pttrn,
@@ -46,6 +47,16 @@ export default function Root() {
               onClick={() => Cookies.remove("authToken")}
             >
               <span className="text">Logout</span>
+            </button>
+          </div>
+          <div className="padding">
+            <button
+              className="button-64"
+              onClick={() =>
+                invokePost("/initdb", null, "InitDB success", "InitDB failure")
+              }
+            >
+              <span className="text">InitDB</span>
             </button>
           </div>
         </div>

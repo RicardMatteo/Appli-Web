@@ -597,23 +597,32 @@ public class Facade {
 	@Path("/initdb")
 	@Consumes({ "application/json" })
 	public void initTestDB() {
+		System.out.println("Entrée dans initDB");
 		GroupName g = new GroupName("Acide");
 		createGroup(g);
+		System.out.println("Création du groupe Acide");
 		User u = new User("Myrtille", "Jean-Michel", "Paltan", null, null, false);
 		addUser(u);
+		System.out.println("Création de l'utilisateur Myrtille");
 		User u2 = new User("Tron", "Anabelle", "Praissé", null, null, false);
 		addUser(u);
+		System.out.println("Création de l'utilisateur Tron");
 
 		Event e = new Event("fete des agrumes", null, null);
 		addEvent(e);
-		addOrganiserInEvent(new Association(u.getId(), e.getId()));
-		addGuestInEvent(new Association(u2.getId(), e.getId()));
+		System.out.println("Création de l'évènement fete des agrumes");
+		// addOrganiserInEvent(new Association(u.getId(), e.getId()));
+		System.out.println("Ajout de l'organisateur Myrtille à l'évènement fete des agrumes");
+		// addGuestInEvent(new Association(u2.getId(), e.getId()));
+		System.out.println("Ajout de l'invité Tron à l'évènement fete des agrumes");
 
 		Agenda a = new Agenda("Déroulé de la fete", null, null);
 		addAgenda(a);
+		System.out.println("Création de l'agenda Déroulé de la fete");
 
 		Place p = new Place("Salle des citrons", 100);
 		addPlace(p);
+		System.out.println("Création de la salle des citrons");
 	}
 
 	//
