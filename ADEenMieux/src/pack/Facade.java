@@ -274,22 +274,66 @@ public class Facade {
 	}
 
 	public static class AddEventClass {
-		public String eventName;
-		public Collection<Long> participants;
-		public Collection<Long> startDates;
-		public Collection<Long> endDates;
-		public Collection<Long> capacities;
+		private String eventName;
+		private Collection<Long> participants;
+		private Collection<Long> startDates;
+		private Collection<Long> endDates;
+		private Collection<Long> capacities;
+
+		public AddEventClass() {
+		}
+
+		public String getEventName() {
+			return eventName;
+		}
+
+		public void setEventName(String eventName) {
+			this.eventName = eventName;
+		}
+
+		public Collection<Long> getParticipants() {
+			return participants;
+		}
+
+		public void setParticipants(Collection<Long> participants) {
+			this.participants = participants;
+		}
+
+		public Collection<Long> getStartDates() {
+			return startDates;
+		}
+
+		public void setStartDates(Collection<Long> startDates) {
+			this.startDates = startDates;
+		}
+
+		public Collection<Long> getEndDates() {
+			return endDates;
+		}
+
+		public void setEndDates(Collection<Long> endDates) {
+			this.endDates = endDates;
+		}
+
+		public Collection<Long> getCapacities() {
+			return capacities;
+		}
+
+		public void setCapacities(Collection<Long> capacities) {
+			this.capacities = capacities;
+		}
 	}
 
 	/**
 	 * Create an event
 	 * 
-	 * @param event
+	 * @param data
+	 * @param cookie
 	 */
 	@POST
 	@Path("/addevent")
 	@Consumes({ "application/json" })
-	public Response addEvent(AddEventClass data, @HeaderParam("authToken") String cookie) {
+	public Response addEvent(AddEventClass data, @HeaderParam("cookie") String cookie) {
 		System.out.println("Cookie : " + cookie);
 		String[] cookieParts = cookie.split("=", 2);
 		String cookieValue = cookieParts[1];
@@ -302,19 +346,6 @@ public class Facade {
 			if (token != null) {
 				System.out.println("User found : " + token.getUserToken().getUsername());
 				System.out.println("data received :");
-				System.out.println("eventName : " + data.eventName);
-				for (Long participant : data.participants) {
-					System.out.println("participant : " + participant);
-				}
-				for (Long startDate : data.startDates) {
-					System.out.println("startDate : " + startDate);
-				}
-				for (Long endDate : data.endDates) {
-					System.out.println("endDate : " + endDate);
-				}
-				for (Long capacity : data.capacities) {
-					System.out.println("capacity : " + capacity);
-				}
 				return Response.ok().build();
 			}
 		} catch (Exception e) {

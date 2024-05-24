@@ -13,10 +13,13 @@ async function invokePost(
   successMsg: string,
   failureMsg: string
 ): Promise<Response> {
+  const authToken = localStorage.getItem("authToken") || "";
   const requestOptions: RequestInit = {
     method: "POST",
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-    credentials: "include",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      cookie: authToken,
+    },
     body: JSON.stringify(data),
   };
 
