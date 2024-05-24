@@ -597,16 +597,16 @@ public class Facade {
 	@Path("/initdb")
 	@Consumes({ "application/json" })
 	public void initTestDB() {
-		System.out.println("Entrée dans initDB");
 		GroupName g = new GroupName("Acide");
 		createGroup(g);
-		System.out.println("Création du groupe Acide");
+		GroupName g2 = new GroupName("ab");
+		createGroup(g2);
 		User u = new User("Myrtille", "Jean-Michel", "Paltan", null, null, false);
 		addUser(u);
-		System.out.println("Création de l'utilisateur Myrtille");
 		User u2 = new User("Tron", "Anabelle", "Praissé", null, null, false);
-		addUser(u);
-		System.out.println("Création de l'utilisateur Tron");
+		addUser(u2);
+		User u3 = new User("a", "a", "a", null, null, false);
+		addUser(u3);
 
 		Event e = new Event("fete des agrumes", null, null);
 		addEvent(e);
