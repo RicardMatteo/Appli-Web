@@ -16,6 +16,7 @@ import Agenda from "./routes/agenda/agenda";
 import Organiser from "./routes/organiser/organiser";
 import Participant from "./routes/participant/participant";
 import Events from "./routes/events/events";
+import ReplyToInvite from "./routes/events/replytoinvite/replytoinvite";
 
 // Create Router and render App
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
   {
     path: "/events",
     element: <Events />,
+  },
+  {
+    path: "/events/replytoinvite/:eventId",
+    element: <ReplyToInvite />,
   },
 ]);
 

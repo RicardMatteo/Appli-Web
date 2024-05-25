@@ -509,6 +509,7 @@ public class Facade {
 				// add the participants
 				// initialize the guests list
 				event.setGuests(new ArrayList<User>());
+				event.setSlots(new ArrayList<Slot>());
 				for (Integer userId : eventSlotsData.participants) {
 					User user = em.find(User.class, userId);
 					event.getGuests().add(user);
@@ -533,6 +534,120 @@ public class Facade {
 			e.printStackTrace();
 			System.out.println("Error creating event");
 		}
+	}
+
+	public static class SmallEvent {
+		public Integer eventId;
+		public String eventName;
+		public Collection<Integer> slotIds;
+		public Collection<Long> startDates;
+		public Collection<Long> endDates;
+		public Collection<Integer> capacities;
+
+		// Constructor
+		public SmallEvent() {
+		}
+
+		public Integer getEventId() {
+			return eventId;
+		}
+
+		public void setEventId(Integer eventId) {
+			this.eventId = eventId;
+		}
+
+		public String getEventName() {
+			return eventName;
+		}
+
+		public void setEventName(String eventName) {
+			this.eventName = eventName;
+		}
+
+		public Collection<Integer> getSlotIds() {
+			return slotIds;
+		}
+
+		public void setSlotIds(Collection<Integer> slotIds) {
+			this.slotIds = slotIds;
+		}
+
+		public Collection<Long> getStartDates() {
+			return startDates;
+		}
+
+		public void setStartDates(Collection<Long> startDates) {
+			this.startDates = startDates;
+		}
+
+		public Collection<Long> getEndDates() {
+			return endDates;
+		}
+
+		public void setEndDates(Collection<Long> endDates) {
+			this.endDates = endDates;
+		}
+
+		public Collection<Integer> getCapacities() {
+			return capacities;
+		}
+
+		public void setCapacities(Collection<Integer> capacities) {
+			this.capacities = capacities;
+		}
+
+	}
+
+	/*
+	 * Retrieve an event
+	 * 
+	 * @param cookie
+	 * 
+	 * @param eventId
+	 */
+	@GET
+	@Path("/getevent")
+	@Produces({ "application/json" })
+	public SmallEvent getEvent(@HeaderParam("Cookie") String rawAuthToken, @HeaderParam("eventId") String rawEventId) {
+		String[] cookieParts = rawAuthToken.split("=", 2);
+		String cookie = cookieParts[1];
+		System.out.println("Raw event id : " + rawEventId);
+		int eventId = Integer.parseInt(rawEventId);
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				System.out.println("login success !!");
+				Event event = em.find(Event.class, eventId);
+				SmallEvent smallEvent = new SmallEvent();
+				smallEvent.setEventId(event.getId());
+				smallEvent.setEventName(event.getName());
+				smallEvent.setSlotIds(new ArrayList<>());
+				smallEvent.setStartDates(new ArrayList<>());
+				smallEvent.setEndDates(new ArrayList<>());
+				smallEvent.setCapacities(new ArrayList<>());
+				// get the slots
+				TypedQuery<Slot> reqSlots = em.createQuery("select s from Slot s where s.event_slot = :event",
+						Slot.class);
+				reqSlots.setParameter("event", event);
+				Collection<Slot> slots = reqSlots.getResultList();
+				System.out.println("Slots : " + slots.size());
+				for (Slot slot : slots) {
+					smallEvent.getSlotIds().add(slot.getId());
+					smallEvent.getStartDates().add(slot.getStartDate());
+					smallEvent.getEndDates().add(slot.getEndDate());
+					smallEvent.getCapacities().add(slot.getCapacity());
+				}
+				return smallEvent;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error getting event");
+		}
+		return null;
 	}
 
 	//

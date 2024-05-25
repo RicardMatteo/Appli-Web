@@ -3,14 +3,16 @@ import Cookies from "js-cookie";
 async function invokeGetWithCookie(
   method: string,
   successMsg: string,
-  failureMsg: string
+  failureMsg: string,
+  headerName?: string,
+  headerValue?: string
 ): Promise<any | null> {
   const authToken = Cookies.get("authToken") || ""; // Check if authToken cookie exists, provide default value if it doesn't
   const requestOptions: RequestInit = {
     method: "GET",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      cookie: authToken,
+      ...(headerName && headerValue && { [headerName]: headerValue }),
     },
     credentials: "include",
   };

@@ -25,7 +25,7 @@ public class Slot {
 	Place location;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	Event event;
+	Event event_slot;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	Collection<User> participants;
@@ -39,13 +39,13 @@ public class Slot {
 		this.endDate = endDate;
 	}
 
-	public Slot(int capacity, long startDate, long endDate, Place location, Event event,
+	public Slot(int capacity, long startDate, long endDate, Place location, Event event_slot,
 			Collection<User> participants) {
 		this.capacity = capacity;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.location = location;
-		this.event = event;
+		this.event_slot = event_slot;
 		this.participants = participants;
 	}
 
@@ -116,14 +116,14 @@ public class Slot {
 	 * @return Event
 	 */
 	public Event getEvent() {
-		return event;
+		return event_slot;
 	}
 
 	/**
 	 * @param event
 	 */
-	public void setEvent(Event event) {
-		this.event = event;
+	public void setEvent(Event event_slot) {
+		this.event_slot = event_slot;
 	}
 
 	/**

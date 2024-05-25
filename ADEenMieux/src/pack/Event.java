@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Event {
@@ -21,6 +22,9 @@ public class Event {
 
 	@ManyToMany()
 	Collection<User> guests;
+
+	@OneToMany(mappedBy = "event_slot", fetch = FetchType.EAGER)
+	Collection<Slot> slots;
 
 	/*
 	 * @ManyToMany(fetch = FetchType.EAGER)
@@ -42,6 +46,20 @@ public class Event {
 	 * this.organisers = organisers;
 	 * }
 	 */
+
+	/**
+	 * @return Collection<Slot>
+	 */
+	public Collection<Slot> getSlots() {
+		return slots;
+	}
+
+	/**
+	 * @param slots
+	 */
+	public void setSlots(Collection<Slot> slots) {
+		this.slots = slots;
+	}
 
 	/**
 	 * @return int
