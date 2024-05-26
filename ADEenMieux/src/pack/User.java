@@ -41,6 +41,9 @@ public class User {
 	@OneToMany(mappedBy = "user_token", fetch = FetchType.EAGER)
 	Collection<ConnexionToken> tokens;
 
+	@ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
+	Collection<Slot> slots_user;
+
 	private boolean isAdmin;
 
 	public User() {
@@ -190,5 +193,13 @@ public class User {
 	 */
 	public void setHashedPassword(String hashedPassword) {
 		this.hashedPassword = hashedPassword;
+	}
+
+	public Collection<Slot> getSlots_user() {
+		return slots_user;
+	}
+
+	public void setSlots_user(Collection<Slot> slots_user) {
+		this.slots_user = slots_user;
 	}
 }

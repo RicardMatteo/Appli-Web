@@ -47,34 +47,57 @@ function ChooseSlot({ slots }: { slots: Slot[] }) {
     onSubmit: (values) => {
       const selectedSlotId = parseInt(values.selectedSlot);
       console.log("Selected slot id", selectedSlotId);
+      invokePost(
+        "addusertoslot",
+        {
+          slotId: selectedSlotId,
+        },
+        "Reply to invite success",
+        "Reply to invite failure"
+      ).then(
+        (res) => {
+          if (res !== null) {
+            console.log("Reply to invite success", res);
+            alert("Inscription au créneau réussie");
+          }
+        },
+        (error) => {
+          console.error("Reply to invite failure", error);
+          alert("Erreur lors de l'inscription au créneau");
+        }
+      );
     },
   });
 
   return (
     <>
       <div className="container">
-        <form onSubmit={formikSlot.handleSubmit}>
-          {slots.map((slot) => (
-            <div key={slot.slotId}>
-              <input
-                type="radio"
-                name="selectedSlot"
-                value={slot.slotId.toString()}
-                onChange={formikSlot.handleChange}
-                onBlur={formikSlot.handleBlur}
-                checked={
-                  formikSlot.values.selectedSlot === slot.slotId.toString()
-                }
-              />
-              <label>
-                {new Date(slot.startDate).toLocaleDateString()} -{" "}
-                {new Date(slot.endDate).toLocaleDateString()} - {slot.capacity}{" "}
-                places restantes - {slot.slotId.toString()}
-              </label>
-            </div>
-          ))}
-          <button type="submit">Submit</button>
-        </form>
+        {slots.length === 0 ? (
+          <p>Désolé, plus aucun créneau disponible</p>
+        ) : (
+          <form onSubmit={formikSlot.handleSubmit}>
+            {slots.map((slot) => (
+              <div key={slot.slotId}>
+                <input
+                  type="radio"
+                  name="selectedSlot"
+                  value={slot.slotId.toString()}
+                  onChange={formikSlot.handleChange}
+                  onBlur={formikSlot.handleBlur}
+                  checked={
+                    formikSlot.values.selectedSlot === slot.slotId.toString()
+                  }
+                />
+                <label>
+                  {new Date(slot.startDate).toLocaleDateString()} -{" "}
+                  {new Date(slot.endDate).toLocaleDateString()} -{" "}
+                  {slot.capacity} places restantes - {slot.slotId.toString()}
+                </label>
+              </div>
+            ))}
+            <button type="submit">Submit</button>
+          </form>
+        )}
       </div>
     </>
   );
@@ -139,7 +162,6 @@ function ReplyToInvite() {
       </HeroPattern>
       <PresentEventDetails eventName={eventRef.current?.eventName || ""} />
       <ChooseSlot slots={listSlot} />
-      <div className="container"> Slots : {listSlot.length}</div>
     </>
   );
 }

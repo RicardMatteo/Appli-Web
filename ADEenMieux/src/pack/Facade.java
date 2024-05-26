@@ -633,6 +633,10 @@ public class Facade {
 						break;
 					}
 				}
+				if (!isGuest) {
+					System.out.println("User is not a guest of the event");
+					return null;
+				}
 
 				SmallEvent smallEvent = new SmallEvent();
 				smallEvent.setEventId(event.getId());
@@ -648,10 +652,13 @@ public class Facade {
 				Collection<Slot> slots = reqSlots.getResultList();
 				System.out.println("Slots : " + slots.size());
 				for (Slot slot : slots) {
-					smallEvent.getSlotIds().add(slot.getId());
-					smallEvent.getStartDates().add(slot.getStartDate());
-					smallEvent.getEndDates().add(slot.getEndDate());
-					smallEvent.getCapacities().add(slot.getCapacity());
+					if (slot.getCapacity() != 0) {
+
+						smallEvent.getSlotIds().add(slot.getId());
+						smallEvent.getStartDates().add(slot.getStartDate());
+						smallEvent.getEndDates().add(slot.getEndDate());
+						smallEvent.getCapacities().add(slot.getCapacity());
+					}
 				}
 				return smallEvent;
 			}
@@ -698,9 +705,14 @@ public class Facade {
 				System.out.println("login success !!");
 				Slot slot = em.find(Slot.class, slotId.getSlotId());
 				User user = token.getUserToken();
-				slot.addParticipant(user);
+				slot.getParticipants().add(user);
 				System.out.println("User added to slot");
 				slot.getEvent().getGuests().remove(user);
+				int newCapacity = slot.getCapacity() - 1;
+
+				slot.setCapacity(newCapacity);
+				System.out.println("Slot capacity updated");
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -889,10 +901,10 @@ public class Facade {
 		String password = "a";
 		String hashedPassword = LoginInfo.hashPassword(password);
 		// "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"
-		User u = new User("Myrtille", "Jean-Michel", "Paltan", null, null, false);
+		User u = new User("kirby", "Jean-Michel", "Paltan", null, null, false);
 		u.setHashedPassword(hashedPassword);
 		addUser(u);
-		User u2 = new User("Tron", "Anabelle", "Praissé", null, null, false);
+		User u2 = new User("ness", "Anabelle", "Praissé", null, null, false);
 		u2.setHashedPassword(hashedPassword);
 		addUser(u2);
 		User u3 = new User("a", "a", "a", null, null, false);

@@ -15,8 +15,9 @@ const WrongEventId = () => {
         <div></div>
       </HeroPattern>
       <div className="container">
-        <h1>Wrong Event Id</h1>
-        <p>Event Id does not exist</p>
+        <h1>Erreur</h1>
+        <p>L'évènement auquel vous essayez de vous inscrire n'est pas valide</p>
+        <p>ou vous êtes déjà inscrits</p>
       </div>
     </>
   );
