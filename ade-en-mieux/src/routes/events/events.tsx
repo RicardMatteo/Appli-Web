@@ -19,6 +19,13 @@ type Slot = {
   capacity: number;
   startDate: number;
   endDate: number;
+  placeId: number;
+};
+
+type SmallPlaceGet = {
+  id: number;
+  name: string;
+  capacity: number;
 };
 
 const HeroPattern = ({
@@ -32,20 +39,38 @@ const HeroPattern = ({
 function ManageSlots({
   listSlot,
   setListSlot,
+  places,
+  setPlaces,
 }: {
   listSlot: Slot[];
   setListSlot: React.Dispatch<React.SetStateAction<Slot[]>>;
+  places: SmallPlaceGet[];
+  setPlaces: React.Dispatch<React.SetStateAction<SmallPlaceGet[]>>;
 }) {
+  useEffect(() => {
+    invokeGetWithCookie(
+      "getplacesid",
+      "Get places success",
+      "Get places failure"
+    ).then((res) => {
+      if (res !== null) {
+        setPlaces(res);
+      }
+    });
+  }, [setPlaces]);
+
   const formikSlot = useFormik({
     initialValues: {
       startDate: "",
       endDate: "",
       capacity: "",
+      placeId: "",
     },
     onSubmit: (values) => {
       console.log("Submitted values - start date : ", values.startDate);
       console.log("Submitted values - end date : ", values.endDate);
       console.log("Submitted values - capacity : ", values.capacity);
+      console.log("Submitted values - place id : ", values.placeId);
       //add the slot to the list of slots
       setListSlot((prevListSlot) => [
         ...prevListSlot,
@@ -53,6 +78,7 @@ function ManageSlots({
           capacity: Number(values.capacity),
           startDate: Date.parse(values.startDate),
           endDate: Date.parse(values.endDate),
+          placeId: Number(values.placeId),
         },
       ]);
       console.log(listSlot);
@@ -62,7 +88,7 @@ function ManageSlots({
 
   return (
     <>
-      <h1>Manage Slots</h1>
+      <h1>Gérer les slots</h1>
       <div className="container">
         <h1>Créer un créneau</h1>
         <form onSubmit={formikSlot.handleSubmit}>
@@ -108,6 +134,25 @@ function ManageSlots({
               Capacité
             </label>
           </div>
+          <div>
+            <label htmlFor="placeId">Lieu</label>
+            <select
+              id="placeId"
+              name="placeId"
+              onChange={(e) => {
+                console.log("Place id", e.target.value);
+                formikSlot.handleChange(e);
+              }}
+              value={formikSlot.values.placeId}
+            >
+              {places.map((place) => (
+                <option key={place.id} value={place.id}>
+                  {place.name} (ID: {place.id})
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className="button-container">
             <div className="padding">
               <button className="button-64" type="submit">
@@ -124,13 +169,14 @@ function ManageSlots({
 function ListSlots({ listSlot }: { listSlot: Slot[] }) {
   return (
     <>
-      <h1>List Slots</h1>
+      <h1>Liste des Slots</h1>
       <div className="container">
         {listSlot.map((slot, index) => (
           <div key={index} className="container">
             <p>Start date : {slot.startDate}</p>
             <p>End date : {slot.endDate}</p>
             <p>Capacity : {slot.capacity}</p>
+            <p>Place id : {slot.placeId}</p>
           </div>
         ))}
       </div>
@@ -165,6 +211,9 @@ function CreateEvent({
       const listCapacity = listSlot.map((s) => s.capacity);
       console.log("List capacity", listCapacity);
 
+      const listSlotId = listSlot.map((s) => s.placeId);
+      console.log("List slot id", listSlotId);
+
       invokePost(
         "createevent",
         {
@@ -173,12 +222,16 @@ function CreateEvent({
           startDates: listStartDate,
           endDates: listEndDate,
           capacities: listCapacity,
+          places: listSlotId,
         },
         "Evènement ajouté",
         "Erreur lors de l'ajout de l'évènement"
       ).then((response: Response) => {
         if (response.ok) {
           console.log("Event added");
+          alert(
+            "Évènement ajouté ! Les utilisateurs pourront voir l'évènement sur leur compte"
+          );
         }
       });
 
@@ -189,7 +242,7 @@ function CreateEvent({
 
   return (
     <>
-      <h1>Create the Event</h1>
+      <h1>Créer l'évènement</h1>
       <h2>Tous les slots créés vont être assignés à cet évènement</h2>
       <div className="container">
         <form onSubmit={formikEvent.handleSubmit}>
@@ -247,6 +300,7 @@ function Events() {
 
   const [listUser, setListUser] = useState<User[]>([]);
   const [listSlot, setListSlot] = useState<Slot[]>([]);
+  const [places, setPlaces] = useState<SmallPlaceGet[]>([]);
 
   useEffect(() => {
     invokeGetWithCookie(
@@ -269,7 +323,12 @@ function Events() {
         <div></div>
       </HeroPattern>
       <div>
-        <ManageSlots listSlot={listSlot} setListSlot={setListSlot} />
+        <ManageSlots
+          listSlot={listSlot}
+          setListSlot={setListSlot}
+          places={places}
+          setPlaces={setPlaces}
+        />
         <ListSlots listSlot={listSlot} />
         <CreateEvent
           listSlot={listSlot}

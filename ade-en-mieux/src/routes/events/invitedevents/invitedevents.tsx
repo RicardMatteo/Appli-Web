@@ -36,6 +36,19 @@ const InvitedEvents = () => {
       <HeroPattern pttrn={"topography-pattern"}>
         <div></div>
       </HeroPattern>
+      <div className="topbar">
+        <h1>Invitations</h1>
+        <div className="dashboard">
+          <div className="padding">
+            <button
+              className="button-64"
+              onClick={() => navigate("/dashboard")}
+            >
+              <span className="text">Dashboard</span>
+            </button>
+          </div>
+        </div>
+      </div>
       <div className="container">
         <h1>Liste des évènements auquels vous êtes invités</h1>
         <div>

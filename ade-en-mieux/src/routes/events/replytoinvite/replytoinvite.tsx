@@ -42,6 +42,7 @@ function PresentEventDetails({ eventName }: { eventName: string }) {
 }
 
 function ChooseSlot({ slots }: { slots: Slot[] }) {
+  const navigate = useNavigate();
   const formikSlot = useFormik({
     initialValues: { selectedSlot: "" },
     onSubmit: (values) => {
@@ -59,7 +60,7 @@ function ChooseSlot({ slots }: { slots: Slot[] }) {
           if (res !== null) {
             console.log("Reply to invite success", res);
             alert("Inscription au créneau réussie");
-            window.location.reload();
+            navigate("/events/invitedevents");
           }
         },
         (error) => {

@@ -20,6 +20,7 @@ import ReplyToInvite from "./routes/events/replytoinvite/replytoinvite";
 import WrongEventId from "./routes/events/wrongeventid/wrongeventid";
 import InvitedEvents from "./routes/events/invitedevents/invitedevents";
 import Places from "./routes/places/places";
+import RecapEvents from "./routes/recapevents/recapevents";
 
 // Create Router and render App
 
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
   {
     path: "/places",
     element: <Places />,
+  },
+  {
+    path: "/recapevents",
+    element: <RecapEvents />,
   },
 ]);
 

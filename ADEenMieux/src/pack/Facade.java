@@ -441,6 +441,7 @@ public class Facade {
 		public Collection<Long> startDates;
 		public Collection<Long> endDates;
 		public Collection<Integer> capacities;
+		public Collection<Integer> places;
 
 		public String getEventName() {
 			return eventName;
@@ -520,8 +521,11 @@ public class Facade {
 					long startDate = eventSlotsData.startDates.toArray(new Long[0])[i];
 					long endDate = eventSlotsData.endDates.toArray(new Long[0])[i];
 
-					Place location = new Place("Location " + i, capacity);
-					em.persist(location);
+					System.out.println("id place :" + eventSlotsData.places.toArray(new Integer[0])[i]);
+					// Place location = new Place("Location " + i, capacity);
+					// em.persist(location);
+
+					Place location = em.find(Place.class, eventSlotsData.places.toArray(new Integer[0])[i]);
 
 					Slot slot = new Slot(capacity, startDate, endDate);
 					em.persist(slot);
@@ -718,6 +722,168 @@ public class Facade {
 			e.printStackTrace();
 			System.out.println("Error adding user to slot");
 		}
+	}
+
+	public static class SmallPlaceGet implements Serializable {
+		private int id;
+		private String name;
+		private int capacity;
+
+		public SmallPlaceGet() {
+		}
+
+		public SmallPlaceGet(String name, int capacity, int id) {
+			this.name = name;
+			this.capacity = capacity;
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public int getCapacity() {
+			return capacity;
+		}
+
+		public void setCapacity(int capacity) {
+			this.capacity = capacity;
+		}
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
+	}
+
+	/**
+	 * Get all the existing location
+	 *
+	 * @return Collection<Place>
+	 */
+	@GET
+	@Path("/getplacesid")
+	@Produces({ "application/json" })
+	public Collection<SmallPlaceGet> getPlaceId(@HeaderParam("Cookie") String rawAuthToken) {
+		String[] cookieParts = rawAuthToken.split("=", 2);
+		String cookie = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				System.out.println("login success !!");
+				TypedQuery<Place> reqPlaces = em.createQuery("select p from Place p", Place.class);
+				List<SmallPlaceGet> places = new ArrayList<>();
+				for (Place place : reqPlaces.getResultList()) {
+					System.out.println("Place : " + place.getName() + " " + place.getCapacity() + " " + place.getId());
+					places.add(new SmallPlaceGet(place.getName(), place.getCapacity(), place.getId())); // Added closing
+																										// parenthesis
+				}
+				return places;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error getting places");
+		}
+		return Collections.emptyList();
+	}
+
+	public static class SmallSlot implements Serializable {
+		private String eventName;
+		private long startDate;
+		private long endDate;
+		private String location;
+
+		public SmallSlot() {
+		}
+
+		public SmallSlot(String eventName, long startDate, long endDate, String location) {
+			this.eventName = eventName;
+			this.startDate = startDate;
+			this.endDate = endDate;
+			this.location = location;
+		}
+
+		public String getEventName() {
+			return eventName;
+		}
+
+		public void setEventName(String eventName) {
+			this.eventName = eventName;
+		}
+
+		public long getStartDate() {
+			return startDate;
+		}
+
+		public void setStartDate(long startDate) {
+			this.startDate = startDate;
+		}
+
+		public long getEndDate() {
+			return endDate;
+		}
+
+		public void setEndDate(long endDate) {
+			this.endDate = endDate;
+		}
+
+		public String getLocation() {
+			return location;
+		}
+
+		public void setLocation(String location) {
+			this.location = location;
+		}
+	}
+
+	/*
+	 * Get all the slots of a user
+	 * 
+	 * @param cookie
+	 * 
+	 * @return Collection<SmallSlot>
+	 */
+	@GET
+	@Path("/getuserslots")
+	@Produces({ "application/json" })
+	public Collection<SmallSlot> getUserSlots(@HeaderParam("Cookie") String rawAuthToken) {
+		String[] cookieParts = rawAuthToken.split("=", 2);
+		String cookie = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				System.out.println("login success !!");
+				User user = token.getUserToken();
+				TypedQuery<Slot> reqSlots = em.createQuery("select s from Slot s where :user member of s.participants",
+						Slot.class);
+				reqSlots.setParameter("user", user);
+				List<SmallSlot> slots = new ArrayList<>();
+				for (Slot slot : reqSlots.getResultList()) {
+					slots.add(new SmallSlot(slot.getEvent().getName(), slot.getStartDate(), slot.getEndDate(),
+							slot.getLocation().getName()));
+				}
+				return slots;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error getting slots");
+		}
+		return Collections.emptyList();
 	}
 
 	//
@@ -976,6 +1142,9 @@ public class Facade {
 
 		SmallPlace p = new SmallPlace("Salle des citrons", 100);
 		addPlace(p);
+
+		SmallPlace p2 = new SmallPlace("Salle des oranges", 100);
+		addPlace(p2);
 		System.out.println("Création de la salle des citrons");
 	}
 
