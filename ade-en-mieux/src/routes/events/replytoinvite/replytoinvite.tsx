@@ -59,6 +59,7 @@ function ChooseSlot({ slots }: { slots: Slot[] }) {
           if (res !== null) {
             console.log("Reply to invite success", res);
             alert("Inscription au créneau réussie");
+            window.location.reload();
           }
         },
         (error) => {

@@ -50,6 +50,15 @@ function Dashboard() {
               <span className="text">Events</span>
             </button>
           </div>
+
+          <div className="padding">
+            <button
+              className="button-64"
+              onClick={() => navigate("/events/invitedevents")}
+            >
+              <span className="text">Invited Events</span>
+            </button>
+          </div>
         </div>
         <div className="container">
           <div>

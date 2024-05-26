@@ -928,6 +928,79 @@ public class Facade {
 		System.out.println("Création de la salle des citrons");
 	}
 
+	public static class SmallInvitedEvents {
+		private Integer eventId;
+		private String eventName;
+
+		public SmallInvitedEvents() {
+		}
+
+		public Integer getEventId() {
+			return eventId;
+		}
+
+		public void setEventId(Integer eventId) {
+			this.eventId = eventId;
+		}
+
+		public String getEventName() {
+			return eventName;
+		}
+
+		public void setEventName(String eventName) {
+			this.eventName = eventName;
+		}
+
+	}
+
+	/**
+	 * Get the events the user is invited to
+	 * 
+	 * @param cookie
+	 * @return SmallInvitedEvents
+	 */
+	@GET
+	@Path("/getinvitedevents")
+	@Produces({ "application/json" })
+	public Collection<SmallInvitedEvents> getInvitedEvents(@HeaderParam("cookie") String cookie) {
+		System.out.println("Cookie : " + cookie);
+		String[] cookieParts = cookie.split("=", 2);
+		String cookieValue = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookieValue);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				System.out.println("login success !!");
+				User user = token.getUserToken();
+				ArrayList<SmallInvitedEvents> invitedEvents = new ArrayList<>();
+				// get all the events from the DB
+				TypedQuery<Event> reqEvents = em.createQuery("select e from Event e", Event.class);
+				// return the list of groups as a json object that we build as a string
+				// beforehand, and then put it in the groups header
+				for (Event event : reqEvents.getResultList()) {
+					for (User guest : event.getGuests()) {
+						if (guest.getId() == user.getId()) {
+							SmallInvitedEvents smallEvent = new SmallInvitedEvents();
+							smallEvent.setEventId(event.getId());
+							smallEvent.setEventName(event.getName());
+							invitedEvents.add(smallEvent);
+						}
+					}
+				}
+				return invitedEvents;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("No events found");
+			return null;
+		}
+		System.out.println("Not logged in");
+		return null;
+	}
+
 	//
 	//
 	// /**
