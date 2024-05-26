@@ -81,7 +81,7 @@ const Login = () => {
           console.log("AuthToken : ", authToken);
           Cookies.set("authToken", authToken, {
             expires: 365,
-            sameSite: "Strict",
+            sameSite: "None",
           });
           navigate("/dashboard");
         })

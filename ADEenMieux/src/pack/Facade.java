@@ -622,6 +622,18 @@ public class Facade {
 			if (token != null) {
 				System.out.println("login success !!");
 				Event event = em.find(Event.class, eventId);
+				System.out.println("Event found : " + event.getName());
+
+				// check if the user is a guest of the event
+				boolean isGuest = false;
+				for (User guest : event.getGuests()) {
+					if (guest.getId() == token.getUserToken().getId()) {
+						isGuest = true;
+						System.out.println("User is a guest of the event");
+						break;
+					}
+				}
+
 				SmallEvent smallEvent = new SmallEvent();
 				smallEvent.setEventId(event.getId());
 				smallEvent.setEventName(event.getName());
@@ -648,6 +660,52 @@ public class Facade {
 			System.out.println("Error getting event");
 		}
 		return null;
+	}
+
+	public static class SlotId {
+		public Integer slotId;
+
+		public SlotId() {
+		}
+
+		public Integer getSlotId() {
+			return slotId;
+		}
+
+		public void setSlotId(Integer slotId) {
+			this.slotId = slotId;
+		}
+	}
+
+	/**
+	 * Associate a user to a slot in an event
+	 * 
+	 * @param SlotId
+	 */
+	@POST
+	@Path("/addusertoslot")
+	@Consumes({ "application/json" })
+	public void addUserToSlot(@HeaderParam("Cookie") String rawAuthToken, SlotId slotId) {
+		String[] cookieParts = rawAuthToken.split("=", 2);
+		String cookie = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				System.out.println("login success !!");
+				Slot slot = em.find(Slot.class, slotId.getSlotId());
+				User user = token.getUserToken();
+				slot.addParticipant(user);
+				System.out.println("User added to slot");
+				slot.getEvent().getGuests().remove(user);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error adding user to slot");
+		}
 	}
 
 	//
