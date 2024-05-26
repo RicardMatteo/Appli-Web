@@ -39,21 +39,25 @@ const InvitedEvents = () => {
       <div className="container">
         <h1>Liste des évènements auquels vous êtes invités</h1>
         <div>
-          {listEvents.map((event) => (
-            <div key={event.eventId}>
-              <h2>{event.eventName}</h2>
-              <div className="padding">
-                <button
-                  className="button-64"
-                  onClick={() =>
-                    navigate("/events/replytoinvite/" + event.eventId)
-                  }
-                >
-                  <span className="text">Répondre à l'invitation</span>
-                </button>
+          {listEvents.length === 0 ? (
+            <div>Aucune invitation</div>
+          ) : (
+            listEvents.map((event) => (
+              <div key={event.eventId}>
+                <h2>{event.eventName}</h2>
+                <div className="padding">
+                  <button
+                    className="button-64"
+                    onClick={() =>
+                      navigate("/events/replytoinvite/" + event.eventId)
+                    }
+                  >
+                    <span className="text">Répondre à l'invitation</span>
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </>

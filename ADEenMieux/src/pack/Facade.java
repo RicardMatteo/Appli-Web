@@ -838,24 +838,75 @@ public class Facade {
 
 	//
 	//
+
+	public static class SmallPlace implements Serializable {
+		private String name;
+		private int capacity;
+
+		public SmallPlace() {
+		}
+
+		public SmallPlace(String name, int capacity) {
+			this.name = name;
+			this.capacity = capacity;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public int getCapacity() {
+			return capacity;
+		}
+
+		public void setCapacity(int capacity) {
+			this.capacity = capacity;
+		}
+	}
+
 	/**
 	 * Get all the existing location
 	 *
 	 * @return Collection<Place>
 	 */
 	@GET
-	@Path("/getplace")
-	@Consumes({ "application/json" })
-	public Collection<Place> getPlace() {
-		TypedQuery<Place> req = em.createQuery("select l from Place l", Place.class);
-		return req.getResultList();
+	@Path("/getplaces")
+	@Produces({ "application/json" })
+	public Collection<SmallPlace> getPlace(@HeaderParam("Cookie") String rawAuthToken) {
+		String[] cookieParts = rawAuthToken.split("=", 2);
+		String cookie = cookieParts[1];
+		// check if the user is logged in
+		TypedQuery<ConnexionToken> req = em.createQuery("select c from ConnexionToken c where c.token = :token",
+				ConnexionToken.class);
+		req.setParameter("token", cookie);
+		try {
+			ConnexionToken token = req.getSingleResult();
+			if (token != null) {
+				System.out.println("login success !!");
+				TypedQuery<Place> reqPlaces = em.createQuery("select p from Place p", Place.class);
+				List<SmallPlace> places = new ArrayList<>();
+				for (Place place : reqPlaces.getResultList()) {
+					places.add(new SmallPlace(place.getName(), place.getCapacity()));
+				}
+				return places;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error getting places");
+		}
+		return Collections.emptyList();
 	}
 
 	@POST
 	@Path("/addplace")
 	@Consumes({ "application/json" })
-	public void addPlace(Place place) {
-		em.persist(place);
+	public void addPlace(SmallPlace place) {
+		Place p = new Place(place.getName(), place.getCapacity());
+		em.persist(p);
 	}
 
 	/**
@@ -923,7 +974,7 @@ public class Facade {
 		addAgenda(a);
 		System.out.println("Création de l'agenda Déroulé de la fete");
 
-		Place p = new Place("Salle des citrons", 100);
+		SmallPlace p = new SmallPlace("Salle des citrons", 100);
 		addPlace(p);
 		System.out.println("Création de la salle des citrons");
 	}

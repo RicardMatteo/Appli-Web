@@ -41,13 +41,19 @@ function Dashboard() {
               className="button-64"
               onClick={() => navigate("/organiser")}
             >
-              <span className="text">Organiser</span>
+              <span className="text">Gérer les groupes</span>
             </button>
           </div>
 
           <div className="padding">
             <button className="button-64" onClick={() => navigate("/events")}>
-              <span className="text">Events</span>
+              <span className="text">Créer un évènement</span>
+            </button>
+          </div>
+
+          <div className="padding">
+            <button className="button-64" onClick={() => navigate("/places")}>
+              <span className="text">Gérer les salles</span>
             </button>
           </div>
         </div>
@@ -77,7 +83,7 @@ function Dashboard() {
               className="button-64"
               onClick={() => navigate("/events/invitedevents")}
             >
-              <span className="text">Participer</span>
+              <span className="text">Répondre aux invitations</span>
             </button>
           </div>
         </div>
