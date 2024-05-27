@@ -35,9 +35,6 @@ public class User {
 	@ManyToMany(mappedBy = "guests")
 	Collection<Event> signed_up_events;
 
-	// @ManyToMany(mappedBy = "organisers", fetch = FetchType.EAGER)
-	// Collection<Event> organised_events;
-
 	@OneToMany(mappedBy = "user_token", fetch = FetchType.EAGER)
 	Collection<ConnexionToken> tokens;
 

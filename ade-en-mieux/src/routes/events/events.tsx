@@ -95,7 +95,7 @@ function ManageSlots({
           <div className="form__group field">
             <input
               className="form__field"
-              type="date"
+              type="datetime-local"
               name="startDate"
               id="startDate"
               onChange={formikSlot.handleChange}
@@ -109,7 +109,7 @@ function ManageSlots({
           <div className="form__group field">
             <input
               className="form__field"
-              type="date"
+              type="datetime-local"
               name="endDate"
               id="endDate"
               onChange={formikSlot.handleChange}
@@ -173,10 +173,9 @@ function ListSlots({ listSlot }: { listSlot: Slot[] }) {
       <div className="container">
         {listSlot.map((slot, index) => (
           <div key={index} className="container">
-            <p>Start date : {slot.startDate}</p>
-            <p>End date : {slot.endDate}</p>
+            <p>Start date : {new Date(slot.startDate).toLocaleString()}</p>
+            <p>End date : {new Date(slot.endDate).toLocaleString()}</p>
             <p>Capacity : {slot.capacity}</p>
-            <p>Place id : {slot.placeId}</p>
           </div>
         ))}
       </div>

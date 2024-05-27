@@ -20,17 +20,12 @@ export default function Root() {
       </HeroPattern>
       <div className="container">
         <div>
-          <h1>ADE en Mieux</h1>
+          <h1>Agenda</h1>
         </div>
         <div>
-          <h2>Ceci sera la future homepage du site !</h2>
+          <h2>Bienvenue sur votre agenda !</h2>
         </div>
         <div className="button-container">
-          <div className="padding">
-            <button className="button-64" onClick={() => navigate("/tp3")}>
-              <span className="text">TP3</span>
-            </button>
-          </div>
           <div className="padding">
             <button className="button-64" onClick={() => navigate("/login")}>
               <span className="text">Login</span>
