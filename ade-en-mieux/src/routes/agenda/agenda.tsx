@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { invokeGetWithCookie } from "../../include/getwithcookie";
+import React, { useState } from 'react';
 import "./agenda.scss";
 import { date } from "yup";
 
@@ -59,20 +60,20 @@ function Agenda() {
 
   // On vérifie que l'utilisateur est connecter avant d'afficher la page
   useEffect(() => {
-    if (Cookies.get("authToken") === undefined) {
-      navigate("/login");
-    } else {
-      
-      // on recupère tt les slots du boug
-      invokeGetWithCookie("getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
-        if(Array.isArray(resultat)){
-          resultat.forEach((res) => (slots.push(transformToSlot(res))));
-          
-        
-        } 
-      });
-      
-    }
+    //if (Cookies.get("authToken") === undefined) {
+    //  navigate("/login");
+    //} else {
+    //  
+    //  // on recupère tt les slots du boug
+    //  invokeGetWithCookie("getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
+    //    if(Array.isArray(resultat)){
+    //      resultat.forEach((res) => (slots.push(transformToSlot(res))));
+    //      
+    //    
+    //    } 
+    //  });
+    //  
+    //}
     init_display();
   }, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
 
@@ -133,12 +134,16 @@ function Agenda() {
               <span className="close-button">&times;</span>
               <h2>Ajouter un événement</h2>
               <form id="event-form">
+                <ul>
                 <label htmlFor="event-name">Nom de l'événement:</label>
                 <input type="text" id="event-name" name="event-name" required />
-
+                </ul>
+                <ul>
                 <label htmlFor="event-date">Date:</label>
-                <input type="date" id="event-date" name="event-date" required />
-
+                <DateInputComponent />
+                </ul>
+                
+                <ul>
                 <label htmlFor="start-time">Heure de début:</label>
                 <input type="time" id="start-time" name="start-time" required />
 
@@ -146,6 +151,7 @@ function Agenda() {
                 <input type="time" id="end-time" name="end-time" required />
 
                 <button type="submit">Ajouter</button>
+                </ul>
               </form>
             </div>
           </div>
@@ -253,6 +259,7 @@ function updateWeekDisplay() {//reset
       
     }
   })
+
 }
 
 function init_display(){
@@ -271,9 +278,59 @@ function init_display(){
         updateWeekDisplay();
       }); 
     }
-  }
 
+
+
+  }
+  const modal = document.getElementById('event-modal');
+  const addEventButton = document.getElementById('add-event-button');
+  const closeButton = document.querySelector('.close-button');
+  
+  if(addEventButton!=null &&modal!=null&& closeButton!=null){
+    addEventButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    
+    
+  }
   updateWeekDisplay();
 }
 
 
+
+const DateInputComponent = () => {
+  // Déclaration de l'état pour stocker la valeur de l'input
+  
+  const [datee, setDate] = useState('');
+  // Fonction pour gérer le changement de valeur de l'input
+  const handleDateChange = (event : React.ChangeEvent<HTMLInputElement>) => {
+    setDate(event.target.value);
+  };
+
+  
+  
+
+  return (
+    <input
+        type="date"
+        id="event-date"
+        value={datee}
+        onChange={handleDateChange}
+      />
+    
+  );
+
+
+
+};
