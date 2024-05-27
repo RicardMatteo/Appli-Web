@@ -56,11 +56,13 @@ function Agenda() {
     } else {
       
       // on recupère tt les slots du boug
-      invokeGetWithCookie("/getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
+      invokeGetWithCookie("getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
         if(Array.isArray(resultat)){
           console.log(resultat[0]);
           
         
+        } else {
+          console.log(resultat);
         }
       });
       
