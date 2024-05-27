@@ -4,3 +4,224 @@
 @import url("/src/style/container.scss");
 @import url("/src/style/topbar.scss");
 @import url("/src/style/box.scss");
+
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+.time-slot {
+    height: 8.33%; /* 1 hour = 8.33% of 12 hours (8-20) */
+    border-top: 1px solid #eee;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.time-slot::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+}
+
+
+.time-slot[data-hour="8"],
+.time-slot[data-hour="10"],
+.time-slot[data-hour="12"],
+.time-slot[data-hour="14"],
+.time-slot[data-hour="16"],
+.time-slot[data-hour="18"] {
+    border-top: 2px solid #bbb;
+}
+
+.hours-label{
+  width :px;
+  background-color: #f0f0f0;
+}
+.hours-column {
+    width : 45px;
+    align-items: center;
+    
+    background-color: #f0f0f0;
+}
+
+.hours-column .hour {
+    height: 8.33%; /* 1 hour = 8.33% of 12 hours (8-20) */
+    position: relative;
+    top : -1%;
+  
+    justify-content: center;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.hours-column .hour[hour="20"]{
+    position: relative;
+    top : -2%;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 5%;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    color: #ffeb3b;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.menu{
+    width: 200px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.agenda {
+    display: grid;
+    grid-template-columns: 45px repeat(7, 1fr);
+    grid-template-rows: auto 1fr;
+    
+    background-color: #ccc;
+    width: 100%;
+    height: 100%;
+}
+.header {
+    display: contents;
+}
+
+.header .day {
+    background-color: #444;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #444;
+}
+
+.body {
+    display: contents;
+    position: relative;
+}
+
+.column {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    position: relative;
+}
+
+.activity {
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    background-color: #ffeb3b;
+    border: 1px solid #fbc02d;
+    padding: 10% 0%;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align:center;
+  
+}
+
+.activity:hover {
+    background-color: #fbc02d;
+}
+
+.week-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.week-navigation button {
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.week-navigation button:hover {
+    background-color: #666;
+}
+
+#current-week {
+    font-weight: bold;
+}
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
