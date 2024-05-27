@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+/**
+ * The Agenda class represents a user's agenda.
+ * It contains information about the agenda's ID, name, tasks, slots, and user.
+ */
 @Entity
 public class Agenda {
 
@@ -31,77 +35,114 @@ public class Agenda {
 	public Agenda() {
 	};
 
+	/**
+	 * Constructs a new Agenda object with the specified name.
+	 *
+	 * @param name the name of the agenda
+	 */
 	public Agenda(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Constructs a new Agenda object with the specified name, tasks, and slots.
+	 *
+	 * @param name  the name of the agenda
+	 * @param tasks the collection of tasks associated with the agenda
+	 * @param slots the collection of slots associated with the agenda
+	 */
 	public Agenda(String name, Collection<Task> tasks, Collection<Slot> slots) {
 		this.name = name;
-		// TODO check if null
 		this.tasks = tasks;
 		this.slots = slots;
 	}
 
 	/**
-	 * @return int
+	 * Returns the ID of the agenda.
+	 *
+	 * @return the ID of the agenda
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @return String
+	 * Returns the name of the agenda.
+	 *
+	 * @return the name of the agenda
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @param name
+	 * Sets the name of the agenda.
+	 *
+	 * @param name the name of the agenda
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @return Collection<Task>
+	 * Returns the collection of tasks associated with the agenda.
+	 *
+	 * @return the collection of tasks associated with the agenda
 	 */
 	public Collection<Task> getTasks() {
 		return tasks;
 	}
 
 	/**
-	 * @param tasks
+	 * Sets the collection of tasks associated with the agenda.
+	 *
+	 * @param tasks the collection of tasks associated with the agenda
 	 */
 	public void setTasks(Collection<Task> tasks) {
 		this.tasks = tasks;
 	}
 
 	/**
-	 * @return Collection<Slot>
+	 * Returns the collection of slots associated with the agenda.
+	 *
+	 * @return the collection of slots associated with the agenda
 	 */
 	public Collection<Slot> getSlots() {
 		return slots;
 	}
 
 	/**
-	 * @param slots
+	 * Sets the collection of slots associated with the agenda.
+	 *
+	 * @param slots the collection of slots associated with the agenda
 	 */
 	public void setSlots(Collection<Slot> slots) {
 		this.slots = slots;
 	}
 
+	/**
+	 * Adds a slot to the collection of slots associated with the agenda.
+	 *
+	 * @param slot the slot to be added
+	 */
 	public void addSlot(Slot slot) {
 		this.slots.add(slot);
 	}
 
 	/**
-	 * @return User
+	 * Returns the user associated with the agenda.
+	 *
+	 * @return the user associated with the agenda
 	 */
 	public User getUser() {
 		return user;
 	}
 
+	/**
+	 * Sets the user associated with the agenda.
+	 *
+	 * @param user the user associated with the agenda
+	 */
 	public void setUser(User user) {
 		this.user = user;
 	}

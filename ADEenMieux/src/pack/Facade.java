@@ -21,6 +21,22 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+/**
+ * The Facade class is responsible for handling user-related operations and serving as an interface between the client and the database.
+ * It provides methods for adding users, logging in, retrieving user information, creating groups, and listing users and groups.
+ */
+/**
+ * The Facade class is responsible for handling various operations related to user management and authentication.
+ * It provides methods for adding a user to the database, logging in a user, retrieving user information, creating groups, and listing users and groups.
+ * This class is annotated with @Singleton to ensure that only one instance of the class is created and shared across multiple requests.
+ * The class also defines several inner classes to represent different data structures used in the operations.
+ */
+/**
+ * The Facade class is responsible for handling user-related operations and
+ * serving as an interface between the client and the database.
+ * It provides methods for adding users, logging in, retrieving user
+ * information, creating groups, and listing users and groups.
+ */
 @Singleton
 @Path("/")
 public class Facade {
@@ -51,29 +67,52 @@ public class Facade {
 		private String username;
 		private String hashedPassword;
 
-		// Constructor
+		/**
+		 * Default constructor for LoginInfo.
+		 */
 		public LoginInfo() {
 		}
 
+		/**
+		 * Constructor for LoginInfo with username and hashed password.
+		 *
+		 * @param username       the username
+		 * @param hashedPassword the hashed password
+		 */
 		public LoginInfo(String username, String hashedPassword) {
 			this.username = username;
 			this.hashedPassword = hashedPassword;
 		}
 
-		// Getters and setters
+		/**
+		 * Get the username.
+		 *
+		 * @return the username
+		 */
 		public String getUsername() {
 			return username;
 		}
 
+		/**
+		 * Set the username.
+		 *
+		 * @param username the username to set
+		 */
 		public void setUsername(String username) {
 			this.username = username;
 		}
 
-		public static String hashPassword(String Password) {
+		/**
+		 * Hashes the given password using SHA-256 algorithm.
+		 *
+		 * @param password the password to hash
+		 * @return the hashed password
+		 */
+		public static String hashPassword(String password) {
 			MessageDigest digest;
 			try {
 				digest = MessageDigest.getInstance("SHA-256");
-				byte[] encodedhash = digest.digest(Password.getBytes(StandardCharsets.UTF_8));
+				byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
 				String encodedHashString = bytesToHex(encodedhash);
 				return encodedHashString;
 			} catch (NoSuchAlgorithmException e) {
@@ -82,6 +121,12 @@ public class Facade {
 			return "";
 		}
 
+		/**
+		 * Converts a byte array to a hexadecimal string.
+		 *
+		 * @param encodedhash the byte array to convert
+		 * @return the hexadecimal string
+		 */
 		private static String bytesToHex(byte[] encodedhash) {
 			StringBuilder sb = new StringBuilder();
 			for (byte b : encodedhash) {
@@ -91,10 +136,20 @@ public class Facade {
 			return result;
 		}
 
+		/**
+		 * Get the hashed password.
+		 *
+		 * @return the hashed password
+		 */
 		public String getHashedPassword() {
 			return hashedPassword;
 		}
 
+		/**
+		 * Set the hashed password.
+		 *
+		 * @param hashedPassword the hashed password to set
+		 */
 		public void setHashedPassword(String hashedPassword) {
 			this.hashedPassword = hashedPassword;
 		}
@@ -142,18 +197,35 @@ public class Facade {
 	public static class Cookie {
 		private String cookie;
 
-		// Constructor
+		/**
+		 * Constructs a new Cookie object.
+		 */
 		public Cookie() {
 		}
 
+		/**
+		 * Constructs a new Cookie object with the specified cookie value.
+		 *
+		 * @param cookie the cookie value
+		 */
 		public Cookie(String cookie) {
 			this.cookie = cookie;
 		}
 
+		/**
+		 * Returns the cookie value.
+		 *
+		 * @return the cookie value
+		 */
 		public String getCookie() {
 			return cookie;
 		}
 
+		/**
+		 * Sets the cookie value.
+		 *
+		 * @param cookie the cookie value to set
+		 */
 		public void setCookie(String cookie) {
 			this.cookie = cookie;
 		}
@@ -185,18 +257,35 @@ public class Facade {
 	public static class GroupName {
 		private String groupName;
 
-		// Constructor
+		/**
+		 * Constructs a new GroupName object.
+		 */
 		public GroupName() {
 		}
 
+		/**
+		 * Constructs a new GroupName object with the specified group name.
+		 *
+		 * @param groupName the group name
+		 */
 		public GroupName(String groupName) {
 			this.groupName = groupName;
 		}
 
+		/**
+		 * Returns the group name.
+		 *
+		 * @return the group name
+		 */
 		public String getGroupName() {
 			return groupName;
 		}
 
+		/**
+		 * Sets the group name.
+		 *
+		 * @param groupName the group name to set
+		 */
 		public void setGroupName(String groupName) {
 			this.groupName = groupName;
 		}
@@ -220,27 +309,55 @@ public class Facade {
 		private Integer groupId;
 		private String groupName;
 
-		// Constructor
+		/**
+		 * Default constructor for the SmallGroup class.
+		 */
 		public SmallGroup() {
 		}
 
+		/**
+		 * Constructor for the SmallGroup class.
+		 * 
+		 * @param groupId   the ID of the group
+		 * @param groupName the name of the group
+		 */
 		public SmallGroup(Integer groupId, String groupName) {
 			this.groupId = groupId;
 			this.groupName = groupName;
 		}
 
+		/**
+		 * Get the ID of the group.
+		 * 
+		 * @return the group ID
+		 */
 		public Integer getGroupId() {
 			return groupId;
 		}
 
+		/**
+		 * Set the ID of the group.
+		 * 
+		 * @param groupId the group ID to set
+		 */
 		public void setGroupId(Integer groupId) {
 			this.groupId = groupId;
 		}
 
+		/**
+		 * Get the name of the group.
+		 * 
+		 * @return the group name
+		 */
 		public String getGroupName() {
 			return groupName;
 		}
 
+		/**
+		 * Set the name of the group.
+		 * 
+		 * @param groupName the group name to set
+		 */
 		public void setGroupName(String groupName) {
 			this.groupName = groupName;
 		}
@@ -293,58 +410,127 @@ public class Facade {
 		private String hashedPassword;
 		private boolean isAdmin;
 
+		/**
+		 * Default constructor for the SmallUser class.
+		 */
 		public SmallUser() {
 		}
 
+		/**
+		 * Constructor for the SmallUser class with userId and username parameters.
+		 *
+		 * @param userId   the ID of the user
+		 * @param username the username of the user
+		 */
 		public SmallUser(Integer userId, String username) {
 			this.userId = userId;
 			this.username = username;
 		}
 
+		/**
+		 * Get the ID of the user.
+		 *
+		 * @return the ID of the user
+		 */
 		public Integer getUserId() {
 			return userId;
 		}
 
+		/**
+		 * Set the ID of the user.
+		 *
+		 * @param userId the ID of the user
+		 */
 		public void setUserId(Integer userId) {
 			this.userId = userId;
 		}
 
+		/**
+		 * Get the username of the user.
+		 *
+		 * @return the username of the user
+		 */
 		public String getUsername() {
 			return username;
 		}
 
+		/**
+		 * Set the username of the user.
+		 *
+		 * @param username the username of the user
+		 */
 		public void setUsername(String username) {
 			this.username = username;
 		}
 
+		/**
+		 * Get the first name of the user.
+		 *
+		 * @return the first name of the user
+		 */
 		public String getFirstName() {
 			return firstName;
 		}
 
+		/**
+		 * Set the first name of the user.
+		 *
+		 * @param firstName the first name of the user
+		 */
 		public void setFirstName(String firstName) {
 			this.firstName = firstName;
 		}
 
+		/**
+		 * Get the last name of the user.
+		 *
+		 * @return the last name of the user
+		 */
 		public String getLastName() {
 			return lastName;
 		}
 
+		/**
+		 * Set the last name of the user.
+		 *
+		 * @param lastName the last name of the user
+		 */
 		public void setLastName(String lastName) {
 			this.lastName = lastName;
 		}
 
+		/**
+		 * Get the hashed password of the user.
+		 *
+		 * @return the hashed password of the user
+		 */
 		public String getHashedPassword() {
 			return hashedPassword;
 		}
 
+		/**
+		 * Set the hashed password of the user.
+		 *
+		 * @param hashedPassword the hashed password of the user
+		 */
 		public void setHashedPassword(String hashedPassword) {
 			this.hashedPassword = hashedPassword;
 		}
 
+		/**
+		 * Check if the user is an admin.
+		 *
+		 * @return true if the user is an admin, false otherwise
+		 */
 		public boolean isAdmin() {
 			return isAdmin;
 		}
 
+		/**
+		 * Set the admin status of the user.
+		 *
+		 * @param isAdmin true if the user is an admin, false otherwise
+		 */
 		public void setAdmin(boolean isAdmin) {
 			this.isAdmin = isAdmin;
 		}
@@ -389,31 +575,63 @@ public class Facade {
 		return Collections.emptyList();
 	}
 
+	/**
+	 * Represents an association between a selected group and a collection of
+	 * selected users.
+	 */
 	public static class AssociationGUID {
 		private Integer selectedGroup;
 		private Collection<Integer> selectedUsers;
 
-		// Constructor
+		/**
+		 * Default constructor for the AssociationGUID class.
+		 */
 		public AssociationGUID() {
 		}
 
+		/**
+		 * Constructor for the AssociationGUID class.
+		 * 
+		 * @param selectedGroup The selected group.
+		 * @param selectedUsers The collection of selected users.
+		 */
 		public AssociationGUID(Integer selectedGroup, Collection<Integer> selectedUsers) {
 			this.selectedGroup = selectedGroup;
 			this.selectedUsers = selectedUsers;
 		}
 
+		/**
+		 * Get the selected group.
+		 * 
+		 * @return The selected group.
+		 */
 		public Integer getSelectedGroup() {
 			return selectedGroup;
 		}
 
+		/**
+		 * Set the selected group.
+		 * 
+		 * @param selectedGroup The selected group.
+		 */
 		public void setSelectedGroup(Integer selectedGroup) {
 			this.selectedGroup = selectedGroup;
 		}
 
+		/**
+		 * Get the collection of selected users.
+		 * 
+		 * @return The collection of selected users.
+		 */
 		public Collection<Integer> getSelectedUsers() {
 			return selectedUsers;
 		}
 
+		/**
+		 * Set the collection of selected users.
+		 * 
+		 * @param selectedUsers The collection of selected users.
+		 */
 		public void setSelectedUsers(Collection<Integer> selectedUsers) {
 			this.selectedUsers = selectedUsers;
 		}
@@ -435,6 +653,9 @@ public class Facade {
 		}
 	}
 
+	/**
+	 * Represents the data for event slots.
+	 */
 	public static class EventSlotsData {
 		public String eventName;
 		public Collection<Integer> participants;
@@ -443,46 +664,95 @@ public class Facade {
 		public Collection<Integer> capacities;
 		public Collection<Integer> places;
 
+		/**
+		 * Gets the event name.
+		 * 
+		 * @return The event name.
+		 */
 		public String getEventName() {
 			return eventName;
 		}
 
+		/**
+		 * Sets the event name.
+		 * 
+		 * @param eventName The event name to set.
+		 */
 		public void setEventName(String eventName) {
 			this.eventName = eventName;
 		}
 
+		/**
+		 * Gets the participants.
+		 * 
+		 * @return The participants.
+		 */
 		public Collection<Integer> getParticipants() {
 			return participants;
 		}
 
+		/**
+		 * Sets the participants.
+		 * 
+		 * @param participants The participants to set.
+		 */
 		public void setParticipants(Collection<Integer> participants) {
 			this.participants = participants;
 		}
 
+		/**
+		 * Gets the start dates.
+		 * 
+		 * @return The start dates.
+		 */
 		public Collection<Long> getStartDates() {
 			return startDates;
 		}
 
+		/**
+		 * Sets the start dates.
+		 * 
+		 * @param startDates The start dates to set.
+		 */
 		public void setStartDates(Collection<Long> startDates) {
 			this.startDates = startDates;
 		}
 
+		/**
+		 * Gets the end dates.
+		 * 
+		 * @return The end dates.
+		 */
 		public Collection<Long> getEndDates() {
 			return endDates;
 		}
 
+		/**
+		 * Sets the end dates.
+		 * 
+		 * @param endDates The end dates to set.
+		 */
 		public void setEndDates(Collection<Long> endDates) {
 			this.endDates = endDates;
 		}
 
+		/**
+		 * Gets the capacities.
+		 * 
+		 * @return The capacities.
+		 */
 		public Collection<Integer> getCapacities() {
 			return capacities;
 		}
 
+		/**
+		 * Sets the capacities.
+		 * 
+		 * @param capacities The capacities to set.
+		 */
 		public void setCapacities(Collection<Integer> capacities) {
 			this.capacities = capacities;
 		}
-
 	}
 
 	/**
@@ -541,67 +811,156 @@ public class Facade {
 	}
 
 	public static class SmallEvent {
+		/**
+		 * The ID of the event.
+		 */
 		public Integer eventId;
+
+		/**
+		 * The name of the event.
+		 */
 		public String eventName;
+
+		/**
+		 * The IDs of the slots associated with the event.
+		 */
 		public Collection<Integer> slotIds;
+
+		/**
+		 * The start dates of the event.
+		 */
 		public Collection<Long> startDates;
+
+		/**
+		 * The end dates of the event.
+		 */
 		public Collection<Long> endDates;
+
+		/**
+		 * The capacities of the event.
+		 */
 		public Collection<Integer> capacities;
 
-		// Constructor
+		/**
+		 * Constructs a new instance of the SmallEvent class.
+		 */
 		public SmallEvent() {
 		}
 
+		/**
+		 * Gets the ID of the event.
+		 *
+		 * @return The ID of the event.
+		 */
 		public Integer getEventId() {
 			return eventId;
 		}
 
+		/**
+		 * Sets the ID of the event.
+		 *
+		 * @param eventId The ID of the event.
+		 */
 		public void setEventId(Integer eventId) {
 			this.eventId = eventId;
 		}
 
+		/**
+		 * Gets the name of the event.
+		 *
+		 * @return The name of the event.
+		 */
 		public String getEventName() {
 			return eventName;
 		}
 
+		/**
+		 * Sets the name of the event.
+		 *
+		 * @param eventName The name of the event.
+		 */
 		public void setEventName(String eventName) {
 			this.eventName = eventName;
 		}
 
+		/**
+		 * Gets the IDs of the slots associated with the event.
+		 *
+		 * @return The IDs of the slots associated with the event.
+		 */
 		public Collection<Integer> getSlotIds() {
 			return slotIds;
 		}
 
+		/**
+		 * Sets the IDs of the slots associated with the event.
+		 *
+		 * @param slotIds The IDs of the slots associated with the event.
+		 */
 		public void setSlotIds(Collection<Integer> slotIds) {
 			this.slotIds = slotIds;
 		}
 
+		/**
+		 * Gets the start dates of the event.
+		 *
+		 * @return The start dates of the event.
+		 */
 		public Collection<Long> getStartDates() {
 			return startDates;
 		}
 
+		/**
+		 * Sets the start dates of the event.
+		 *
+		 * @param startDates The start dates of the event.
+		 */
 		public void setStartDates(Collection<Long> startDates) {
 			this.startDates = startDates;
 		}
 
+		/**
+		 * Gets the end dates of the event.
+		 *
+		 * @return The end dates of the event.
+		 */
 		public Collection<Long> getEndDates() {
 			return endDates;
 		}
 
+		/**
+		 * Sets the end dates of the event.
+		 *
+		 * @param endDates The end dates of the event.
+		 */
 		public void setEndDates(Collection<Long> endDates) {
 			this.endDates = endDates;
 		}
 
+		/**
+		 * Gets the capacities of the event.
+		 *
+		 * @return The capacities of the event.
+		 */
 		public Collection<Integer> getCapacities() {
 			return capacities;
 		}
 
+		/**
+		 * Sets the capacities of the event.
+		 *
+		 * @param capacities The capacities of the event.
+		 */
 		public void setCapacities(Collection<Integer> capacities) {
 			this.capacities = capacities;
 		}
-
 	}
 
+	/**
+	 * @param rawAuthToken
+	 * @param rawEventId
+	 * @return SmallEvent
+	 */
 	/*
 	 * Retrieve an event
 	 * 
@@ -673,16 +1032,29 @@ public class Facade {
 		return null;
 	}
 
+	/**
+	 * Represents a Slot ID.
+	 */
 	public static class SlotId {
 		public Integer slotId;
 
 		public SlotId() {
 		}
 
+		/**
+		 * Gets the slot ID.
+		 * 
+		 * @return The slot ID.
+		 */
 		public Integer getSlotId() {
 			return slotId;
 		}
 
+		/**
+		 * Sets the slot ID.
+		 * 
+		 * @param slotId The slot ID to set.
+		 */
 		public void setSlotId(Integer slotId) {
 			this.slotId = slotId;
 		}
@@ -724,40 +1096,83 @@ public class Facade {
 		}
 	}
 
+	/**
+	 * Represents a small place object with its name, capacity, and ID.
+	 */
 	public static class SmallPlaceGet implements Serializable {
 		private int id;
 		private String name;
 		private int capacity;
 
+		/**
+		 * Default constructor for the SmallPlaceGet class.
+		 */
 		public SmallPlaceGet() {
 		}
 
+		/**
+		 * Constructor for the SmallPlaceGet class with parameters.
+		 *
+		 * @param name     the name of the small place
+		 * @param capacity the capacity of the small place
+		 * @param id       the ID of the small place
+		 */
 		public SmallPlaceGet(String name, int capacity, int id) {
 			this.name = name;
 			this.capacity = capacity;
 			this.id = id;
 		}
 
+		/**
+		 * Gets the name of the small place.
+		 *
+		 * @return the name of the small place
+		 */
 		public String getName() {
 			return name;
 		}
 
+		/**
+		 * Sets the name of the small place.
+		 *
+		 * @param name the name of the small place
+		 */
 		public void setName(String name) {
 			this.name = name;
 		}
 
+		/**
+		 * Gets the capacity of the small place.
+		 *
+		 * @return the capacity of the small place
+		 */
 		public int getCapacity() {
 			return capacity;
 		}
 
+		/**
+		 * Sets the capacity of the small place.
+		 *
+		 * @param capacity the capacity of the small place
+		 */
 		public void setCapacity(int capacity) {
 			this.capacity = capacity;
 		}
 
+		/**
+		 * Gets the ID of the small place.
+		 *
+		 * @return the ID of the small place
+		 */
 		public int getId() {
 			return id;
 		}
 
+		/**
+		 * Sets the ID of the small place.
+		 *
+		 * @param id the ID of the small place
+		 */
 		public void setId(int id) {
 			this.id = id;
 		}
@@ -804,9 +1219,20 @@ public class Facade {
 		private long endDate;
 		private String location;
 
+		/**
+		 * Default constructor for the SmallSlot class.
+		 */
 		public SmallSlot() {
 		}
 
+		/**
+		 * Constructor for the SmallSlot class.
+		 * 
+		 * @param eventName The name of the event.
+		 * @param startDate The start date of the event.
+		 * @param endDate   The end date of the event.
+		 * @param location  The location of the event.
+		 */
 		public SmallSlot(String eventName, long startDate, long endDate, String location) {
 			this.eventName = eventName;
 			this.startDate = startDate;
@@ -814,39 +1240,83 @@ public class Facade {
 			this.location = location;
 		}
 
+		/**
+		 * Get the name of the event.
+		 * 
+		 * @return The name of the event.
+		 */
 		public String getEventName() {
 			return eventName;
 		}
 
+		/**
+		 * Set the name of the event.
+		 * 
+		 * @param eventName The name of the event.
+		 */
 		public void setEventName(String eventName) {
 			this.eventName = eventName;
 		}
 
+		/**
+		 * Get the start date of the event.
+		 * 
+		 * @return The start date of the event.
+		 */
 		public long getStartDate() {
 			return startDate;
 		}
 
+		/**
+		 * Set the start date of the event.
+		 * 
+		 * @param startDate The start date of the event.
+		 */
 		public void setStartDate(long startDate) {
 			this.startDate = startDate;
 		}
 
+		/**
+		 * Get the end date of the event.
+		 * 
+		 * @return The end date of the event.
+		 */
 		public long getEndDate() {
 			return endDate;
 		}
 
+		/**
+		 * Set the end date of the event.
+		 * 
+		 * @param endDate The end date of the event.
+		 */
 		public void setEndDate(long endDate) {
 			this.endDate = endDate;
 		}
 
+		/**
+		 * Get the location of the event.
+		 * 
+		 * @return The location of the event.
+		 */
 		public String getLocation() {
 			return location;
 		}
 
+		/**
+		 * Set the location of the event.
+		 * 
+		 * @param location The location of the event.
+		 */
 		public void setLocation(String location) {
 			this.location = location;
 		}
 	}
 
+	/**
+	 * @param rawAuthToken
+	 * @return Collection<SmallSlot>
+	 */
 	/*
 	 * Get all the slots of a user
 	 * 
@@ -1009,26 +1479,55 @@ public class Facade {
 		private String name;
 		private int capacity;
 
+		/**
+		 * Default constructor for the SmallPlace class.
+		 */
 		public SmallPlace() {
 		}
 
+		/**
+		 * Constructor for the SmallPlace class.
+		 * 
+		 * @param name     the name of the small place
+		 * @param capacity the capacity of the small place
+		 */
 		public SmallPlace(String name, int capacity) {
 			this.name = name;
 			this.capacity = capacity;
 		}
 
+		/**
+		 * Get the name of the small place.
+		 * 
+		 * @return the name of the small place
+		 */
 		public String getName() {
 			return name;
 		}
 
+		/**
+		 * Set the name of the small place.
+		 * 
+		 * @param name the name of the small place
+		 */
 		public void setName(String name) {
 			this.name = name;
 		}
 
+		/**
+		 * Get the capacity of the small place.
+		 * 
+		 * @return the capacity of the small place
+		 */
 		public int getCapacity() {
 			return capacity;
 		}
 
+		/**
+		 * Set the capacity of the small place.
+		 * 
+		 * @param capacity the capacity of the small place
+		 */
 		public void setCapacity(int capacity) {
 			this.capacity = capacity;
 		}
@@ -1067,6 +1566,9 @@ public class Facade {
 		return Collections.emptyList();
 	}
 
+	/**
+	 * @param place
+	 */
 	@POST
 	@Path("/addplace")
 	@Consumes({ "application/json" })
@@ -1091,6 +1593,10 @@ public class Facade {
 		return token.getUserToken();
 	}
 
+	/**
+	 * @param slot
+	 * @param agenda
+	 */
 	@POST
 	@Path("/slottoagenda")
 	@Consumes({ "application/json" })
@@ -1100,6 +1606,10 @@ public class Facade {
 		agenda.setSlots(slots);
 	}
 
+	/**
+	 * @param task
+	 * @param agenda
+	 */
 	@POST
 	@Path("/tasktoagenda")
 	@Consumes({ "application/json" })
@@ -1152,25 +1662,47 @@ public class Facade {
 		private Integer eventId;
 		private String eventName;
 
+		/**
+		 * Default constructor for the SmallInvitedEvents class.
+		 */
 		public SmallInvitedEvents() {
 		}
 
+		/**
+		 * Get the event ID.
+		 *
+		 * @return The event ID.
+		 */
 		public Integer getEventId() {
 			return eventId;
 		}
 
+		/**
+		 * Set the event ID.
+		 *
+		 * @param eventId The event ID to set.
+		 */
 		public void setEventId(Integer eventId) {
 			this.eventId = eventId;
 		}
 
+		/**
+		 * Get the event name.
+		 *
+		 * @return The event name.
+		 */
 		public String getEventName() {
 			return eventName;
 		}
 
+		/**
+		 * Set the event name.
+		 *
+		 * @param eventName The event name to set.
+		 */
 		public void setEventName(String eventName) {
 			this.eventName = eventName;
 		}
-
 	}
 
 	/**

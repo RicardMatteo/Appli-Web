@@ -60,145 +60,172 @@ public class User {
 	}
 
 	/**
-	 * @return int
+	 * Get the ID of the user.
+	 *
+	 * @return The ID of the user.
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @return String
+	 * Get the username of the user.
+	 *
+	 * @return The username of the user.
 	 */
 	public String getUsername() {
 		return username;
 	}
 
 	/**
-	 * @param username
+	 * Set the username of the user.
+	 *
+	 * @param username The username to set.
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
 	/**
-	 * @return String
+	 * Get the first name of the user.
+	 *
+	 * @return The first name of the user.
 	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
 	/**
-	 * @param firstName
+	 * Set the first name of the user.
+	 *
+	 * @param firstName The first name to set.
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
 	/**
-	 * @return String
+	 * Get the last name of the user.
+	 *
+	 * @return The last name of the user.
 	 */
 	public String getLastName() {
 		return lastName;
 	}
 
 	/**
-	 * @param lastName
+	 * Set the last name of the user.
+	 *
+	 * @param lastName The last name to set.
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
 	/**
-	 * @return Collection<Group>
+	 * Get the groups that the user belongs to.
+	 *
+	 * @return The groups that the user belongs to.
 	 */
 	public Collection<GroupClass> getGroups() {
 		return groups;
 	}
 
 	/**
-	 * @param groups
+	 * Set the groups that the user belongs to.
+	 *
+	 * @param groups The groups to set.
 	 */
 	public void setGroups(Collection<GroupClass> groups) {
 		this.groups = groups;
 	}
 
 	/**
-	 * @return Collection<Agenda>
+	 * Get the agendas of the user.
+	 *
+	 * @return The agendas of the user.
 	 */
 	public Collection<Agenda> getAgendas() {
 		return agendas;
 	}
 
 	/**
-	 * @param agendas
+	 * Set the agendas of the user.
+	 *
+	 * @param agendas The agendas to set.
 	 */
 	public void setAgendas(Collection<Agenda> agendas) {
 		this.agendas = agendas;
 	}
 
 	/**
-	 * @return boolean
+	 * Check if the user is an admin.
+	 *
+	 * @return true if the user is an admin, false otherwise.
 	 */
 	public boolean isAdmin() {
 		return isAdmin;
 	}
 
 	/**
-	 * @param isAdmin
+	 * Set whether the user is an admin or not.
+	 *
+	 * @param isAdmin true if the user is an admin, false otherwise.
 	 */
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 
 	/**
-	 * @return Collection<Event>
+	 * Get the events that the user has signed up for.
+	 *
+	 * @return The events that the user has signed up for.
 	 */
 	public Collection<Event> getSigned_up_events() {
 		return signed_up_events;
 	}
 
 	/**
-	 * @param signed_up_events
+	 * Set the events that the user has signed up for.
+	 *
+	 * @param signed_up_events The events to set.
 	 */
 	public void setSigned_up_events(Collection<Event> signed_up_events) {
 		this.signed_up_events = signed_up_events;
 	}
 
 	/**
-	 * @return Collection<Event>
-	 */ /*
-		 * public Collection<Event> getOrganised_events() {
-		 * return organised_events;
-		 * }
-		 */
-
-	/**
-	 * @param organised_events
-	 */
-	/*
-	 * public void setOrganised_events(Collection<Event> organised_events) {
-	 * this.organised_events = organised_events;
-	 * }
-	 */
-
-	/**
-	 * @return String
+	 * Get the hashed password of the user.
+	 *
+	 * @return The hashed password of the user.
 	 */
 	public String getHashedPassword() {
 		return hashedPassword;
 	}
 
 	/**
-	 * @param hashedPassword
+	 * Set the hashed password of the user.
+	 *
+	 * @param hashedPassword The hashed password to set.
 	 */
 	public void setHashedPassword(String hashedPassword) {
 		this.hashedPassword = hashedPassword;
 	}
 
+	/**
+	 * Get the slots of the user.
+	 *
+	 * @return The slots of the user.
+	 */
 	public Collection<Slot> getSlots_user() {
 		return slots_user;
 	}
 
+	/**
+	 * Set the slots of the user.
+	 *
+	 * @param slots_user The slots to set.
+	 */
 	public void setSlots_user(Collection<Slot> slots_user) {
 		this.slots_user = slots_user;
 	}
