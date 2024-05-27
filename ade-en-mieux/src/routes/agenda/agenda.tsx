@@ -47,7 +47,7 @@ function Agenda() {
         </div>
         <div className="main-content">
           <table className="agenda">
-            <div className="header">
+          <div className="header">
               <div className="hours-label"></div>
               <div className="day">Lundi</div>
 
@@ -106,3 +106,4 @@ function Agenda() {
 }
 
 export default Agenda;
+

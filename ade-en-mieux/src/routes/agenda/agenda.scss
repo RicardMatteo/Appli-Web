@@ -24,6 +24,7 @@ body {
     top: 0; /* Stay at the top */
     left: 0;
     flex-grow: 1;
+    cursor: pointer;
     
 }
 
@@ -59,25 +60,31 @@ body {
     flex-direction: column;
     align-items: center;
     flex-grow: 1;
-    padding: 10px;
+    padding: 15px;
     box-sizing: border-box;
     position: relative; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0px; /* Stay at the top */
     left: 0px;
     width: 100%;
+    height: 100%;
     flex-grow: 9;
 }
 
 .agenda {
     display: grid;
     grid-template-columns: 45px repeat(7, 1fr);
-    table-layout: fixed;
+    
     width: 100%;
+    height: 100%;
+    
 }
 
 .header {
     display: contents;
+    grid-template-columns: 45px repeat(7, 1fr);
+    height: 10px;
+    position: relative;
 }
 
 .header .day {
@@ -91,7 +98,7 @@ body {
 .body {
     display: contents;
     position: relative;
-    height: 100%;
+    height: auto;
 }
  
 .hours-label{
@@ -123,7 +130,7 @@ body {
     background-color: #fff;
     border: 1px solid #ccc;
     position: relative;
-    height: 100px;
+    height: auto;
     
 }
 
