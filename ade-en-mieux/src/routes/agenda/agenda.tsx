@@ -72,7 +72,8 @@ function Agenda() {
   }
     
 
-  init_display()}, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
+  init_display();
+}, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
 
   return (
     <>
