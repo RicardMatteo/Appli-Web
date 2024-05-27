@@ -53,7 +53,6 @@ public class Agenda {
 	 */
 	public Agenda(String name, Collection<Task> tasks, Collection<Slot> slots) {
 		this.name = name;
-		// TODO check if null
 		this.tasks = tasks;
 		this.slots = slots;
 	}
