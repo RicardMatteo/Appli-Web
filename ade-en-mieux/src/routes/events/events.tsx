@@ -67,10 +67,11 @@ function ManageSlots({
       placeId: "",
     },
     onSubmit: (values) => {
+      /* Debug
       console.log("Submitted values - start date : ", values.startDate);
       console.log("Submitted values - end date : ", values.endDate);
       console.log("Submitted values - capacity : ", values.capacity);
-      console.log("Submitted values - place id : ", values.placeId);
+      console.log("Submitted values - place id : ", values.placeId); */
       //add the slot to the list of slots
       setListSlot((prevListSlot) => [
         ...prevListSlot,
@@ -81,7 +82,8 @@ function ManageSlots({
           placeId: Number(values.placeId),
         },
       ]);
-      console.log(listSlot);
+      /* Debug
+      console.log(listSlot); */
       formikSlot.resetForm();
     },
   });
@@ -140,7 +142,8 @@ function ManageSlots({
               id="placeId"
               name="placeId"
               onChange={(e) => {
-                console.log("Place id", e.target.value);
+                /* Debug
+                console.log("Place id", e.target.value); */
                 formikSlot.handleChange(e);
               }}
               value={formikSlot.values.placeId}
@@ -198,20 +201,23 @@ function CreateEvent({
       selectedUsers: [],
     },
     onSubmit: (values) => {
+      /* Debug
       console.log("Submitted values - event name : ", values.eventName);
-      console.log("Selected users : ", values.selectedUsers);
+      console.log("Selected users : ", values.selectedUsers); */
       // create the list of start dates
       const listStartDate = listSlot.map((s) => s.startDate);
-      console.log("List start date", listStartDate);
       // create the list of end dates
       const listEndDate = listSlot.map((s) => s.endDate);
-      console.log("List end date", listEndDate);
       // create the list of capacities
       const listCapacity = listSlot.map((s) => s.capacity);
-      console.log("List capacity", listCapacity);
-
       const listSlotId = listSlot.map((s) => s.placeId);
+
+      /* Debug
+      console.log("List start date", listStartDate);
+      console.log("List end date", listEndDate);
+      console.log("List capacity", listCapacity);
       console.log("List slot id", listSlotId);
+      */
 
       invokePost(
         "createevent",
@@ -227,7 +233,6 @@ function CreateEvent({
         "Erreur lors de l'ajout de l'évènement"
       ).then((response: Response) => {
         if (response.ok) {
-          console.log("Event added");
           alert(
             "Évènement ajouté ! Les utilisateurs pourront voir l'évènement sur leur compte"
           );
@@ -307,7 +312,6 @@ function Events() {
       "Liste des utilisateurs récupérée",
       "Erreur lors de la récupération de la liste des utilisateurs"
     ).then((res) => {
-      console.log("Users res", res);
       if (Array.isArray(res)) {
         setListUser(res);
       } else {

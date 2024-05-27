@@ -31,7 +31,6 @@ const groupValidationSchema = yup.object({
 });
 
 function createGroup(groupName: string) {
-  console.log(groupName);
   invokePost(
     "creategroup",
     { groupName: groupName },
@@ -50,7 +49,6 @@ function ListGroups() {
       "Group listés",
       "Erreur lors de la récupération de la liste des groupes"
     ).then((res) => {
-      console.log("Groups res", res);
       if (Array.isArray(res)) {
         setListGroup(res);
       } else {
@@ -62,7 +60,6 @@ function ListGroups() {
       "Users listés",
       "Erreur lors de la récupération de la liste des users"
     ).then((res) => {
-      console.log("Users res", res);
       if (Array.isArray(res)) {
         setListUser(res);
       } else {
@@ -88,8 +85,6 @@ function ListGroups() {
       }}
       onSubmit={(values) => {
         // Handle form submission
-        console.log(values);
-        ///////////////////////////////////////////
         invokePost(
           "addusergroup",
           {

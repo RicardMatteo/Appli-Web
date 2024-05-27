@@ -47,7 +47,6 @@ function ChooseSlot({ slots }: { slots: Slot[] }) {
     initialValues: { selectedSlot: "" },
     onSubmit: (values) => {
       const selectedSlotId = parseInt(values.selectedSlot);
-      console.log("Selected slot id", selectedSlotId);
       invokePost(
         "addusertoslot",
         {
@@ -58,7 +57,6 @@ function ChooseSlot({ slots }: { slots: Slot[] }) {
       ).then(
         (res) => {
           if (res !== null) {
-            console.log("Reply to invite success", res);
             alert("Inscription au créneau réussie");
             navigate("/events/invitedevents");
           }
@@ -132,10 +130,8 @@ function ReplyToInvite() {
       eventId
     )
       .then((res) => {
-        console.log("Event details", res);
         if (res !== null) {
           eventRef.current = res as SmallEvent;
-          console.log("Event", eventRef.current);
           slots.length = 0;
           for (let i = 0; i < eventRef.current.slotIds.length; i++) {
             slots.push({
@@ -146,7 +142,6 @@ function ReplyToInvite() {
             });
           }
           setListSlot(slots);
-          console.log("Slots", slots);
         } else {
           console.error("Error retrieving event details");
         }

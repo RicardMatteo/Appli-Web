@@ -7,7 +7,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.scss";
 // Routes imports
 import Root from "./routes/root";
-import Tp3 from "./routes/tp3/tp3";
 import Login from "./routes/login/login";
 import Test from "./routes/login/test/test";
 import Register from "./routes/register/register";
@@ -31,10 +30,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-  },
-  {
-    path: "/tp3",
-    element: <Tp3 />,
   },
   {
     path: "/login",

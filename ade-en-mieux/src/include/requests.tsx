@@ -22,6 +22,7 @@ async function invokePost(
 
   try {
     const res = await fetch("/ADEenMieux/rest/" + method, requestOptions);
+    /* Debug
     if (res.ok) {
       //ShowMessage(successMsg);
       console.log(successMsg);
@@ -29,6 +30,7 @@ async function invokePost(
       console.log(failureMsg);
       //ShowMessage(failureMsg);
     }
+    */
     return res;
   } catch (error) {
     console.error("Error in invokePost :", error);

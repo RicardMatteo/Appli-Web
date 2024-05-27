@@ -17,10 +17,12 @@ async function invokeGetWithCookie(
   try {
     const res = await fetch("/ADEenMieux/rest/" + method, requestOptions);
     if (res.ok) {
+      /* Debug
       console.log(successMsg);
-      console.log(res);
+      console.log(res); */
     } else {
-      console.log(failureMsg);
+      /* Debug
+      console.log(failureMsg); */
     }
     return await res.json();
   } catch (error) {

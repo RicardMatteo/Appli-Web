@@ -47,8 +47,6 @@ function Places() {
       capacity: "",
     },
     onSubmit: (values) => {
-      console.log("Submitted values - name : ", values.name);
-      console.log("Submitted values - capacity : ", values.capacity);
       invokePost(
         "addplace",
         {
@@ -59,7 +57,6 @@ function Places() {
         "Add place failure"
       ).then((res) => {
         if (res !== null) {
-          console.log("Add place success", res);
           setPlaces((prevPlaces) => [
             ...prevPlaces,
             {

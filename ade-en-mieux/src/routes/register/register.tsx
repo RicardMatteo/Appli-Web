@@ -23,12 +23,6 @@ const sanitize_username_input = (value: string) => {
   return sanitizedValue;
 };
 
-const sanitize_name_input = (value: string) => {
-  // Remove all non-alphabetical characters
-  const sanitizedValue = value.replace(/[^a-zA-Z]/g, "");
-  return sanitizedValue;
-};
-
 const validationSchema = yup.object({
   username: yup
     .string()
@@ -65,8 +59,7 @@ const Register = () => {
     onSubmit: (values) => {
       const username = sanitize_username_input(values.username);
       const password = hashPassword(values.password);
-      const firstname = sanitize_name_input(values.firstname);
-      const lastname = sanitize_name_input(values.lastname);
+      /* Debug
       console.log(
         "Submitted values - username : ",
         username,
@@ -76,7 +69,7 @@ const Register = () => {
         firstname,
         " - lastname : ",
         lastname
-      );
+      ); */
 
       invokePost(
         "adduser",

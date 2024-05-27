@@ -30,7 +30,6 @@ function RecapEvents() {
     ).then((res) => {
       if (res !== null) {
         setSlots(res);
-        console.log("Slots", res);
       }
     });
   }, []);
