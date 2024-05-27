@@ -32,51 +32,63 @@ public class Task {
 	}
 
 	/**
-	 * @return int
+	 * Get the ID of the task.
+	 *
+	 * @return The ID of the task.
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @return String
+	 * Get the name of the task.
+	 *
+	 * @return The name of the task.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @param name
+	 * Set the name of the task.
+	 *
+	 * @param name The name of the task.
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @return int
+	 * Get the deadline of the task.
+	 *
+	 * @return The deadline of the task.
 	 */
 	public int getDeadline() {
 		return deadline;
 	}
 
 	/**
-	 * @param deadline
+	 * Set the deadline of the task.
+	 *
+	 * @param deadline The deadline of the task.
 	 */
 	public void setDeadline(int deadline) {
 		this.deadline = deadline;
 	}
 
 	/**
-	 * @return agenda
+	 * Get the agenda associated with the task.
+	 *
+	 * @return The agenda associated with the task.
 	 */
 	public Agenda getAgenda() {
 		return agenda;
 	}
 
 	/**
-	 * Choisit l'agenda auquel associer la tâche
-	 * 
-	 * @param agenda
+	 * Set the agenda associated with the task.
+	 *
+	 * @param agenda The agenda to associate with the task.
 	 */
 	public void setAgenda(Agenda agenda) {
 		this.agenda = agenda;

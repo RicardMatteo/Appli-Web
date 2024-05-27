@@ -28,63 +28,84 @@ public class GroupClass {
 	public GroupClass() {
 	};
 
+	/**
+	 * Constructs a new GroupClass object with the specified name.
+	 * 
+	 * @param name the name of the group class
+	 */
 	public GroupClass(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Constructs a new GroupClass object with the specified name and users.
+	 *
+	 * @param name  the name of the group
+	 * @param users the collection of users in the group
+	 */
 	public GroupClass(String name, Collection<User> users) {
 		this.name = name;
 		this.users = users;
 	}
 
 	/**
-	 * @return int
+	 * Get the ID of the group.
+	 *
+	 * @return The ID of the group.
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @return String
+	 * Get the name of the group.
+	 *
+	 * @return The name of the group.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @param name
+	 * Set the name of the group.
+	 *
+	 * @param name The name of the group.
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @return Collection<User>
+	 * Get the users in the group.
+	 *
+	 * @return The users in the group.
 	 */
 	public Collection<User> getUsers() {
 		return users;
 	}
 
 	/**
-	 * @param users
+	 * Set the users in the group.
+	 *
+	 * @param users The users to set in the group.
 	 */
 	public void setUsers(Collection<User> users) {
 		this.users = users;
 	}
 
 	/**
-	 * Add an user to the group
-	 * 
-	 * @param user
+	 * Add a user to the group.
+	 *
+	 * @param user The user to add to the group.
 	 */
 	public void addUser(User user) {
 		this.users.add(user);
 	}
 
 	/**
-	 * Remove an user of the group
-	 * 
-	 * @param user
+	 * Remove a user from the group.
+	 *
+	 * @param user The user to remove from the group.
 	 */
 	public void removeUser(User user) {
 		this.users.remove(user);

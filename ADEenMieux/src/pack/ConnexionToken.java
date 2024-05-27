@@ -23,11 +23,22 @@ public class ConnexionToken {
     public ConnexionToken() {
     };
 
+    /**
+     * Constructs a new ConnexionToken object with the specified token and user.
+     * 
+     * @param token      the connection token
+     * @param user_token the associated user
+     */
     public ConnexionToken(String token, User user_token) {
         this.token = token;
         this.user_token = user_token;
     }
 
+    /**
+     * Generates a random token string.
+     *
+     * @return The generated token string.
+     */
     public String generateToken() {
         String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder token = new StringBuilder();
@@ -38,42 +49,50 @@ public class ConnexionToken {
         }
         String finalToken = token.toString();
         return finalToken;
-
     }
 
     /**
-     * @return int
+     * Returns the ID of the ConnexionToken.
+     *
+     * @return The ID of the ConnexionToken.
      */
     public int getId() {
         return id;
     }
 
     /**
-     * @return String
+     * Returns the token string.
+     *
+     * @return The token string.
      */
     public String getToken() {
         return token;
     }
 
     /**
-     * @return User
+     * Returns the user associated with the token.
+     *
+     * @return The user associated with the token.
      */
     public User getUserToken() {
         return user_token;
     }
 
     /**
-     * @param token
+     * Sets the token string.
+     *
+     * @param token The token string to set.
      */
     public void setToken(String token) {
         this.token = token;
     }
 
     /**
-     * @param user_token
+     * Sets the user associated with the token.
+     *
+     * @param user_token The user to associate with the token.
      */
     public void setUserToken(User user_token) {
         this.user_token = user_token;
     }
-
 }

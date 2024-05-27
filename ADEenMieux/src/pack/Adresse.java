@@ -9,10 +9,6 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- * @author nauchere
- *
- */
 @Entity
 public class Adresse {
 	@Id
@@ -28,38 +24,45 @@ public class Adresse {
 	Personne personne;
 
 	/**
-	 * @return Personne
+	 * Get the associated Personne object.
+	 *
+	 * @return The associated Personne object.
 	 */
-	// ManyToMany
-	// @ManyToMany
-	// Collection<Personne> personnes;
-
-	// OneToOne
-	// @OneToOne
-	// Personne personne;
-
 	public Personne getPersonne() {
 		return personne;
 	}
 
 	/**
-	 * @param personne
+	 * Set the associated Personne object.
+	 *
+	 * @param personne The Personne object to associate with this Adresse.
 	 */
 	public void setPersonne(Personne personne) {
 		this.personne = personne;
 	}
 
+	/**
+	 * Default constructor for Adresse class.
+	 */
 	public Adresse() {
 	}
 
+	/**
+	 * Constructor for Adresse class.
+	 *
+	 * @param street The street of the address.
+	 * @param city   The city of the address.
+	 */
 	public Adresse(String street, String city) {
 		this.setStreet(street);
 		this.setCity(city);
 	}
 
 	/**
-	 * @param street
-	 * @param city
+	 * Set the street and city of the address.
+	 *
+	 * @param street The street of the address.
+	 * @param city   The city of the address.
 	 */
 	public void setAdresse(String street, String city) {
 		this.setStreet(street);
@@ -67,49 +70,63 @@ public class Adresse {
 	}
 
 	/**
-	 * @return String
+	 * Get the full address.
+	 *
+	 * @return The full address.
 	 */
 	public String getAdresse() {
 		return street.concat(" " + city);
 	}
 
 	/**
-	 * @return String
+	 * Get the street of the address.
+	 *
+	 * @return The street of the address.
 	 */
 	public String getStreet() {
 		return street;
 	}
 
 	/**
-	 * @param street
+	 * Set the street of the address.
+	 *
+	 * @param street The street of the address.
 	 */
 	public void setStreet(String street) {
 		this.street = street;
 	}
 
 	/**
-	 * @return String
+	 * Get the city of the address.
+	 *
+	 * @return The city of the address.
 	 */
 	public String getCity() {
 		return city;
 	}
 
 	/**
-	 * @param city
+	 * Set the city of the address.
+	 *
+	 * @param city The city of the address.
 	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
 	/**
-	 * @return int
+	 * Get the ID of the address.
+	 *
+	 * @return The ID of the address.
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @param id
+	 * Set the ID of the address.
+	 *
+	 * @param id The ID of the address.
 	 */
 	public void setId(int id) {
 		this.id = id;
