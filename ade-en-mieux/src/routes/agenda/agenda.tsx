@@ -66,12 +66,10 @@ function Agenda() {
       // on recupère tt les slots du boug
       invokeGetWithCookie("getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
         if(Array.isArray(resultat)){
-          console.log(transformToSlot(resultat[0]));
+          resultat.forEach((res) => (slots.push(transformToSlot(res))));
           
         
-        } else {
-          console.log(resultat);
-        }
+        } 
       });
       
     }
