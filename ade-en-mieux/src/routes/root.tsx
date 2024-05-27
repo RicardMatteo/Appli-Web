@@ -32,6 +32,11 @@ export default function Root() {
             </button>
           </div>
           <div className="padding">
+            <button className="button-64" onClick={() => navigate("/agenda")}>
+              <span className="text">Agenda</span>
+            </button>
+          </div>
+          <div className="padding">
             <button className="button-64" onClick={() => navigate("/login")}>
               <span className="text">Login</span>
             </button>
