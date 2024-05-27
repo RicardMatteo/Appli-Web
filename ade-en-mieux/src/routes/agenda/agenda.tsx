@@ -11,7 +11,6 @@ const HeroPattern = ({
   children: React.ReactNode;
 }) => <div className={pttrn}>{children}</div>;
 
-
 type Slot = {
   name: string;
   startDate: number;
@@ -26,9 +25,7 @@ function Agenda() {
   const navigate = useNavigate();
 
   // On vérifie que l'utilisateur est connecter avant d'afficher la page
-  useEffect(() => {
-    
-  }, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
+  useEffect(() => {}, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
 
   return (
     <>
@@ -39,18 +36,25 @@ function Agenda() {
         <div className="sidebar">
           <h2>Menu</h2>
           <ul>
-              <li><a href="/dashboard">Accueil</a></li>
-              <li><a id="add-event-button">Ajouter une activité</a></li>
-              <li><a href="#">Paramètres</a></li>
-              <li><a href="#">Aide</a></li>
+            <li>
+              <a href="/dashboard">Accueil</a>
+            </li>
+            <li>
+              <a id="add-event-button">Ajouter une activité</a>
+            </li>
+            <li>
+              <a href="#">Paramètres</a>
+            </li>
+            <li>
+              <a href="#">Aide</a>
+            </li>
           </ul>
         </div>
         <div className="main-content">
           <table className="agenda">
-          <div className="header">
+            <div className="header">
               <div className="hours-label"></div>
               <div className="day">Lundi</div>
-
               <div className="day">Mardi</div>
               <div className="day">Mercredi</div>
               <div className="day">Jeudi</div>
@@ -74,7 +78,7 @@ function Agenda() {
             <span id="current-week"></span>
             <button id="next-week">Semaine suivante</button>
           </div>
-        
+
           <div id="event-modal" className="modal">
             <div className="modal-content">
               <span className="close-button">&times;</span>
@@ -96,14 +100,10 @@ function Agenda() {
               </form>
             </div>
           </div>
-          
         </div>
-      
-        
       </div>
     </>
   );
 }
 
 export default Agenda;
-
