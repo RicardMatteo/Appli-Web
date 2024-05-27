@@ -41,33 +41,38 @@ slots.push(slotTest);
 
 
 
+
+
+
+
 function Agenda() {
   const navigate = useNavigate();
 
   // On vérifie que l'utilisateur est connecter avant d'afficher la page
   useEffect(() => {
     if (Cookies.get("authToken") === undefined) {
-      navigate("/login");
-    } else {
-      
-      // on recupère tt les slots du boug
-      invokeGetWithCookie("/getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
-        if(Array.isArray(resultat)){
-          slots = resultat.map(item => ({
-            name: item.name,
-            // si ca marche pas ca veut dire que le startDate de l'objet obtenu est en ms depuis une ref. si c'est le cas, il faut faire 
-            //startDate: new Date(item.startDate),
-            startDate: item.startDate,
-            //endDate: new Date(item.endDate),
-            endDate: item.endDate,
-            capacity: item.capacity
-          }));
-        }
-      });
-      
-    }
+    navigate("/login");
+  } else {
+    
+    // on recupère tt les slots du boug
+    invokeGetWithCookie("/getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
+      if(Array.isArray(resultat)){
+        slots = resultat.map(item => ({
+          name: item.name,
+          // si ca marche pas ca veut dire que le startDate de l'objet obtenu est en ms depuis une ref. si c'est le cas, il faut faire 
+          startDate: new Date(item.startDate),
+          //startDate: item.startDate,
+          endDate: new Date(item.endDate),
+          //endDate: item.endDate,
+          capacity: item.capacity
+        }));
+      }
+    });
+    
+  }
+    
 
-  }, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
+  init_display()}, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
 
   return (
     <>
@@ -144,11 +149,26 @@ function Agenda() {
           </div>
         </div>
       </div>
+      init_display();
     </>
+
+
+
   );
+
+  
+  
+  
+  
+  
+  
+  
+
 }
 
 export default Agenda;
+
+
 
 function n(num: number, len = 2) {
   return `${num}`.padStart(len, '0');
@@ -234,26 +254,25 @@ function updateWeekDisplay() {//reset
   })
 }
 
+function init_display(){
+  if(currentDate != null){
+    let buttonprev = document.getElementById('previous-week');
+    if (buttonprev!=null)
+      buttonprev.addEventListener('click', () => {
+      currentDate.setDate(currentDate.getDate() - 7);
+      updateWeekDisplay();
+    });
+  
+    let buttonnext = document.getElementById('next-week');
+    if (buttonnext!=null){
+      buttonnext.addEventListener('click', () => {
+        currentDate.setDate(currentDate.getDate() + 7);
+        updateWeekDisplay();
+      }); 
+    }
+  }
 
-
-
-
-if(currentDate != null){
-  let buttonprev = document.getElementById('previous-week');
-  if (buttonprev!=null)
-    buttonprev.addEventListener('click', () => {
-    currentDate.setDate(currentDate.getDate() - 7);
-    updateWeekDisplay();
-  });
-
-  let buttonnext = document.getElementById('next-week');
-  if (buttonnext!=null)
-    buttonnext.addEventListener('click', () => {
-    currentDate.setDate(currentDate.getDate() + 7);
-    updateWeekDisplay();
-  });
+  updateWeekDisplay();
 }
 
-
-updateWeekDisplay();
 
