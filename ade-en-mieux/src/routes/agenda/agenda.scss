@@ -70,7 +70,7 @@ body {
 .header {
     display: grid;
     grid-template-columns: 45px repeat(7, 1fr);
-    background-color: var(--subtext1);
+    
     flex-shrink: 0; /* Allow header to shrink if needed */
 }
 
@@ -78,6 +78,7 @@ body {
     color: var(--surface0);
     text-align: center;
     padding: 10px;
+    background-color: var(--subtext1);
     border: 1px solid var(--subtext1);
 }
 
@@ -85,16 +86,15 @@ body {
     display: grid;
     grid-template-columns: 45px repeat(7, 1fr);
     flex-grow: 1;
-    background-color: #fff;
 }
 
 .hours-label {
     width: 45px;
-    background-color: #eee;
 }
 
 .hours-column {
     color: #fefefe;
+    width : 45px;
 }
 
 .hours-column .hour {
@@ -103,7 +103,7 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 0.9em;
-    color: #555;
+    color: white;
 }
 
 .column {

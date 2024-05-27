@@ -107,3 +107,49 @@ function Agenda() {
 }
 
 export default Agenda;
+
+function updateWeekDisplay() {//reset
+  
+  for(let i = 0; i<7;i++){
+    const column = document.querySelector(`.column[data-day="${i}"]`);
+    if(column!=null){
+      while (column.firstChild) {
+        column.removeChild(column.firstChild);
+      }
+      for(let h = 8; h<20 ; h++){
+        const div = document.createElement('div');
+
+        // Ajoute la classe 'time-slot'
+        div.className = 'time-slot';
+
+        // Ajoute l'attribut data-hour avec la valeur h
+        div.setAttribute('data-hour', String(h));
+        column.appendChild(div);
+          
+      }
+    }
+  }
+}
+
+function n(num: number, len = 2) {
+  return `${num}`.padStart(len, '0');
+}
+
+
+
+
+
+updateWeekDisplay();
+for(let h: number = 8; h<=20 ; h++){
+  let hours = document.querySelector(`.hours-column`);
+  const div = document.createElement('div');
+  div.className = 'hour';
+  div.setAttribute('hour', String(h));
+  div.textContent = h+":00";
+  if (hours != null){
+    hours.appendChild(div);
+  }
+  
+}
+
+
