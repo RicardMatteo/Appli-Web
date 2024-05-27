@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./agenda.scss";
-
+/*
 type Slot = {
   name: string;
   startDate: number;
@@ -12,7 +13,7 @@ type Slot = {
 
 // Variables pour la navigation de la semaine
 let currentDate = new Date();
-
+*/
 function Agenda() {
   const navigate = useNavigate();
 
