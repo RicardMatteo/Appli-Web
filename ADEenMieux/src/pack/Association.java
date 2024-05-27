@@ -2,8 +2,6 @@ package pack;
 
 import java.io.Serializable;
 
-import java.io.Serializable;
-
 /**
  * The Association class represents a relationship between two entities.
  * It stores the IDs of the first and second entities.
