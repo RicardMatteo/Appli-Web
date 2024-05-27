@@ -20,6 +20,14 @@ type Slot = {
   capacity: number;
 };
 
+const transformToSlot = (original: { eventName: string; startDate: number; endDate: number; location: string }): Slot => {
+  return {
+    name: original.eventName,
+    startDate: new Date(original.startDate),
+    endDate: new Date(original.endDate),
+    capacity: 100 // Par exemple, en définissant une capacité par défaut
+  };
+};
 
 // Variables pour la navigation de la semaine
 let currentDate = new Date();
@@ -58,7 +66,7 @@ function Agenda() {
       // on recupère tt les slots du boug
       invokeGetWithCookie("getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
         if(Array.isArray(resultat)){
-          console.log(resultat[0]);
+          console.log(transformToSlot(resultat[0]));
           
         
         } else {
