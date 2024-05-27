@@ -136,14 +136,6 @@ const Login = () => {
                 <span className="text">Home</span>
               </button>
             </div>
-            <div className="padding">
-              <button
-                className="button-64"
-                onClick={() => navigate("/login/test")}
-              >
-                <span className="text">Test login</span>
-              </button>
-            </div>
           </div>
         </form>
       </div>

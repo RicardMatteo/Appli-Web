@@ -28,6 +28,13 @@ function Dashboard() {
       </HeroPattern>
       <div className="topbar">
         <h1>Dashboard</h1>
+        <div className="dashboard">
+          <div className="padding">
+            <button className="button-64" onClick={() => navigate("/")}>
+              <span className="text">Home</span>
+            </button>
+          </div>
+        </div>
       </div>
       <div className="box">
         <div className="container">
