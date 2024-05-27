@@ -2,9 +2,7 @@
 @import url("/src/style/catppuccin.scss");
 
 body {
-    font-family: Arial, sans-serif;
-    
-    height: 100vh;
+    font-family: Arial, sans-serif;   
     margin: 0;
     flex-direction: column;
 
@@ -57,7 +55,6 @@ body {
 
 
 .main-content {
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,17 +75,17 @@ body {
     table-layout: fixed;
     width: 100%;
 }
+
 .header {
     display: contents;
-    
 }
 
 .header .day {
-    background-color: #444;
-    color: white;
+    background-color: var(--subtext1);
+    color: var(--surface0);
     text-align: center;
     padding: 10px;
-    border: 1px solid #444;
+    border: 1px solid var(--subtext1);
 }
 
 .body {
@@ -140,8 +137,7 @@ body {
     box-sizing: border-box;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    text-align:center;
-  
+    text-align:center; 
 }
 
 .activity:hover {
@@ -172,11 +168,6 @@ body {
 #current-week {
     font-weight: bold;
 }
-
-
-
-
-
 
 
 .time-slot {
