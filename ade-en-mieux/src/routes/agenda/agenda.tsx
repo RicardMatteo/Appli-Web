@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./agenda.scss";
+import { date } from "yup";
 
 const HeroPattern = ({
   pttrn,
@@ -13,13 +14,30 @@ const HeroPattern = ({
 
 type Slot = {
   name: string;
-  startDate: number;
-  endDate: number;
+  startDate: Date;
+  endDate: Date;
   capacity: number;
 };
-
 // Variables pour la navigation de la semaine
 let currentDate = new Date();
+
+// test
+let date1 = new Date(2024,4,28,14,0,0,0);
+let date2 = new Date(2024,4,28,15,45,0,0);
+
+
+let slotTest : Slot ={
+  name: "Slot de test",
+  startDate: date1,
+  endDate: date2,
+  capacity: 1
+};
+
+// il faut rentrer les slots ici !!
+let slots :Slot[] = [];
+slots.push(slotTest);
+
+
 
 function Agenda() {
   const navigate = useNavigate();
@@ -51,7 +69,7 @@ function Agenda() {
           </ul>
         </div>
         <div className="main-content">
-          <table className="agenda">
+          <div className="agenda">
             <div className="header">
               <div className="hours-label"></div>
               <div className="day">Lundi</div>
@@ -72,7 +90,7 @@ function Agenda() {
               <div className="column" data-day="5"></div>
               <div className="column" data-day="6"></div>
             </div>
-          </table>
+          </div>
           <div className="week-navigation">
             <button id="previous-week">Semaine précédente</button>
             <span id="current-week"></span>
@@ -108,6 +126,10 @@ function Agenda() {
 
 export default Agenda;
 
+function n(num: number, len = 2) {
+  return `${num}`.padStart(len, '0');
+}
+
 function updateWeekDisplay() {//reset
   
   for(let i = 0; i<7;i++){
@@ -129,27 +151,85 @@ function updateWeekDisplay() {//reset
       }
     }
   }
+  let hours = document.querySelector(`.hours-column`);
+  if (hours != null){
+    while (hours.firstChild) {
+      hours.removeChild(hours.firstChild);
+    }
+    for(let h: number = 8; h<=20 ; h++){
+      
+      const div = document.createElement('div');
+      div.className = 'hour';
+      div.setAttribute('hour', String(h));
+      div.textContent = h+":00";
+      
+      hours.appendChild(div);
+    }
+    
+  }
+  const startOfWeek = new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate());
+  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay() + 1); // Lundi
+  
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 6); // Dimanche
+  
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  let doc = document.getElementById('current-week');
+  if (doc!=null) {
+    doc.textContent =  `Semaine du ${startOfWeek.toLocaleDateString('fr-FR')} au ${endOfWeek.toLocaleDateString('fr-FR')}`;
+
+  }
+  
+  slots.forEach((slot:Slot) => {
+    
+    if(slot.endDate>startOfWeek && slot.startDate<endOfWeek){
+      //console.log("semaine du slot" );
+      //on veux afficher pour tt les jours
+      
+
+        const column = document.querySelector(`.column[data-day="${Math.round(slot.startDate.getDate() - startOfWeek.getDate())}"]`);
+        if (column){
+          let dayStart= 8;
+          let dayEnd = 20;
+          let slotStart = slot.startDate.getHours()+slot.startDate.getMinutes()/60;
+          let slotEnd = slot.endDate.getHours()+slot.endDate.getMinutes()/60;
+          let top = (slotStart-dayStart)*100/(dayEnd-dayStart)+'%';
+          let percent = (slotEnd-slotStart)*100/(dayEnd-dayStart)+'%';
+
+          const activityDiv = document.createElement('div');
+          activityDiv.className = 'activity';
+          activityDiv.textContent = `${slot.name} \n${slot.startDate.getHours()}:${n(slot.startDate.getMinutes())} - ${slot.endDate.getHours()}:${n(slot.endDate.getMinutes())}`;
+          activityDiv.style.top = top;
+          activityDiv.style.height = percent; // Adjust this to place the event correctly
+          
+          column.appendChild(activityDiv);
+
+        }
+      
+    }
+  })
 }
 
-function n(num: number, len = 2) {
-  return `${num}`.padStart(len, '0');
+
+
+
+
+if(currentDate != null){
+  let buttonprev = document.getElementById('previous-week');
+  if (buttonprev!=null)
+    buttonprev.addEventListener('click', () => {
+    currentDate.setDate(currentDate.getDate() - 7);
+    updateWeekDisplay();
+  });
+
+  let buttonnext = document.getElementById('next-week');
+  if (buttonnext!=null)
+    buttonnext.addEventListener('click', () => {
+    currentDate.setDate(currentDate.getDate() + 7);
+    updateWeekDisplay();
+  });
 }
-
-
-
 
 
 updateWeekDisplay();
-for(let h: number = 8; h<=20 ; h++){
-  let hours = document.querySelector(`.hours-column`);
-  const div = document.createElement('div');
-  div.className = 'hour';
-  div.setAttribute('hour', String(h));
-  div.textContent = h+":00";
-  if (hours != null){
-    hours.appendChild(div);
-  }
-  
-}
-
 

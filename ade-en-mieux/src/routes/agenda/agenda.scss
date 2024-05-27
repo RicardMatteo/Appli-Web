@@ -65,6 +65,7 @@ body {
     flex-direction: column;
     flex-grow: 1;
     width: 100%;
+    height: auto;
 }
 
 .header {
@@ -95,6 +96,7 @@ body {
 .hours-column {
     color: #fefefe;
     width : 45px;
+    height: auto;
 }
 
 .hours-column .hour {
@@ -104,12 +106,19 @@ body {
     align-items: center;
     font-size: 0.9em;
     color: white;
+    position: relative;
+    top: -4.16%;
+}
+.hours-column .hour[hour="20"]{
+    position: relative;
+    top : -5%;
 }
 
 .column {
     background-color: #fff;
     border: 1px solid #ccc;
     position: relative;
+    height: auto;
 }
 
 .activity {
@@ -152,6 +161,7 @@ body {
 
 #current-week {
     font-weight: bold;
+    color: white;
 }
 
 .time-slot {
