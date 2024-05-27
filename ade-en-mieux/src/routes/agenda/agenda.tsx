@@ -20,6 +20,7 @@ type Slot = {
   capacity: number;
 };
 
+
 // Variables pour la navigation de la semaine
 let currentDate = new Date();
 
@@ -51,29 +52,21 @@ function Agenda() {
   // On vérifie que l'utilisateur est connecter avant d'afficher la page
   useEffect(() => {
     if (Cookies.get("authToken") === undefined) {
-    navigate("/login");
-  } else {
-    
-    // on recupère tt les slots du boug
-    invokeGetWithCookie("/getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
-      if(Array.isArray(resultat)){
-        slots = resultat.map(item => ({
-          name: item.name,
-          // si ca marche pas ca veut dire que le startDate de l'objet obtenu est en ms depuis une ref. si c'est le cas, il faut faire 
-          startDate: new Date(item.startDate),
-          //startDate: item.startDate,
-          endDate: new Date(item.endDate),
-          //endDate: item.endDate,
-          capacity: item.capacity
-        }));
-      }
-    });
-    
-  }
-    
-
-  init_display();
-}, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
+      navigate("/login");
+    } else {
+      
+      // on recupère tt les slots du boug
+      invokeGetWithCookie("/getuserslots","Slots de l'utilisateur récupéré","Erreur recupération des Slots user").then((resultat) => {
+        if(Array.isArray(resultat)){
+          console.log(resultat[0]);
+          
+        
+        }
+      });
+      
+    }
+    init_display();
+  }, [navigate]); // Utilisation d'un tableau vide pour exécuter useEffect une seule fois après le rendu initial
 
   return (
     <>
@@ -150,7 +143,6 @@ function Agenda() {
           </div>
         </div>
       </div>
-      init_display();
     </>
 
 
