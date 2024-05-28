@@ -92,79 +92,81 @@ function ManageSlots({
     <>
       <div>
         <div className="container">
-          <h1>Créer un créneau</h1>
-          <form onSubmit={formikSlot.handleSubmit}>
-            <div className="form__group field">
-              <input
-                className="form__field"
-                type="datetime-local"
-                name="startDate"
-                id="startDate"
-                onChange={formikSlot.handleChange}
-                value={formikSlot.values.startDate}
-                required
-              />
-              <label htmlFor="startDate" className="form__label">
-                Date de début
-              </label>
-            </div>
-            <div className="form__group field">
-              <input
-                className="form__field"
-                type="datetime-local"
-                name="endDate"
-                id="endDate"
-                onChange={formikSlot.handleChange}
-                value={formikSlot.values.endDate}
-                required
-              />
-              <label htmlFor="endDate" className="form__label">
-                Date de fin
-              </label>
-            </div>
-            <div className="form__group field">
-              <input
-                className="form__field"
-                type="number"
-                name="capacity"
-                id="capacity"
-                onChange={formikSlot.handleChange}
-                value={formikSlot.values.capacity}
-                required
-              />
-              <label htmlFor="capacity" className="form__label">
-                Capacité
-              </label>
-            </div>
-            <div>
-              <label htmlFor="placeId">Lieu</label>
-              <select
-                id="placeId"
-                name="placeId"
-                className="form__field"
-                onChange={(e) => {
-                  /* Debug
-                console.log("Place id", e.target.value); */
-                  formikSlot.handleChange(e);
-                }}
-                value={formikSlot.values.placeId}
-              >
-                {places.map((place) => (
-                  <option key={place.id} value={place.id}>
-                    {place.name} (ID: {place.id})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="button-container">
-              <div className="padding">
-                <button className="button-64" type="submit">
-                  <span className="text">Créer</span>
-                </button>
+          <div className="min-width">
+            <h1>Créer un créneau</h1>
+            <form onSubmit={formikSlot.handleSubmit}>
+              <div className="form__group field">
+                <input
+                  className="form__field"
+                  type="datetime-local"
+                  name="startDate"
+                  id="startDate"
+                  onChange={formikSlot.handleChange}
+                  value={formikSlot.values.startDate}
+                  required
+                />
+                <label htmlFor="startDate" className="form__label">
+                  Date de début
+                </label>
               </div>
-            </div>
-          </form>
+              <div className="form__group field">
+                <input
+                  className="form__field"
+                  type="datetime-local"
+                  name="endDate"
+                  id="endDate"
+                  onChange={formikSlot.handleChange}
+                  value={formikSlot.values.endDate}
+                  required
+                />
+                <label htmlFor="endDate" className="form__label">
+                  Date de fin
+                </label>
+              </div>
+              <div className="form__group field">
+                <input
+                  className="form__field"
+                  type="number"
+                  name="capacity"
+                  id="capacity"
+                  onChange={formikSlot.handleChange}
+                  value={formikSlot.values.capacity}
+                  required
+                />
+                <label htmlFor="capacity" className="form__label">
+                  Capacité
+                </label>
+              </div>
+              <div>
+                <label htmlFor="placeId">Lieu</label>
+                <select
+                  id="placeId"
+                  name="placeId"
+                  className="form__field"
+                  onChange={(e) => {
+                    /* Debug
+                console.log("Place id", e.target.value); */
+                    formikSlot.handleChange(e);
+                  }}
+                  value={formikSlot.values.placeId}
+                >
+                  {places.map((place) => (
+                    <option key={place.id} value={place.id}>
+                      {place.name} (ID: {place.id})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="button-container">
+                <div className="padding">
+                  <button className="button-64" type="submit">
+                    <span className="text">Créer</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>
@@ -175,14 +177,16 @@ function ListSlots({ listSlot }: { listSlot: Slot[] }) {
   return (
     <>
       <div className="container">
-        <h1>Liste des Slots</h1>
-        {listSlot.map((slot, index) => (
-          <div key={index} className="container">
-            <p>Start date : {new Date(slot.startDate).toLocaleString()}</p>
-            <p>End date : {new Date(slot.endDate).toLocaleString()}</p>
-            <p>Capacity : {slot.capacity}</p>
-          </div>
-        ))}
+        <div className="min-width">
+          <h1>Liste des Slots</h1>
+          {listSlot.map((slot, index) => (
+            <div key={index} className="container">
+              <p>Start date : {new Date(slot.startDate).toLocaleString()}</p>
+              <p>End date : {new Date(slot.endDate).toLocaleString()}</p>
+              <p>Capacity : {slot.capacity}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );
@@ -250,48 +254,50 @@ function CreateEvent({
     <>
       <div>
         <div className="container">
-          <h1>Créer l'évènement</h1>
-          <h2>Tous les slots créés vont être assignés à cet évènement</h2>
-          <form onSubmit={formikEvent.handleSubmit}>
-            <div className="form__group field">
-              <input
-                className="form__field"
-                type="text"
-                name="eventName"
-                id="eventName"
-                onChange={formikEvent.handleChange}
-                value={formikEvent.values.eventName}
-                required
-              />
-              <label htmlFor="eventName" className="form__label">
-                Nom de l'évènement
-              </label>
-            </div>
-            <div>
-              <label htmlFor="selectedUsers">Participants</label>
-              <select
-                id="selectedUsers"
-                name="selectedUsers"
-                className="form__field"
-                multiple
-                onChange={formikEvent.handleChange}
-                value={formikEvent.values.selectedUsers}
-              >
-                {listUser.map((u) => (
-                  <option key={u.userId} value={u.userId}>
-                    {u.username}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="button-container">
-              <div className="padding">
-                <button className="button-64" type="submit">
-                  <span className="text">Créer</span>
-                </button>
+          <div className="min-width">
+            <h1>Créer l'évènement</h1>
+            <h2>Tous les slots créés vont être assignés à cet évènement</h2>
+            <form onSubmit={formikEvent.handleSubmit}>
+              <div className="form__group field">
+                <input
+                  className="form__field"
+                  type="text"
+                  name="eventName"
+                  id="eventName"
+                  onChange={formikEvent.handleChange}
+                  value={formikEvent.values.eventName}
+                  required
+                />
+                <label htmlFor="eventName" className="form__label">
+                  Nom de l'évènement
+                </label>
               </div>
-            </div>
-          </form>
+              <div>
+                <label htmlFor="selectedUsers">Participants</label>
+                <select
+                  id="selectedUsers"
+                  name="selectedUsers"
+                  className="form__field"
+                  multiple
+                  onChange={formikEvent.handleChange}
+                  value={formikEvent.values.selectedUsers}
+                >
+                  {listUser.map((u) => (
+                    <option key={u.userId} value={u.userId}>
+                      {u.username}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="button-container">
+                <div className="padding">
+                  <button className="button-64" type="submit">
+                    <span className="text">Créer</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>
@@ -350,7 +356,7 @@ function Events() {
           places={places}
           setPlaces={setPlaces}
         />
-        <div className="box-h">
+        <div>
           <ListSlots listSlot={listSlot} />
           <CreateEvent
             listSlot={listSlot}
