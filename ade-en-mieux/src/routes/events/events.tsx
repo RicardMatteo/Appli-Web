@@ -246,48 +246,50 @@ function CreateEvent({
 
   return (
     <>
-      <h1>Créer l'évènement</h1>
-      <h2>Tous les slots créés vont être assignés à cet évènement</h2>
-      <div className="container">
-        <form onSubmit={formikEvent.handleSubmit}>
-          <div className="form__group field">
-            <input
-              className="form__field"
-              type="text"
-              name="eventName"
-              id="eventName"
-              onChange={formikEvent.handleChange}
-              value={formikEvent.values.eventName}
-              required
-            />
-            <label htmlFor="eventName" className="form__label">
-              Nom de l'évènement
-            </label>
-          </div>
-          <div>
-            <label htmlFor="selectedUsers">Participants</label>
-            <select
-              id="selectedUsers"
-              name="selectedUsers"
-              multiple
-              onChange={formikEvent.handleChange}
-              value={formikEvent.values.selectedUsers}
-            >
-              {listUser.map((u) => (
-                <option key={u.userId} value={u.userId}>
-                  {u.username}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="button-container">
-            <div className="padding">
-              <button className="button-64" type="submit">
-                <span className="text">Créer</span>
-              </button>
+      <div>
+        <h1>Créer l'évènement</h1>
+        <h2>Tous les slots créés vont être assignés à cet évènement</h2>
+        <div className="container">
+          <form onSubmit={formikEvent.handleSubmit}>
+            <div className="form__group field">
+              <input
+                className="form__field"
+                type="text"
+                name="eventName"
+                id="eventName"
+                onChange={formikEvent.handleChange}
+                value={formikEvent.values.eventName}
+                required
+              />
+              <label htmlFor="eventName" className="form__label">
+                Nom de l'évènement
+              </label>
             </div>
-          </div>
-        </form>
+            <div>
+              <label htmlFor="selectedUsers">Participants</label>
+              <select
+                id="selectedUsers"
+                name="selectedUsers"
+                multiple
+                onChange={formikEvent.handleChange}
+                value={formikEvent.values.selectedUsers}
+              >
+                {listUser.map((u) => (
+                  <option key={u.userId} value={u.userId}>
+                    {u.username}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="button-container">
+              <div className="padding">
+                <button className="button-64" type="submit">
+                  <span className="text">Créer</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
@@ -329,7 +331,10 @@ function Events() {
         <h1>Dashboard</h1>
         <div className="dashboard">
           <div className="padding">
-            <button className="button-64" onClick={() => navigate("/")}>
+            <button
+              className="button-64"
+              onClick={() => navigate("/dashboard")}
+            >
               <span className="text">Home</span>
             </button>
           </div>
