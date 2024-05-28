@@ -90,7 +90,7 @@ function ManageSlots({
 
   return (
     <>
-      <div className="box">
+      <div>
         <h1>Gérer les slots</h1>
         <div className="container">
           <h1>Créer un créneau</h1>
@@ -344,7 +344,7 @@ function Events() {
           </div>
         </div>
       </div>
-      <div className="box2">
+      <div className="box">
         <ManageSlots
           listSlot={listSlot}
           setListSlot={setListSlot}
