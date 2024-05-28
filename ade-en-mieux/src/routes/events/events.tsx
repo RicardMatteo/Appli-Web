@@ -176,16 +176,16 @@ function ListSlots({ listSlot }: { listSlot: Slot[] }) {
   return (
     <>
       <div className="container">
-        <div className="min-width">
-          <h1>Liste des Slots</h1>
-          {listSlot.map((slot, index) => (
-            <div key={index} className="container">
-              <p>Start date : {new Date(slot.startDate).toLocaleString()}</p>
-              <p>End date : {new Date(slot.endDate).toLocaleString()}</p>
-              <p>Capacity : {slot.capacity}</p>
-            </div>
-          ))}
-        </div>
+        <div className="min-width"></div>
+
+        <h1>Liste des Slots</h1>
+        {listSlot.map((slot, index) => (
+          <div key={index} className="container">
+            <p>Start date : {new Date(slot.startDate).toLocaleString()}</p>
+            <p>End date : {new Date(slot.endDate).toLocaleString()}</p>
+            <p>Capacity : {slot.capacity}</p>
+          </div>
+        ))}
       </div>
     </>
   );
@@ -253,50 +253,50 @@ function CreateEvent({
     <>
       <div>
         <div className="container">
-          <div className="min-width">
-            <h1>Créer l'évènement</h1>
-            <h2>Tous les slots créés vont être assignés à cet évènement</h2>
-            <form onSubmit={formikEvent.handleSubmit}>
-              <div className="form__group field">
-                <input
-                  className="form__field"
-                  type="text"
-                  name="eventName"
-                  id="eventName"
-                  onChange={formikEvent.handleChange}
-                  value={formikEvent.values.eventName}
-                  required
-                />
-                <label htmlFor="eventName" className="form__label">
-                  Nom de l'évènement
-                </label>
+          <div className="min-width"></div>
+
+          <h1>Créer l'évènement</h1>
+          <h2>Tous les slots créés vont être assignés à cet évènement</h2>
+          <form onSubmit={formikEvent.handleSubmit}>
+            <div className="form__group field">
+              <input
+                className="form__field"
+                type="text"
+                name="eventName"
+                id="eventName"
+                onChange={formikEvent.handleChange}
+                value={formikEvent.values.eventName}
+                required
+              />
+              <label htmlFor="eventName" className="form__label">
+                Nom de l'évènement
+              </label>
+            </div>
+            <div>
+              <label htmlFor="selectedUsers">Participants</label>
+              <select
+                id="selectedUsers"
+                name="selectedUsers"
+                className="form__field"
+                multiple
+                onChange={formikEvent.handleChange}
+                value={formikEvent.values.selectedUsers}
+              >
+                {listUser.map((u) => (
+                  <option key={u.userId} value={u.userId}>
+                    {u.username}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="button-container">
+              <div className="padding">
+                <button className="button-64" type="submit">
+                  <span className="text">Créer</span>
+                </button>
               </div>
-              <div>
-                <label htmlFor="selectedUsers">Participants</label>
-                <select
-                  id="selectedUsers"
-                  name="selectedUsers"
-                  className="form__field"
-                  multiple
-                  onChange={formikEvent.handleChange}
-                  value={formikEvent.values.selectedUsers}
-                >
-                  {listUser.map((u) => (
-                    <option key={u.userId} value={u.userId}>
-                      {u.username}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="button-container">
-                <div className="padding">
-                  <button className="button-64" type="submit">
-                    <span className="text">Créer</span>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </>
