@@ -116,16 +116,19 @@ function Places() {
               id="name"
               name="name"
               type="text"
+              className="form__field"
               onChange={formikPlace.handleChange}
               value={formikPlace.values.name}
             />
           </div>
+          <br></br>
           <div>
             <label htmlFor="capacity">Capacité de la salle :</label>
             <input
               id="capacity"
               name="capacity"
               type="number"
+              className="form__field"
               onChange={formikPlace.handleChange}
               value={formikPlace.values.capacity}
             />
