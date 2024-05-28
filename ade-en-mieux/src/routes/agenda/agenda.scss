@@ -127,8 +127,8 @@ body {
     position: absolute;
     left: -1px;
     right: -1px;
-    background-color: #ffeb3b;
-    border: 1px solid #fbc02d;
+    background-color: var(--yellow);
+    border: 1px solid var(--peach);
     padding: 5px;
     box-sizing: border-box;
     cursor: pointer;
@@ -137,7 +137,7 @@ body {
 }
 
 .activity:hover {
-    background-color: #fbc02d;
+    background-color: var(--peach);
 }
 
 .week-navigation {
