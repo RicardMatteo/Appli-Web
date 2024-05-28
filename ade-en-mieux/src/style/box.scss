@@ -31,7 +31,7 @@
 /* Classe spécifique pour une disposition horizontale */
 .box-h {
   display: flex; /* Utilisation de flexbox */
-  flex-direction: row; /* Disposition horizontale */
+  flex-direction: column; /* Disposition verticale */
   align-items: center; /* Alignement vertical */
   justify-content: center; /* Alignement horizontal */
   gap: 5rem;
