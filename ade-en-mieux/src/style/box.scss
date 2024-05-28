@@ -28,16 +28,15 @@
   }
   
 
-/* Classe spécifique pour une disposition horizontale */
-.box-h {
-  display: flex; /* Utilisation de flexbox */
-  flex-direction: column; /* Disposition verticale */
-  align-items: center; /* Alignement vertical */
-  justify-content: center; /* Alignement horizontal */
-  gap: 5rem;
-}
+
+  .box-s {
+    display: flex; /* Utilisation de flexbox */
+    align-items: center; /* Alignement vertical */
+    justify-content: center; /* Alignement horizontal */
+    gap: 1rem;
+  }
   
-  .box-h .container {
+  .box-s .container {
     width: 45%; /* Réduit la largeur pour que deux containers puissent s'aligner côte à côte */
     height: 70vh; /* 70% de la hauteur de la fenêtre */
     margin: 5rem auto 0; /* Espace sur les côtés et en haut */
@@ -48,3 +47,14 @@
     backdrop-filter: blur(200px);
     opacity: 0.8;
   }
+  
+  .box-s .container h1,
+  .box-s .container h2 {
+    text-align: center;
+    color: var(--text);
+  }
+  
+  .box-s .container label {
+    color: var(--text);
+  }
+  

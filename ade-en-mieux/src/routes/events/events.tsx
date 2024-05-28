@@ -176,6 +176,7 @@ function ListSlots({ listSlot }: { listSlot: Slot[] }) {
   return (
     <>
       <div className="container">
+        <div className="min-width-10"></div>
         <h1>Liste des Slots</h1>
         {listSlot.map((slot, index) => (
           <div key={index} className="container">
@@ -346,7 +347,7 @@ function Events() {
           </div>
         </div>
       </div>
-      <div className="box">
+      <div className="box-s">
         <ManageSlots
           listSlot={listSlot}
           setListSlot={setListSlot}
