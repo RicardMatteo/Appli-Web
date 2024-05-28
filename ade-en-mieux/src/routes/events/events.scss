@@ -4,3 +4,7 @@
 @import url("/src/style/container.scss");
 @import url("/src/style/topbar.scss");
 @import url("/src/style/box.scss");
+
+body h1 {
+  color: var(--text);
+}
