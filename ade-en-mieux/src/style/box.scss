@@ -28,12 +28,14 @@
   }
   
 
-  .box-h {
-    display: flex; /* Utilisation de flexbox */
-    align-items: center; /* Alignement vertical */
-    justify-content: space-between; /* Alignement horizontal */
-    gap: 5rem;
-  }
+/* Classe spécifique pour une disposition horizontale */
+.box-h {
+  display: flex; /* Utilisation de flexbox */
+  flex-direction: row; /* Disposition horizontale */
+  align-items: center; /* Alignement vertical */
+  justify-content: center; /* Alignement horizontal */
+  gap: 5rem;
+}
   
   .box-h .container {
     width: 45%; /* Réduit la largeur pour que deux containers puissent s'aligner côte à côte */
