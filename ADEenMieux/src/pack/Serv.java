@@ -1,7 +1,6 @@
 package pack;
 
 import java.io.IOException;
-import java.util.Collection;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -41,8 +40,6 @@ public class Serv extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String s1 = "";
-		String s2 = "";
 		try {
 			if (request.getParameter("op").equals("login")) {
 				LoginInfo logInfo = new LoginInfo();
