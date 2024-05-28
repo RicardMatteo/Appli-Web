@@ -90,80 +90,82 @@ function ManageSlots({
 
   return (
     <>
-      <h1>Gérer les slots</h1>
-      <div className="container">
-        <h1>Créer un créneau</h1>
-        <form onSubmit={formikSlot.handleSubmit}>
-          <div className="form__group field">
-            <input
-              className="form__field"
-              type="datetime-local"
-              name="startDate"
-              id="startDate"
-              onChange={formikSlot.handleChange}
-              value={formikSlot.values.startDate}
-              required
-            />
-            <label htmlFor="startDate" className="form__label">
-              Date de début
-            </label>
-          </div>
-          <div className="form__group field">
-            <input
-              className="form__field"
-              type="datetime-local"
-              name="endDate"
-              id="endDate"
-              onChange={formikSlot.handleChange}
-              value={formikSlot.values.endDate}
-              required
-            />
-            <label htmlFor="endDate" className="form__label">
-              Date de fin
-            </label>
-          </div>
-          <div className="form__group field">
-            <input
-              className="form__field"
-              type="number"
-              name="capacity"
-              id="capacity"
-              onChange={formikSlot.handleChange}
-              value={formikSlot.values.capacity}
-              required
-            />
-            <label htmlFor="capacity" className="form__label">
-              Capacité
-            </label>
-          </div>
-          <div>
-            <label htmlFor="placeId">Lieu</label>
-            <select
-              id="placeId"
-              name="placeId"
-              onChange={(e) => {
-                /* Debug
-                console.log("Place id", e.target.value); */
-                formikSlot.handleChange(e);
-              }}
-              value={formikSlot.values.placeId}
-            >
-              {places.map((place) => (
-                <option key={place.id} value={place.id}>
-                  {place.name} (ID: {place.id})
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="button-container">
-            <div className="padding">
-              <button className="button-64" type="submit">
-                <span className="text">Créer</span>
-              </button>
+      <div className="boc">
+        <h1>Gérer les slots</h1>
+        <div className="container">
+          <h1>Créer un créneau</h1>
+          <form onSubmit={formikSlot.handleSubmit}>
+            <div className="form__group field">
+              <input
+                className="form__field"
+                type="datetime-local"
+                name="startDate"
+                id="startDate"
+                onChange={formikSlot.handleChange}
+                value={formikSlot.values.startDate}
+                required
+              />
+              <label htmlFor="startDate" className="form__label">
+                Date de début
+              </label>
             </div>
-          </div>
-        </form>
+            <div className="form__group field">
+              <input
+                className="form__field"
+                type="datetime-local"
+                name="endDate"
+                id="endDate"
+                onChange={formikSlot.handleChange}
+                value={formikSlot.values.endDate}
+                required
+              />
+              <label htmlFor="endDate" className="form__label">
+                Date de fin
+              </label>
+            </div>
+            <div className="form__group field">
+              <input
+                className="form__field"
+                type="number"
+                name="capacity"
+                id="capacity"
+                onChange={formikSlot.handleChange}
+                value={formikSlot.values.capacity}
+                required
+              />
+              <label htmlFor="capacity" className="form__label">
+                Capacité
+              </label>
+            </div>
+            <div>
+              <label htmlFor="placeId">Lieu</label>
+              <select
+                id="placeId"
+                name="placeId"
+                onChange={(e) => {
+                  /* Debug
+                console.log("Place id", e.target.value); */
+                  formikSlot.handleChange(e);
+                }}
+                value={formikSlot.values.placeId}
+              >
+                {places.map((place) => (
+                  <option key={place.id} value={place.id}>
+                    {place.name} (ID: {place.id})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="button-container">
+              <div className="padding">
+                <button className="button-64" type="submit">
+                  <span className="text">Créer</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </>
   );
@@ -335,7 +337,7 @@ function Events() {
               className="button-64"
               onClick={() => navigate("/dashboard")}
             >
-              <span className="text">Home</span>
+              <span className="text">Dashboard</span>
             </button>
           </div>
         </div>
