@@ -91,7 +91,6 @@ function ManageSlots({
   return (
     <>
       <div>
-        <h1>Gérer les slots</h1>
         <div className="container">
           <h1>Créer un créneau</h1>
           <form onSubmit={formikSlot.handleSubmit}>
@@ -175,8 +174,8 @@ function ManageSlots({
 function ListSlots({ listSlot }: { listSlot: Slot[] }) {
   return (
     <>
-      <h1>Liste des Slots</h1>
       <div className="container">
+        <h1>Liste des Slots</h1>
         {listSlot.map((slot, index) => (
           <div key={index} className="container">
             <p>Start date : {new Date(slot.startDate).toLocaleString()}</p>
@@ -250,9 +249,9 @@ function CreateEvent({
   return (
     <>
       <div>
-        <h1>Créer l'évènement</h1>
-        <h2>Tous les slots créés vont être assignés à cet évènement</h2>
         <div className="container">
+          <h1>Créer l'évènement</h1>
+          <h2>Tous les slots créés vont être assignés à cet évènement</h2>
           <form onSubmit={formikEvent.handleSubmit}>
             <div className="form__group field">
               <input
@@ -339,7 +338,7 @@ function Events() {
               className="button-64"
               onClick={() => navigate("/dashboard")}
             >
-              <span className="text">Dashboard</span>
+              <span className="text">Gerer les slots</span>
             </button>
           </div>
         </div>
