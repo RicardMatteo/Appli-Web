@@ -334,33 +334,35 @@ function Events() {
       <HeroPattern pttrn={"topography-pattern"}>
         <div></div>
       </HeroPattern>
-      <div className="topbar">
-        <h1>Dashboard</h1>
-        <div className="dashboard">
-          <div className="padding">
-            <button
-              className="button-64"
-              onClick={() => navigate("/dashboard")}
-            >
-              <span className="text">Dashboard</span>
-            </button>
+      <div>
+        <div className="topbar">
+          <h1>Dashboard</h1>
+          <div className="dashboard">
+            <div className="padding">
+              <button
+                className="button-64"
+                onClick={() => navigate("/dashboard")}
+              >
+                <span className="text">Dashboard</span>
+              </button>
+            </div>
           </div>
         </div>
+        <div className="box-s">
+          <ManageSlots
+            listSlot={listSlot}
+            setListSlot={setListSlot}
+            places={places}
+            setPlaces={setPlaces}
+          />
+          <CreateEvent
+            listSlot={listSlot}
+            listUser={listUser}
+            setListSlot={setListSlot}
+          />
+        </div>
+        <ListSlots listSlot={listSlot} />
       </div>
-      <div className="box-s">
-        <ManageSlots
-          listSlot={listSlot}
-          setListSlot={setListSlot}
-          places={places}
-          setPlaces={setPlaces}
-        />
-        <CreateEvent
-          listSlot={listSlot}
-          listUser={listUser}
-          setListSlot={setListSlot}
-        />
-      </div>
-      <ListSlots listSlot={listSlot} />
     </>
   );
 }
