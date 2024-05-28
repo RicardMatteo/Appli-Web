@@ -90,8 +90,10 @@ function ChooseSlot({ slots }: { slots: Slot[] }) {
                 />
                 <label>
                   {new Date(slot.startDate).toLocaleDateString()} -{" "}
+                  {new Date(slot.startDate).toLocaleTimeString()}{" "}
                   {new Date(slot.endDate).toLocaleDateString()} -{" "}
-                  {slot.capacity} places restantes
+                  {new Date(slot.endDate).toLocaleTimeString()} {slot.capacity}{" "}
+                  places restantes
                 </label>
               </div>
             ))}
