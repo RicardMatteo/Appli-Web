@@ -142,6 +142,7 @@ function ManageSlots({
               <select
                 id="placeId"
                 name="placeId"
+                className="form__field"
                 onChange={(e) => {
                   /* Debug
                 console.log("Place id", e.target.value); */
@@ -272,6 +273,7 @@ function CreateEvent({
               <select
                 id="selectedUsers"
                 name="selectedUsers"
+                className="form__field"
                 multiple
                 onChange={formikEvent.handleChange}
                 value={formikEvent.values.selectedUsers}
