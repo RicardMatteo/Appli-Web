@@ -342,7 +342,7 @@ function Events() {
               className="button-64"
               onClick={() => navigate("/dashboard")}
             >
-              <span className="text">Gerer les slots</span>
+              <span className="text">Dashboard</span>
             </button>
           </div>
         </div>
