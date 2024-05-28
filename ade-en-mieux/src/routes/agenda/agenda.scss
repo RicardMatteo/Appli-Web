@@ -1,5 +1,7 @@
 @import url("/src/style/background.scss");
 @import url("/src/style/catppuccin.scss");
+@import url("/src/style/button.scss");
+@import url("/src/style/topbar.scss");
 
 body {
     font-family: Arial, sans-serif;   
@@ -10,7 +12,7 @@ body {
 }
 
 .sidebar {
-    width: 9em;
+    width: 13em;
     height: 100%;
     border: thick double var(--text);
     background-color: var(--overlay0);
