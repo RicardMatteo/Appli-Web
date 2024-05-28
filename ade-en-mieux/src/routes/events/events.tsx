@@ -354,14 +354,13 @@ function Events() {
           places={places}
           setPlaces={setPlaces}
         />
-        <div>
-          <ListSlots listSlot={listSlot} />
-          <CreateEvent
-            listSlot={listSlot}
-            listUser={listUser}
-            setListSlot={setListSlot}
-          />
-        </div>
+
+        <ListSlots listSlot={listSlot} />
+        <CreateEvent
+          listSlot={listSlot}
+          listUser={listUser}
+          setListSlot={setListSlot}
+        />
       </div>
     </>
   );
