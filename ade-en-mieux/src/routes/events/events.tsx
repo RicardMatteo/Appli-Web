@@ -350,12 +350,14 @@ function Events() {
           places={places}
           setPlaces={setPlaces}
         />
-        <ListSlots listSlot={listSlot} />
-        <CreateEvent
-          listSlot={listSlot}
-          listUser={listUser}
-          setListSlot={setListSlot}
-        />
+        <div className="box-h">
+          <ListSlots listSlot={listSlot} />
+          <CreateEvent
+            listSlot={listSlot}
+            listUser={listUser}
+            setListSlot={setListSlot}
+          />
+        </div>
       </div>
     </>
   );
