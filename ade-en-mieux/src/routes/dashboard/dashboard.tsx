@@ -71,6 +71,12 @@ function Dashboard() {
           </div>
 
           <div className="padding">
+            <button className="button-64" onClick={() => navigate("/agenda")}>
+              <span className="text">Mon agenda</span>
+            </button>
+          </div>
+
+          <div className="padding">
             <button
               className="button-64"
               onClick={() => navigate("/recapevents")}
