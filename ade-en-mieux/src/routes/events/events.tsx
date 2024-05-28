@@ -175,7 +175,7 @@ function ManageSlots({
 function ListSlots({ listSlot }: { listSlot: Slot[] }) {
   return (
     <>
-      <div>
+      <div className="container">
         <div className="min-width"></div>
         <h1>Liste des Slots</h1>
         {listSlot.map((slot, index) => (
