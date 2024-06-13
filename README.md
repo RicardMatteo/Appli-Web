@@ -3,14 +3,11 @@ Projet d'application web réalisé au S8 de la formation SN de l'n7
 
 ## Installation
 
-### Java 
+### Java
 
-Prendre les trucs via le site d'hagimont https://discord.com/channels/1207964046377353256/1232606273069908069/1232717492665716748
+Utiliser Jboss et mettre le WAR dans standalone/deployments 
 
-Installer JBoss dans votre `/work/EAP`.
-**JAVA 8 requit !!!**
-
-Ne pas oublier d'export eclipse dans le path (`export PATH=/work/eclipse:$PATH`).
+Backend situé sur `localhost:8080`
 
 ### React
 
@@ -22,6 +19,4 @@ npm install
 npm start
 ```
 
-Application react située sur `localhost:3000'
-
-Et c'est good je crois.
+Application react située sur `localhost:3000`
